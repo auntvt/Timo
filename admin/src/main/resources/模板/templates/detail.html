@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+    <div class="timo-detail-page">
+        <div class="timo-detail-title">基本信息</div>
+        <table class="layui-table timo-detail-table">
+            <tbody>
+            <tr>
+                <th width='100px'>#{title}编号</th>
+                <td th:text="${#{var}.id}"></td>
+                <th width='100px'>#{title}标题</th>
+                <td th:text="${#{var}.title}"></td>
+            </tr>
+            <tr>
+                <th>创建用户</th>
+                <td th:text="${#{var}.createBy?.nickname}"></td>
+                <th>更新用户</th>
+                <td th:text="${#{var}.updateBy?.nickname}"></td>
+            </tr>
+            <tr>
+                <th>创建时间</th>
+                <td th:text="${#dates.format(#{var}.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <th>最后修改</th>
+                <td th:text="${#dates.format(#{var}.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr>
+                <th>备注</th>
+                <td th:text="${#{var}.remark}" colspan="4"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>

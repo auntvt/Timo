@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+<div class="layui-form timo-compile user-info-page">
+    <div class="user-info">
+        <div class="user-avatar-box">
+            <img class="user-avatar" th:src="@{/images/user.jpeg}" alt="头像">
+            <span class="edit-avatar">修改头像</span>
+        </div>
+        <ul class="detail-info">
+            <li>账号：<span th:text="${user.username}" th:title="${user.username}"></span></li>
+            <li>昵称：<span th:text="${user.nickname}" th:title="${user.nickname}"></span></li>
+            <li>性别：<span th:text="${#dicts.keyValue('USER_SEX', user.sex)}"
+                         th:title="${#dicts.keyValue('USER_SEX', user.sex)}"></span></li>
+            <li>电话：<span th:text="${user.phone}" th:title="${user.phone}"></span></li>
+            <li>邮箱：<span th:text="${user.email}" th:title="${user.email}"></span></li>
+        </ul>
+    </div>
+    <form class="user-edit" th:action="@{/user_info}">
+        <input type="hidden" name="username" th:value="${user.username}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户昵称</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" name="nickname" placeholder="请输入用户昵称" th:value="${user.nickname}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话号码</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" name="phone" placeholder="请输入电话号码" th:value="${user.phone}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" name="email" placeholder="请输入邮箱" th:value="${user.email}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择性别</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="sex" value="1" title="男" checked><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><div>男</div></div>
+                <input type="radio" name="sex" value="2" title="女" th:checked="${user.sex} eq 2"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>女</div></div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea" name="remark">[[${user.remark}]]</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item timo-finally">
+            <button class="layui-btn ajax-submit"><i class="fa fa-check-circle"></i> 保存</button>
+            <a class="layui-btn btn-secondary close-popup"><i class="fa fa-times-circle"></i> 关闭</a>
+        </div>
+    </form>
+</div>
+<script th:replace="/common/template :: script"></script>
+<script>
+    layui.use(['jquery'], function () {
+        var $ = layui.jquery;
+        $(".user-edit").on("mousedown", function () {
+            $(this).css("opacity", 1);
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:mo="https://gitee.com/aun/timo-admin">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+    <div class="timo-detail-page">
+        <div class="timo-detail-title">基本信息</div>
+        <table class="layui-table timo-detail-table">
+            <tbody>
+            <tr>
+                <th width='100px'>用户编号</th>
+                <td th:text="${user.id}"></td>
+                <th width='100px'>用户账号</th>
+                <td th:text="${user.username}"></td>
+            </tr>
+            <tr>
+                <th>用户昵称</th>
+                <td th:text="${user.nickname}"></td>
+                <th>用户性别</th>
+                <td th:text="${#dicts.keyValue('USER_SEX', user.sex)}"></td>
+            </tr>
+            <tr>
+                <th>电话号码</th>
+                <td th:text="${user.phone}"></td>
+                <th>邮箱</th>
+                <td th:text="${user.email}"></td>
+            </tr>
+            <tr>
+                <th>创建时间</th>
+                <td th:text="${#dates.format(user.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <th>最后修改</th>
+                <td th:text="${#dates.format(user.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr>
+                <th>备注</th>
+                <td th:text="${user.remark}" colspan="4"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:mo="https://gitee.com/aun/timo-admin">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+    <div class="timo-detail-page">
+        <div class="timo-detail-title">基本信息</div>
+        <table class="layui-table timo-detail-table">
+            <tbody>
+            <tr>
+                <th width='100px'>角色ID</th>
+                <td th:text="${role.id}"></td>
+                <th width='100px'>角色编号名称</th>
+                <td>[[${role.title}]]（[[${role.name}]]）</td>
+            </tr>
+            <tr>
+                <th>创建用户</th>
+                <td th:text="${role.createBy?.nickname}"></td>
+                <th>更新用户</th>
+                <td th:text="${role.updateBy?.nickname}"></td>
+            </tr>
+            <tr>
+                <th>创建时间</th>
+                <td th:text="${#dates.format(role.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <th>最后修改</th>
+                <td th:text="${#dates.format(role.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr>
+                <th>备注</th>
+                <td th:text="${role.remark}" colspan="4"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>

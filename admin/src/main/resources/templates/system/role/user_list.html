@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:mo="https://gitee.com/aun/timo-admin">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+    <style>
+        a{
+            color: #009688;
+        }
+        a:hover{
+            color: #004a43;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="timo-detail-page">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>用户名</th>
+                <th>用户昵称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item:${list}">
+                <td>[[${item.username}]]</td>
+                <td>[[${item.nickname}]]</td>
+                <td><a th:href="@{/user/index(id=${item.id})}">查看</a></td>
+            </tr>
+            <tr th:if="${list.isEmpty()}">
+                <td style="text-align: center" colspan="3">未有分配该角色的用户</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>

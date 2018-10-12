@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:mo="https://gitee.com/aun/timo-admin">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+    <div class="timo-detail-page">
+        <div class="timo-detail-title">基本信息</div>
+        <table class="layui-table timo-detail-table">
+            <tbody>
+            <tr>
+                <th width='100px'>字典编号</th>
+                <td th:text="${dict.id}"></td>
+                <th width='100px'>字典标识</th>
+                <td th:text="${dict.name}"></td>
+            </tr>
+            <tr>
+                <th width='100px'>字典标题</th>
+                <td th:text="${dict.title}"></td>
+                <th width='100px'>字典类型</th>
+                <td th:text="${#dicts.enumValue('ENUM_DICT_TYPE', dict.type)}">字典类型</td>
+            </tr>
+            <tr>
+                <th>字典值</th>
+                <td colspan="4">
+                    <div class="detail-remark">[[${dict.value}]]</div>
+                </td>
+            </tr>
+            <tr>
+                <th>创建用户</th>
+                <td th:text="${dict.createBy?.nickname}"></td>
+                <th>更新用户</th>
+                <td th:text="${dict.updateBy?.nickname}"></td>
+            </tr>
+            <tr>
+                <th>创建时间</th>
+                <td th:text="${#dates.format(dict.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <th>最后修改</th>
+                <td th:text="${#dates.format(dict.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr>
+                <th>备注</th>
+                <td th:text="${dict.remark}" colspan="4"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>

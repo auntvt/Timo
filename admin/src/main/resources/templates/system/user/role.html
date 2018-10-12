@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+    <style>
+        .layui-input-block{
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-bottom: 70px;
+        }
+        .timo-compile .timo-finally{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding-bottom: 14px;
+            margin-bottom: 0;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form timo-compile">
+    <form th:action="@{/user/role}">
+        <input type="hidden" name="id" th:value="${id}"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input th:each="item:${list}" type="checkbox" name="roleId" th:title="${item.title}"
+                       th:value="${item.id}" th:checked="${item.remark} eq 'auth:true'" lay-skin="primary">
+            </div>
+        </div>
+        <div class="layui-form-item timo-finally">
+            <button class="layui-btn ajax-submit"><i class="fa fa-check-circle"></i> 保存</button>
+            <button class="layui-btn btn-secondary close-popup"><i class="fa fa-times-circle"></i> 关闭</button>
+        </div>
+    </form>
+</div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>

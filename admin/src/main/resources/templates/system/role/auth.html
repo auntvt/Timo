@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:mo="https://gitee.com/aun/timo-admin">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+    <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+    <style>
+        .ztree{
+            margin-left: 12px;
+            margin-bottom: 70px;
+        }
+        .timo-compile .timo-finally{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding-bottom: 14px;
+            margin-bottom: 0;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form timo-compile">
+    <ul id="authTree" class="ztree" th:attr="data-url=@{/role/authList(ids=${id})}"></ul>
+    <div class="layui-form-item timo-finally">
+        <button id="submit" class="layui-btn" th:attr="data-url=@{/role/auth}, data-id=${id}"><i class="fa fa-check-circle"></i> 保存</button>
+        <button class="layui-btn btn-secondary close-popup"><i class="fa fa-times-circle"></i> 关闭</button>
+    </div>
+</div>
+<script th:replace="/common/template :: script"></script>
+<script type="text/javascript" th:src="@{/js/plugins/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.core.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.excheck.min.js}"></script>
+<SCRIPT type="text/javascript">
+    $(function(){
+        var setting = {
+            check: {
+                enable: true,
+                chkboxType: { "Y" : "ps", "N" : "ps" }
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        $.get($("#authTree").data("url"), function(result){
+            var keyPid = [];
+            result.data.forEach(function(item){
+                keyPid[item.pid] = true;
+            });
+            var zNodes =[];
+            result.data.forEach(function (item) {
+                var menu = {
+                    id: item.id,
+                    pId: item.pid,
+                    name: item.title
+                };
+                if(item.pid === 0){
+                    menu.open = true;
+                }
+                if(item.url.indexOf("/index") !== -1 && keyPid[item.id]){
+                    var index = {
+                        id: item.id*-1,
+                        pId: item.id,
+                        name: "列表"
+                    };
+                    if(item.remark === "auth:true"){
+                        index.checked = true;
+                    }
+                    zNodes.push(index);
+                }
+                if(item.remark === "auth:true"){
+                    menu.checked = true;
+                }
+                zNodes.push(menu);
+            });
+            $.fn.zTree.init($("#authTree"), setting, zNodes);
+        });
+
+        $("#submit").click(function () {
+            var zTreeObj = $.fn.zTree.getZTreeObj("authTree");
+            var authList = zTreeObj.getCheckedNodes(true);
+            var authIds = [];
+            authIds.push("id="+$(this).data("id"));
+            console.log(authList);
+            authList.forEach(function(item){
+                if(item.id > 0){
+                    authIds.push("authId="+item.id);
+                }
+            });
+            $.post($(this).data("url"), authIds.join("&"), function(result){
+                if (result.data == null) {
+                    result.data = 'submit[refresh]';
+                }
+                $.Messager(result);
+            });
+        });
+    });
+</SCRIPT>
+</body>
+</html>

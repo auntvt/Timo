@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:mo="https://gitee.com/aun/timo-admin">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+    <div class="timo-detail-page">
+        <div class="timo-detail-title">基本信息</div>
+        <table class="layui-table timo-detail-table">
+            <tbody>
+            <tr>
+                <th width='100px'>菜单编号</th>
+                <td th:text="${menu.id}"></td>
+                <th width='100px'>菜单标题</th>
+                <td th:text="${menu.title}"></td>
+            </tr>
+            <tr>
+                <th width='100px'>图标</th>
+                <td th:text="${menu.icon}"></td>
+                <th width='100px'>菜单父编号</th>
+                <td th:text="${menu.pid}"></td>
+            </tr>
+            <tr>
+                <th width='100px'>URl地址</th>
+                <td th:text="${menu.url}"></td>
+                <th width='100px'>权限资源</th>
+                <td th:text="${menu.url}"></td>
+            </tr>
+            <tr>
+                <th width='100px'>菜单类型</th>
+                <td th:text="${#dicts.enumValue('ENUM_MENU_TYPE', menu.type)}"></td>
+                <th width='100px'>本级排序</th>
+                <td th:text="${menu.sort}"></td>
+            </tr>
+                <tr>
+                    <th>创建用户</th>
+                    <td th:text="${menu.createBy?.nickname}"></td>
+                    <th>更新用户</th>
+                    <td th:text="${menu.updateBy?.nickname}"></td>
+                </tr>
+                <tr>
+                    <th>创建时间</th>
+                    <td th:text="${#dates.format(menu.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <th>最后修改</th>
+                    <td th:text="${#dates.format(menu.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                </tr>
+                <tr>
+                    <th>备注</th>
+                    <td th:text="${menu.remark}" colspan="4"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>
