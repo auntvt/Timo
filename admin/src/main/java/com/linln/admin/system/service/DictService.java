@@ -8,6 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 public interface DictService {
 
     Dict getName(String name);

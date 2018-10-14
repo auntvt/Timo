@@ -11,6 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 public interface RoleService {
     @Transactional
     Set<Role> getUserRoleList(Long id);

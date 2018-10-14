@@ -14,6 +14,8 @@ import java.beans.PropertyDescriptor;
 
 /**
  * 自定义用户信息展示标签
+ * @author 小懒虫
+ * @date 2018/8/14
  */
 public class UserAttrProcessor extends AbstractAttributeTagProcessor {
 

@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+/**
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 public interface MenuRepository extends BaseRepository<Menu, Long> {
 
     /**

@@ -30,6 +30,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 @Controller
 public class MainController {
 

@@ -5,6 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 @Controller
 public class IndexController {
     /**

@@ -4,6 +4,8 @@ import lombok.Getter;
 
 /**
  * 后台返回结果集枚举
+ * @author 小懒虫
+ * @date 2018/8/14
  */
 @Getter
 public enum ResultEnum{

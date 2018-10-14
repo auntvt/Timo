@@ -14,6 +14,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 @Entity
 @Table(name="sys_menu")
 @Getter

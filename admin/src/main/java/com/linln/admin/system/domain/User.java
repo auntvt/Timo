@@ -15,6 +15,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 @Entity
 @Table(name="sys_user")
 @Getter

@@ -4,7 +4,10 @@ import com.linln.admin.system.domain.User;
 
 import java.util.List;
 
-
+/**
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 public interface UserRepository extends BaseRepository<User, Long>{
     /**
      * 根据用户名查询用户数据

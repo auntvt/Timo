@@ -5,6 +5,8 @@ import lombok.Getter;
 
 /**
  * 自定义异常对象
+ * @author 小懒虫
+ * @date 2018/8/14
  */
 @Getter
 public class ResultException extends RuntimeException {

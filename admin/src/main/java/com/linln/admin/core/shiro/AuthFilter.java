@@ -8,7 +8,11 @@ import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-// 暂时没有使用
+/**
+ * 暂时没有使用
+ * @author 小懒虫
+ * @date 2018/8/14
+ */
 public class AuthFilter extends AuthorizationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {

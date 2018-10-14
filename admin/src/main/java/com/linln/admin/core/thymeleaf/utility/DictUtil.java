@@ -12,6 +12,8 @@ import java.util.Map;
 
 /**
  * 字典提取工具对象
+ * @author 小懒虫
+ * @date 2018/8/14
  */
 public class DictUtil {
     // 缓存字典数据
