@@ -130,4 +130,16 @@ public class DictUtil {
         String label = "DATA_STATUS";
         return DictUtil.keyValue(label, String.valueOf(status));
     }
+
+    /**
+     * 清除缓存中指定的数据
+     * @param label 字典标识
+     */
+    public static void clearCache(String label){
+        if (dictValues.containsKey(label)){
+            dictValues.remove(label);
+        }else if (dictKeyValues.containsKey(label)){
+            dictKeyValues.remove(label);
+        }else dictEnums.remove(label);
+    }
 }

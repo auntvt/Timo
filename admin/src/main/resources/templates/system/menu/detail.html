@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:mo="https://gitee.com/aun/timo-admin">
+      xmlns:mo="https://gitee.com/aun/Timo">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
 </head>
 <body>
@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <th width='100px'>菜单类型</th>
-                <td th:text="${#dicts.enumValue('ENUM_MENU_TYPE', menu.type)}"></td>
+                <td th:text="${#dicts.keyValue('MENU_TYPE', menu.type)}"></td>
                 <th width='100px'>本级排序</th>
                 <td th:text="${menu.sort}"></td>
             </tr>

@@ -3,6 +3,7 @@ package com.linln.admin.system.controller;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.exception.ResultException;
+import com.linln.admin.core.thymeleaf.utility.DictUtil;
 import com.linln.admin.core.utils.TimoExample;
 import com.linln.admin.system.domain.Dict;
 import com.linln.admin.system.service.DictService;
@@ -95,6 +96,9 @@ public class DictController {
         // 保存数据
         Dict save = dictService.save(dict);
         if(save != null){
+            if(dictForm.getId() != null){
+                DictUtil.clearCache(dictForm.getName());
+            }
             return ResultVoUtil.success("保存成功");
         }else{
             return ResultVoUtil.error("保存失败，请重新输入");

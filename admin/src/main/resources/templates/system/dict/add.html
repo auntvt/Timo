@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:mo="https://gitee.com/aun/timo-admin">
+      xmlns:mo="https://gitee.com/aun/Timo">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
 </head>
 <body>
@@ -22,7 +22,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">字典类型</label>
             <div class="layui-input-inline">
-                <select name="type" mo:dictEnum="ENUM_DICT_TYPE" mo-selected="${dict} ? ${dict.type} : 2" lay-verify="type"></select>
+                <select name="type" mo:dictKey="DICT_TYPE" mo-selected="${dict} ? ${dict.type} : 2" lay-verify="type"></select>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">

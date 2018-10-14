@@ -68,7 +68,7 @@ public class MenuController {
         List<Menu> list = menuService.getList(example, sort);
         list.forEach(editMenu -> {
             String type = String.valueOf(editMenu.getType());
-            editMenu.setRemark(DictUtil.enumValue("ENUM_MENU_TYPE", type));
+            editMenu.setRemark(DictUtil.keyValue("MENU_TYPE", type));
         });
         return ResultVoUtil.success(list);
     }

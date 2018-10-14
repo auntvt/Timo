@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:mo="https://gitee.com/aun/timo-admin">
+      xmlns:mo="https://gitee.com/aun/Timo">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
     <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
 </head>
@@ -36,7 +36,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">菜单类型</label>
             <div class="layui-input-inline">
-                <select name="type" mo:dictEnum="ENUM_MENU_TYPE" mo-selected="${menu?.type}" mo-empty="" lay-verify="type"></select>
+                <select name="type" mo:dictKey="MENU_TYPE" mo-selected="${menu?.type}" mo-empty="" lay-verify="type"></select>
             </div>
         </div>
         <!--<div class="layui-form-item">

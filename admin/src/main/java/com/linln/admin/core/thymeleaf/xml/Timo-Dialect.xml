@@ -22,7 +22,7 @@
 <dialect
         xmlns="http://www.thymeleaf.org/extras/dialect"
         prefix="mo"
-        namespace-uri="https://gitee.com/aun/timo-admin"
+        namespace-uri="https://gitee.com/aun/Timo"
         class="com.linln.admin.core.thymeleaf.TimoDialect">
 
     <!-- 自定义属性标签 -->

@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public enum DictTypeEnum {
 
-    VALUE((byte)1, "字符串"),
+    VALUE((byte)1, "字符值"),
     KEY_VALUE((byte)2, "键值对"),
     ENUM_VALUE((byte)3, "枚举类");
 

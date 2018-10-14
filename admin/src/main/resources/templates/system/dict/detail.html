@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:mo="https://gitee.com/aun/timo-admin">
+      xmlns:mo="https://gitee.com/aun/Timo">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
 </head>
 <body>
@@ -18,7 +18,7 @@
                 <th width='100px'>字典标题</th>
                 <td th:text="${dict.title}"></td>
                 <th width='100px'>字典类型</th>
-                <td th:text="${#dicts.enumValue('ENUM_DICT_TYPE', dict.type)}">字典类型</td>
+                <td th:text="${#dicts.keyValue('DICT_TYPE', dict.type)}">字典类型</td>
             </tr>
             <tr>
                 <th>字典值</th>
