@@ -1,6 +1,7 @@
 package com.linln.admin.core.thymeleaf;
 
 import com.linln.admin.core.thymeleaf.utility.DictUtil;
+import com.linln.admin.core.thymeleaf.utility.LogUtil;
 import com.linln.admin.core.thymeleaf.utility.PageUtil;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.expression.IExpressionObjectFactory;
@@ -20,12 +21,15 @@ public class TimoExpressionObjectFactory implements IExpressionObjectFactory {
     public static final PageUtil PAGE_UTIL_OBJECT = new PageUtil();
     public static final String DICT_UTIL_NAME = "dicts";
     public static final DictUtil DICT_UTIL_OBJECT = new DictUtil();
+    public static final String LOG_UTIL_NAME = "logs";
+    public static final LogUtil LOG_UTIL_OBJECT = new LogUtil();
 
     @Override
     public Set<String> getAllExpressionObjectNames() {
         Set<String> names = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(
                 PAGE_UTIL_NAME,
-                DICT_UTIL_NAME
+                DICT_UTIL_NAME,
+                LOG_UTIL_NAME
         )));
         return names;
     }
@@ -37,6 +41,9 @@ public class TimoExpressionObjectFactory implements IExpressionObjectFactory {
         }
         if(DICT_UTIL_NAME.equals(expressionObjectName)){
             return DICT_UTIL_OBJECT;
+        }
+        if(LOG_UTIL_NAME.equals(expressionObjectName)){
+            return LOG_UTIL_OBJECT;
         }
         return null;
     }

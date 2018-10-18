@@ -4,12 +4,15 @@ package com.linln.admin.system.controller;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.exception.ResultException;
+import com.linln.admin.core.log.action.SaveAction;
+import com.linln.admin.core.log.action.StatusAction;
+import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.thymeleaf.utility.DictUtil;
 import com.linln.admin.system.validator.MenuForm;
 import com.linln.admin.core.utils.TimoExample;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.service.MenuService;
-import com.linln.core.utils.FormBeanUtils;
+import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.vo.ResultVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -116,6 +119,7 @@ public class MenuController {
     @PostMapping("/save")
     @RequiresPermissions({"/menu/add","/menu/edit"})
     @ResponseBody
+    @ActionLog(name = "菜单管理", message = "菜单：${title}", action = SaveAction.class)
     public ResultVo save(@Validated MenuForm menuForm){
         if(menuForm.getId() == null){
             // 添加最后的排序
@@ -141,15 +145,11 @@ public class MenuController {
             menuForm.setPids(menu.getPids());
             menuForm.setSort(menu.getSort());
         }
-        FormBeanUtils.copyProperties(menuForm, menu);
+        FormBeanUtil.copyProperties(menuForm, menu);
 
         // 保存数据
-        Menu save = menuService.save(menu);
-        if(save != null){
-            return ResultVoUtil.success("保存成功");
-        }else{
-            return ResultVoUtil.error("保存失败，请重新输入");
-        }
+        menuService.save(menu);
+        return ResultVoUtil.SAVE_SUCCESS;
     }
 
     /**
@@ -169,7 +169,8 @@ public class MenuController {
     @RequestMapping("/status/{param}")
     @RequiresPermissions("/menu/status")
     @ResponseBody
-    public ResultVo delete(
+    @ActionLog(name = "菜单状态", action = StatusAction.class)
+    public ResultVo status(
             @PathVariable("param") String param,
             @RequestParam(value = "ids", required = false) List<Long> idList){
         try {

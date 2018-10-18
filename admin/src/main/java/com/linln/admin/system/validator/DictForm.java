@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 @Data
 public class DictForm extends Dict implements Serializable {
+    private Object entity;
     @NotEmpty(message = "字典标识不能为空")
     private String name;
     @NotEmpty(message = "字典标题不能为空")

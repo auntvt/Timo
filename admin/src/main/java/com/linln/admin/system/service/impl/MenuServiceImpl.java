@@ -29,7 +29,8 @@ public class MenuServiceImpl implements MenuService {
     @Override
     @Transactional
     public Menu getId(Long id) {
-        return menuRepository.findByIdAndStatus(id, StatusEnum.OK.getCode());
+        Byte[] status = {StatusEnum.OK.getCode(), StatusEnum.FREEZED.getCode()};
+        return menuRepository.findByIdAndStatusIn(id, status);
     }
 
     /**

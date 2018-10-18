@@ -4,6 +4,9 @@ import com.linln.admin.core.constant.AdminConst;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.exception.ResultException;
+import com.linln.admin.core.log.action.RoleAction;
+import com.linln.admin.core.log.action.StatusAction;
+import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.system.validator.RoleForm;
 import com.linln.admin.core.utils.TimoExample;
@@ -11,7 +14,7 @@ import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.service.MenuService;
 import com.linln.admin.system.service.RoleService;
-import com.linln.core.utils.FormBeanUtils;
+import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.vo.ResultVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -95,9 +98,10 @@ public class RoleController {
     @PostMapping("/save")
     @RequiresPermissions({"/role/add","/role/edit"})
     @ResponseBody
+    @ActionLog(key = RoleAction.ROLE_SAVE, action = RoleAction.class)
     public ResultVo save(@Validated RoleForm roleForm){
         // 不允许操作管理员角色数据
-        if (roleForm.getId().equals(AdminConst.ADMIN_ROLE_ID) &&
+        if (roleForm.getId() !=null && roleForm.getId().equals(AdminConst.ADMIN_ROLE_ID) &&
                 !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)){
             throw new ResultException(ResultEnum.NO_ADMINROLE_AUTH);
         }
@@ -108,15 +112,11 @@ public class RoleController {
             role = roleService.getId(roleForm.getId());
         }
         String[] ignore = {"users", "menus"};
-        FormBeanUtils.copyProperties(roleForm, role, ignore);
+        FormBeanUtil.copyProperties(roleForm, role, ignore);
 
         // 保存数据
-        Role save = roleService.save(role);
-        if(save != null){
-            return ResultVoUtil.success("保存成功");
-        }else{
-            return ResultVoUtil.error("保存失败，请重新输入");
-        }
+        roleService.save(role);
+        return ResultVoUtil.SAVE_SUCCESS;
     }
 
     /**
@@ -159,6 +159,7 @@ public class RoleController {
     @PostMapping("/auth")
     @RequiresPermissions("/role/auth")
     @ResponseBody
+    @ActionLog(key = RoleAction.ROLE_AUTH, action = RoleAction.class)
     public ResultVo auth(
             @RequestParam(value = "id", required = true) Long id,
             @RequestParam(value = "authId", required = false) List<Long> authIds){
@@ -179,12 +180,8 @@ public class RoleController {
         }
 
         // 保存数据
-        Role save = roleService.save(role);
-        if(save != null){
-            return ResultVoUtil.success("保存成功");
-        }else{
-            return ResultVoUtil.error("保存失败，请重新选择");
-        }
+        roleService.save(role);
+        return ResultVoUtil.SAVE_SUCCESS;
     }
 
     /**
@@ -215,7 +212,8 @@ public class RoleController {
     @RequestMapping("/status/{param}")
     @RequiresPermissions("/role/status")
     @ResponseBody
-    public ResultVo delete(
+    @ActionLog(name = "角色状态", action = StatusAction.class)
+    public ResultVo status(
             @PathVariable("param") String param,
             @RequestParam(value = "ids", required = false) List<Long> idList){
         // 不能修改超级管理员角色状态

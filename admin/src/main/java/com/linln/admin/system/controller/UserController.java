@@ -6,13 +6,16 @@ import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.enums.UserIsRoleEnum;
 import com.linln.admin.core.exception.ResultException;
+import com.linln.admin.core.log.action.StatusAction;
+import com.linln.admin.core.log.action.UserAction;
+import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.system.validator.UserForm;
 import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.domain.User;
 import com.linln.admin.system.service.RoleService;
 import com.linln.admin.system.service.UserService;
-import com.linln.core.utils.FormBeanUtils;
+import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.vo.ResultVo;
 import com.linln.admin.core.utils.TimoExample;
@@ -100,12 +103,8 @@ public class UserController {
     @PostMapping("/save")
     @RequiresPermissions({"/user/add", "/user/edit"})
     @ResponseBody
+    @ActionLog(key = UserAction.USER_SAVE, action = UserAction.class)
     public ResultVo save(@Validated UserForm userForm) {
-        // 判断账号是否重复
-        User getName = userService.getByName(userForm.getUsername(), StatusEnum.FREEZED.getCode());
-        if (getName != null) {
-            throw new ResultException(ResultEnum.USER_EXIST);
-        }
 
         // 验证数据是否合格
         if (userForm.getId() == null) {
@@ -124,6 +123,12 @@ public class UserController {
             String encrypt = ShiroUtil.encrypt(userForm.getPassword(), salt);
             userForm.setPassword(encrypt);
             userForm.setSalt(salt);
+
+            // 判断账号是否重复
+            User soleUser = userService.getByName(userForm.getUsername(), StatusEnum.FREEZED.getCode());
+            if (soleUser != null) {
+                throw new ResultException(ResultEnum.USER_EXIST);
+            }
         }
 
         // 将验证的数据复制给实体类
@@ -134,20 +139,20 @@ public class UserController {
                     !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)){
                 throw new ResultException(ResultEnum.NO_ADMIN_AUTH);
             }
-            user = userService.getId(userForm.getId());
+            // 判断账号是否重复
+            user = userService.getByName(userForm.getUsername(), StatusEnum.FREEZED.getCode());
+            if (user != null && !user.getId().equals(userForm.getId())) {
+                throw new ResultException(ResultEnum.USER_EXIST);
+            }
             String[] ignore = {"password", "salt", "roles", "isRole"};
-            FormBeanUtils.copyProperties(userForm, user, ignore);
+            FormBeanUtil.copyProperties(userForm, user, ignore);
         } else {
-            FormBeanUtils.copyProperties(userForm, user);
+            FormBeanUtil.copyProperties(userForm, user);
         }
 
         // 保存数据
-        User save = userService.save(user);
-        if (save != null) {
-            return ResultVoUtil.success("保存成功");
-        } else {
-            return ResultVoUtil.error("保存失败，请重新输入");
-        }
+        userService.save(user);
+        return ResultVoUtil.SAVE_SUCCESS;
     }
 
     /**
@@ -178,6 +183,7 @@ public class UserController {
     @PostMapping("/pwd")
     @RequiresPermissions("/user/pwd")
     @ResponseBody
+    @ActionLog(key = UserAction.EDIT_PWD, action = UserAction.class)
     public ResultVo editPassword(String password, String confirm,
             @RequestParam(value = "ids", required = false) List<Long> idList) {
 
@@ -207,12 +213,8 @@ public class UserController {
         });
 
         // 保存数据
-        List<User> save = userService.save(userList);
-        if (save.size() > 0) {
-            return ResultVoUtil.success("修改成功");
-        } else {
-            return ResultVoUtil.error("修改失败，请重新输入");
-        }
+        userService.save(userList);
+        return ResultVoUtil.success("修改成功");
     }
 
     /**
@@ -247,6 +249,7 @@ public class UserController {
     @PostMapping("/role")
     @RequiresPermissions("/user/role")
     @ResponseBody
+    @ActionLog(key = UserAction.EDIT_ROLE, action = UserAction.class)
     public ResultVo auth(
             @RequestParam(value = "id", required = true) Long id,
             @RequestParam(value = "roleId", required = false) List<Long> roleIds) {
@@ -270,12 +273,8 @@ public class UserController {
         }
 
         // 保存数据
-        User save = userService.save(user);
-        if (save != null) {
-            return ResultVoUtil.success("保存成功");
-        } else {
-            return ResultVoUtil.error("保存失败，请重新选择");
-        }
+        userService.save(user);
+        return ResultVoUtil.SAVE_SUCCESS;
     }
 
     /**
@@ -284,6 +283,7 @@ public class UserController {
     @RequestMapping("/status/{param}")
     @RequiresPermissions("/user/status")
     @ResponseBody
+    @ActionLog(name = "用户状态", action = StatusAction.class)
     public ResultVo delete(
             @PathVariable("param") String param,
             @RequestParam(value = "ids", required = false) List<Long> idList) {

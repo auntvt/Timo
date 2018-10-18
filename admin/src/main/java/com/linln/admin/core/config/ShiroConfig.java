@@ -50,6 +50,7 @@ public class ShiroConfig {
         filterMap.put("/js/**","anon");
         filterMap.put("/images/**","anon");
         filterMap.put("/lib/**","anon");
+        filterMap.put("/favicon.ico","anon");
         filterMap.put("/**","user");
 
         // 设置过滤规则

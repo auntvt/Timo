@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<!-- 分页模块 -->
 <th:block th:fragment="page">
     <div class="layui-row" th:if="${#pageUtil.pageInit(page,#request)}">
         <div class="layui-col-sm6">
@@ -27,4 +28,24 @@
             </ul>
         </div>
     </div>
+</th:block>
+
+<!-- 日志展示模块 -->
+<th:block th:fragment="log(entity)">
+    <table class="layui-table timo-detail-table">
+        <tbody>
+        <tr>
+            <th>操作时间</th>
+            <th>操作人</th>
+            <th>日志名称</th>
+            <th>日志消息</th>
+        </tr>
+        <tr th:each="item:${#logs.entityList(entity)}">
+            <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${item.createBy?.nickname}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.message}"></td>
+        </tr>
+        </tbody>
+    </table>
 </th:block>

@@ -3,11 +3,24 @@ package #{path}.controller;
 import #{path}.domain.#{obj};
 import #{path}.service.#{obj}Service;
 import #{path}.validator.#{obj}Form;
+import com.linln.admin.core.enums.ResultEnum;
+import com.linln.admin.core.enums.StatusEnum;
+import com.linln.admin.core.exception.ResultException;
+import com.linln.admin.core.utils.TimoExample;
+import com.linln.core.utils.FormBeanUtils;
+import com.linln.core.utils.ResultVoUtil;
+import com.linln.core.vo.ResultVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/#{var}")
@@ -78,12 +91,8 @@ public class #{obj}Controller {
         FormBeanUtils.copyProperties(#{var}Form, #{var});
 
         // 保存数据
-        #{obj} save = #{var}Service.save(#{var});
-        if(save != null){
-            return ResultVoUtil.success("保存成功");
-        }else{
-            return ResultVoUtil.error("保存失败，请重新输入");
-        }
+        #{var}Service.save(#{var});
+        return ResultVoUtil.SAVE_SUCCESS;
     }
 
     /**
@@ -103,7 +112,7 @@ public class #{obj}Controller {
     @RequestMapping("/status/{param}")
     @RequiresPermissions("/#{var}/status")
     @ResponseBody
-    public ResultVo delete(
+    public ResultVo status(
             @PathVariable("param") String param,
             @RequestParam(value = "ids", required = false) List<Long> idList){
         try {

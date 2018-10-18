@@ -34,7 +34,8 @@ public class DictServiceImpl implements DictService {
     @Override
     @Transactional
     public Dict getId(Long id) {
-        return dictRepository.findByIdAndStatus(id, StatusEnum.OK.getCode());
+        Byte[] status = {StatusEnum.OK.getCode(), StatusEnum.FREEZED.getCode()};
+        return dictRepository.findByIdAndStatusIn(id, status);
     }
 
     /**
@@ -58,8 +59,7 @@ public class DictServiceImpl implements DictService {
         // 创建分页对象
         Sort sort = new Sort(Sort.Direction.DESC, "createDate");
         PageRequest page = PageRequest.of(pageIndex-1, pageSize, sort);
-        Page<Dict> list = dictRepository.findAll(example, page);
-        return list;
+        return dictRepository.findAll(example, page);
     }
 
     /**

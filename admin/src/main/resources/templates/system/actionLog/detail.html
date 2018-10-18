@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+    <div class="timo-detail-page">
+        <div class="timo-detail-title">基本信息</div>
+        <table class="layui-table timo-detail-table">
+            <tbody>
+            <tr>
+                <th width='100px'>日志编号</th>
+                <td th:text="${actionLog.id}"></td>
+                <th width='100px'>日志名称</th>
+                <td th:text="${actionLog.name}"></td>
+            </tr>
+            <tr>
+                <th>日志类型</th>
+                <td th:text="${#dicts.keyValue('LOG_TYPE', actionLog.type)}"></td>
+                <th>切入点</th>
+                <td th:text="${actionLog.clazz}+'.'+${actionLog.method}+'()'"></td>
+            </tr>
+            <tr>
+                <th>产生日志的表</th>
+                <td th:text="${actionLog.model}"></td>
+                <th>产生日志数据id</th>
+                <td th:text="${actionLog.recordId}"></td>
+            </tr>
+            <tr>
+                <th>操作人</th>
+                <td th:text="${actionLog.createBy?.nickname}"></td>
+                <th>记录时间</th>
+                <td th:text="${#dates.format(actionLog.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr>
+                <th>日志消息</th>
+                <td colspan="4"><pre>[[${actionLog.message}]]</pre></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>

@@ -5,12 +5,14 @@ import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.enums.UserIsRoleEnum;
 import com.linln.admin.core.exception.ResultException;
+import com.linln.admin.core.log.action.UserAction;
+import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.system.validator.UserForm;
 import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.domain.User;
 import com.linln.admin.system.service.UserService;
-import com.linln.core.utils.FormBeanUtils;
+import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.vo.ResultVo;
 import com.linln.core.wraps.URL;
@@ -100,15 +102,11 @@ public class MainController {
 
         // 将验证的数据复制给实体类
         String[] ignore = {"id", "password", "salt", "roles", "isRole"};
-        FormBeanUtils.copyProperties(userForm, user, ignore);
+        FormBeanUtil.copyProperties(userForm, user, ignore);
 
         // 保存数据
-        User save = userService.save(user);
-        if (save != null) {
-            return ResultVoUtil.success("保存成功", new URL("/user_info"));
-        } else {
-            return ResultVoUtil.error("保存失败，请重新输入");
-        }
+        userService.save(user);
+        return ResultVoUtil.success("保存成功", new URL("/user_info"));
     }
 
     /**
@@ -152,12 +150,8 @@ public class MainController {
         newPwdUser.setSalt(salt);
 
         // 保存数据
-        User save = userService.save(newPwdUser);
-        if (save != null) {
-            return ResultVoUtil.success("修改成功");
-        } else {
-            return ResultVoUtil.error("修改失败，请重新输入");
-        }
+        userService.save(newPwdUser);
+        return ResultVoUtil.success("修改成功");
     }
 
     /**
@@ -173,7 +167,14 @@ public class MainController {
      */
     @PostMapping("/login")
     @ResponseBody
+    @ActionLog(key = UserAction.USER_LOGIN, action = UserAction.class)
     public ResultVo login(String username, String password, String rememberMe){
+        // 判断账号密码是否为空
+        if(username.isEmpty() || "".equals(username.trim()) ||
+                password.isEmpty() || "".equals(password.trim())){
+            throw new ResultException(ResultEnum.USER_NAME_PWD_NULL);
+        }
+
         // 1.获取Subject主体对象
         Subject subject = SecurityUtils.getSubject();
 

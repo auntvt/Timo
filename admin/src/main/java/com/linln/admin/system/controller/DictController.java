@@ -3,12 +3,15 @@ package com.linln.admin.system.controller;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.exception.ResultException;
+import com.linln.admin.core.log.action.SaveAction;
+import com.linln.admin.core.log.action.StatusAction;
+import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.thymeleaf.utility.DictUtil;
 import com.linln.admin.core.utils.TimoExample;
 import com.linln.admin.system.domain.Dict;
 import com.linln.admin.system.service.DictService;
 import com.linln.admin.system.validator.DictForm;
-import com.linln.core.utils.FormBeanUtils;
+import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.vo.ResultVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -86,6 +89,7 @@ public class DictController {
     @PostMapping({"/add","/edit"})
     @RequiresPermissions({"/dict/add","/dict/edit"})
     @ResponseBody
+    @ActionLog(name = "字典管理", message = "字典：${title}", action = SaveAction.class)
     public ResultVo save(@Validated DictForm dictForm){
         // 清除字典值两边空格
         dictForm.setValue(dictForm.getValue().trim());
@@ -95,18 +99,14 @@ public class DictController {
         if(dictForm.getId() != null){
             dict = dictService.getId(dictForm.getId());
         }
-        FormBeanUtils.copyProperties(dictForm, dict);
+        FormBeanUtil.copyProperties(dictForm, dict);
 
         // 保存数据
-        Dict save = dictService.save(dict);
-        if(save != null){
-            if(dictForm.getId() != null){
-                DictUtil.clearCache(dictForm.getName());
-            }
-            return ResultVoUtil.success("保存成功");
-        }else{
-            return ResultVoUtil.error("保存失败，请重新输入");
+        dictService.save(dict);
+        if(dictForm.getId() != null){
+            DictUtil.clearCache(dictForm.getName());
         }
+        return ResultVoUtil.SAVE_SUCCESS;
     }
 
     /**
@@ -126,7 +126,8 @@ public class DictController {
     @RequestMapping("/status/{param}")
     @RequiresPermissions("/dict/status")
     @ResponseBody
-    public ResultVo delete(
+    @ActionLog(name = "字典状态", action = StatusAction.class)
+    public ResultVo status(
             @PathVariable("param") String param,
             @RequestParam(value = "ids", required = false) List<Long> idList){
         try {

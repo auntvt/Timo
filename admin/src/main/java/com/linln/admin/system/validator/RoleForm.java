@@ -12,6 +12,9 @@ import java.io.Serializable;
  */
 @Data
 public class RoleForm extends Role implements Serializable {
-    @NotEmpty(message = "标题不能为空")
+    private Object entity;
+    @NotEmpty(message = "角色编号不能为空")
+    private String name;
+    @NotEmpty(message = "角色名称不能为空")
     private String title;
 }

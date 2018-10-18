@@ -3,6 +3,7 @@ package com.linln.admin.system.validator;
 import com.linln.admin.system.domain.User;
 import lombok.Data;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 public class UserForm extends User implements Serializable {
+    private Object entity;
     @NotEmpty(message = "用户名不能为空")
     private String username;
     @NotEmpty(message = "用户昵称不能为空")

@@ -44,7 +44,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public Role getId(Long id) {
-        return roleRepository.findByIdAndStatus(id, StatusEnum.OK.getCode());
+        Byte[] status = {StatusEnum.OK.getCode(), StatusEnum.FREEZED.getCode()};
+        return roleRepository.findByIdAndStatusIn(id, status);
     }
 
     /**

@@ -7,8 +7,13 @@ import com.linln.core.wraps.URL;
 
 /**
  * 响应数据(结果)最外层对象工具
+ * @author 小懒虫
+ * @date 2018/10/15
  */
 public class ResultVoUtil {
+
+    public static ResultVo SAVE_SUCCESS = success("保存成功");
+
     /**
      * 操作成功
      * @param msg 提示信息

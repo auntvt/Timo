@@ -543,6 +543,9 @@ a{
 .timo-layout-page .timo-table{
 	color: #000000;
 }
+.timo-layout-page .timo-table.timo-table-fixed{
+    table-layout: fixed;
+}
 .timo-layout-page .timo-table a{
 	color: #009688;
 }
@@ -554,6 +557,9 @@ a{
 .timo-layout-page .timo-table td{
 	padding: 12px;
 	border: 1px solid #dee2e6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .timo-layout-page .timo-table th{
 	vertical-align: bottom;
@@ -714,7 +720,7 @@ a{
 }
 .timo-detail-table{
 	color: #000000;
-	margin: 0;
+    margin: 0 0 12px;
 }
 .timo-detail-table th{
 	font-weight: bold;

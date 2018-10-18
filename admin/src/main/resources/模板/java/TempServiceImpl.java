@@ -3,9 +3,16 @@ package #{path}.service.impl;
 import #{path}.domain.#{obj};
 import #{path}.repository.#{obj}Repository;
 import #{path}.service.#{obj}Service;
+import com.linln.admin.core.enums.StatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class #{obj}ServiceImpl implements #{obj}Service {
@@ -20,7 +27,8 @@ public class #{obj}ServiceImpl implements #{obj}Service {
     @Override
     @Transactional
     public #{obj} getId(Long id) {
-        return #{var}Repository.findByIdAndStatus(id, StatusEnum.OK.getCode());
+        Byte[] status = {StatusEnum.OK.getCode(), StatusEnum.FREEZED.getCode()};
+        return #{var}Repository.findByIdAndStatusIn(id, status);
     }
 
     /**

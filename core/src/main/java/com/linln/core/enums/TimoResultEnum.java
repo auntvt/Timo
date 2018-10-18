@@ -4,6 +4,8 @@ import lombok.Getter;
 
 /**
  * 通用状态信息
+ * @author 小懒虫
+ * @date 2018/10/15
  */
 @Getter
 public enum TimoResultEnum {

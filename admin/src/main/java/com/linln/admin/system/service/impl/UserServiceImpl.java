@@ -42,7 +42,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getId(Long id) {
-        return userRepository.findByIdAndStatus(id, StatusEnum.OK.getCode());
+        Byte[] status = {StatusEnum.OK.getCode(), StatusEnum.FREEZED.getCode()};
+        return userRepository.findByIdAndStatusIn(id, status);
     }
 
     /**

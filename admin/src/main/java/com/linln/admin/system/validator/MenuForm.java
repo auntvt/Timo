@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 @Data
 public class MenuForm extends Menu implements Serializable {
+    private Object entity;
     @NotEmpty(message = "标题不能为空")
     private String title;
     @NotNull(message = "父级菜单不能为空")

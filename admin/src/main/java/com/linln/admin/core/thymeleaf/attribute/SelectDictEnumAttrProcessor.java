@@ -99,7 +99,7 @@ public class SelectDictEnumAttrProcessor extends AbstractAttributeTagProcessor {
         // 判断是添加空值选项
         String attributeEmptyValue = tag.getAttributeValue(EMPTY_ATTR_NAME);
         if(attributeEmptyValue != null){
-            String emptyStr = "<option>" + attributeEmptyValue + "</option>";
+            String emptyStr = "<option value=''>" + attributeEmptyValue + "</option>";
             optionContent.insert(0, emptyStr);
         }
 

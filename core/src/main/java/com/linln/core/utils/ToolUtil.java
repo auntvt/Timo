@@ -4,6 +4,8 @@ import java.util.Random;
 
 /**
  * 通用方法工具类
+ * @author 小懒虫
+ * @date 2018/10/15
  */
 public class ToolUtil {
 

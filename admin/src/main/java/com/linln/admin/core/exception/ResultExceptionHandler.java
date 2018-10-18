@@ -1,6 +1,8 @@
 package com.linln.admin.core.exception;
 
 import com.linln.admin.core.enums.ResultEnum;
+import com.linln.admin.core.log.action.SystemAction;
+import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.vo.ResultVo;
@@ -71,7 +73,8 @@ public class ResultExceptionHandler {
     // 拦截未知的运行时异常
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public ResultVo euntimeException(RuntimeException e) {
+    @ActionLog(key = SystemAction.RUNTIME_EXCEPTION, action = SystemAction.class)
+    public ResultVo runtimeException(RuntimeException e) {
         log.error("【系统异常】", e);
         return ResultVoUtil.error(500, "未知错误：EX4399");
     }

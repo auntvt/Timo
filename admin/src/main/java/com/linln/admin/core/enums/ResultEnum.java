@@ -17,7 +17,7 @@ public enum ResultEnum{
     USER_PWD_NULL(402, "密码不能为空"),
     USER_INEQUALITY(403, "两次密码不一致"),
     USER_OLD_PWD_ERROR(404, "原来密码不正确"),
-    NO_EDIT_USERNAME(502, "不允许修改用户名"),
+    USER_NAME_PWD_NULL(405, "用户名和密码不能为空"),
 
     /**
      * 非法操作
