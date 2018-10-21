@@ -22,7 +22,6 @@ public class IndexController {
         model.addAttribute("qq", "<option value ='volvo'><script>alert(111)</script>Volvo</option>");
         model.addAttribute("one", 1);
         int[] list = {111,222,333};
-        list[3] = 111;
         model.addAttribute("list", list);
         return "/system/main/index";
     }

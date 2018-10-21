@@ -1,5 +1,8 @@
 package com.linln.core.utils;
 
+import org.springframework.util.ResourceUtils;
+
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 /**
@@ -23,5 +26,20 @@ public class ToolUtil {
             sb.append((char)range);
         }
         return sb.toString();
+    }
+
+    /**
+     * 获取项目根路径
+     */
+    public static String getProjectPath(){
+        try {
+            String path = ResourceUtils.getURL("classpath:").getPath();
+            path = path.replace("/WEB-INF/classes/", "");
+            path = path.replace("/target/classes/", "");
+            path = path.replace("file:/", "");
+            return path;
+        } catch (FileNotFoundException e) {
+            return "";
+        }
     }
 }

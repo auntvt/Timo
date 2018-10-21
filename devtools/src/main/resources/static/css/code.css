@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+/*基本信息*/
+.layui-elem-field{
+    border-color: #cccccc;
+}
+.layui-elem-field .code-legend{
+    font-size: 16px;
+    font-weight: 500;
+}
+.layui-elem-field .layui-field-box{
+    padding-top: 20px;
+}
+.layui-form-item .layui-input-inline{
+    width: 240px;
+}
+.layui-form-item .layui-input-inline input{
+    border-color: #cccccc;
+}
+.layui-form-item .layui-input-inline input:focus{
+    border-color: #009688!important;
+}
+
+/*面板*/
+.panel{
+    margin: 15px 2px 5px;
+    border: 1px solid #cccccc;
+}
+.panel-header{
+    color: #333;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #cccccc;
+}
+.panel-header div{
+    float: left;
+}
+.panel-header .title{
+    font-weight: 600;
+}
+.panel-header .info{
+    margin-left: 50px;
+}
+.panel-header .info i{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #1ab394;
+    margin-left: 12px;
+    margin-right: 4px;
+    margin-bottom: -1px;
+}
+.panel-header .info i.lose{
+    background-color: #e7e9ec;
+}
+.panel-header .path{
+    float: right;
+}
+.panel-body{
+    padding: 15px 0 0 15px;
+    overflow: hidden;
+}
+.float-label{
+    float: left;
+    font-size: 14px;
+    padding:4px 12px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid #cbced3;
+    background-color: #e7e9ec;
+    cursor: pointer;
+}
+.float-label.active{
+    color: #ffffff;
+    border: 1px solid #209684;
+    background-color: #1ab394;
+}

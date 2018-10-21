@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>admin</artifactId>
+    <artifactId>devtools</artifactId>
     <packaging>jar</packaging>
-    <name>后台管理模块</name>
+    <name>开发中心模块</name>
 
     <parent>
         <groupId>com.linln</groupId>
@@ -17,6 +17,11 @@
         <dependency>
             <groupId>com.linln</groupId>
             <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linln</groupId>
+            <artifactId>admin</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

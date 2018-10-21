@@ -5,6 +5,7 @@
 
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
+    <name>核心模块</name>
 
     <parent>
         <groupId>com.linln</groupId>
