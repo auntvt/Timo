@@ -34,6 +34,17 @@ public class MenuServiceImpl implements MenuService {
     }
 
     /**
+     * 根据菜单url查询菜单数据
+     * @param url 菜单url
+     */
+    @Override
+    @Transactional
+    public Menu getUrl(String url){
+        Byte[] StatusBytes = {StatusEnum.OK.getCode(), StatusEnum.FREEZED.getCode()};
+        return menuRepository.findByUrlAndStatusIn(url, StatusBytes);
+    }
+
+    /**
      * 根据菜单ID列表查询多个菜单数据
      * @param ids 菜单ID列表
      */

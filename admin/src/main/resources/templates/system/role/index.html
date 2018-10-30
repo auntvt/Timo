@@ -83,9 +83,6 @@
                         <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/role/status/delete(ids=${item.id})}">删除</a>
                     </td>
                 </tr>
-                <tr th:if="${list.isEmpty()}">
-                    <td class="timo-table-null" colspan="9">没有找到匹配的记录</td>
-                </tr>
                 </tbody>
             </table>
             <div th:replace="/common/module :: page"></div>

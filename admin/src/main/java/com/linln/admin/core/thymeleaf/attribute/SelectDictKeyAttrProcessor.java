@@ -36,7 +36,7 @@ public class SelectDictKeyAttrProcessor extends SelectDictEnumAttrProcessor {
         if(attributeValue.isEmpty() || !elementName.equals("select")) return;
 
         // 获取列表对象，空则不处理
-        Map<String, String> valueList = DictUtil.keyValueList(attributeValue);
+        Map<Long, String> valueList = DictUtil.keyValueList(attributeValue);
         if(valueList != null && valueList.size() > 0) {
             doProcess(context, tag, attributeName, attributeValue, structureHandler, valueList);
         };

@@ -55,25 +55,25 @@ public class SelectListAttrProcessor extends SelectDictEnumAttrProcessor {
         }
 
         // 转换列表对象
-        Map<String, String> valueList = new HashMap<>();
+        Map<Long, String> valueList = new HashMap<>();
         if(expressionResult.getClass().isArray()){
             // 转换数组
             int length = Array.getLength(expressionResult);
             for (int i = 0; i < length; i++) {
                 String value = String.valueOf(Array.get(expressionResult, i));
-                valueList.put(value, value);
+                valueList.put(Long.valueOf(value), value);
             }
         }else if(expressionResult instanceof Collection){
             // 装换Collection集合
             Collection list = (Collection) expressionResult;
             list.forEach(item -> {
-                valueList.put(String.valueOf(item), String.valueOf(item));
+                valueList.put(Long.valueOf(String.valueOf(item)), String.valueOf(item));
             });
         }else if(expressionResult instanceof Map){
             // 装换Map集合
             Map list = (Map) expressionResult;
             list.forEach((key, item) -> {
-                valueList.put(String.valueOf(key), String.valueOf(item));
+                valueList.put(Long.valueOf(String.valueOf(key)), String.valueOf(item));
             });
         }
 

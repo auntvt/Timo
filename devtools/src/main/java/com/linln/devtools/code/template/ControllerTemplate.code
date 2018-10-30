@@ -1,26 +1,4 @@
-package #{path}.controller;
-
-import #{path}.domain.#{obj};
-import #{path}.service.#{obj}Service;
-import #{path}.validator.#{obj}Form;
-import com.linln.admin.core.enums.ResultEnum;
-import com.linln.admin.core.enums.StatusEnum;
-import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.core.utils.TimoExample;
-import com.linln.core.utils.FormBeanUtils;
-import com.linln.core.utils.ResultVoUtil;
-import com.linln.core.vo.ResultVo;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+##[Class:3-8],[index:10-32],[add:34-73],[detail:75-84],[status:86-108]
 
 @Controller
 @RequestMapping("/#{var}")
@@ -41,8 +19,7 @@ public class #{obj}Controller {
             @RequestParam(value="size",defaultValue="10") int pageSize){
 
         // 创建匹配器，进行动态查询匹配
-        ExampleMatcher matcher = ExampleMatcher.matching().
-                withMatcher("title", match -> match.contains());
+        ExampleMatcher matcher = ExampleMatcher.matching()#{matcher};
 
         // 获取#{title}列表
         Example<#{obj}> example = TimoExample.of(#{var}, matcher);
@@ -51,7 +28,7 @@ public class #{obj}Controller {
         // 封装数据
         model.addAttribute("list",list.getContent());
         model.addAttribute("page",list);
-        return "/system/#{var}/index";
+        return "/#{module}/#{var}/index";
     }
 
     /**
@@ -60,7 +37,7 @@ public class #{obj}Controller {
     @GetMapping("/add")
     @RequiresPermissions("/#{var}/add")
     public String toAdd(){
-        return "/system/#{var}/add";
+        return "/#{module}/#{var}/add";
     }
 
     /**
@@ -71,7 +48,7 @@ public class #{obj}Controller {
     public String toEdit(@PathVariable("id") Long id, Model model){
         #{obj} #{var} = #{var}Service.getId(id);
         model.addAttribute("#{var}",#{var});
-        return "/system/#{var}/add";
+        return "/#{module}/#{var}/add";
     }
 
     /**
@@ -88,7 +65,7 @@ public class #{obj}Controller {
         if(#{var}Form.getId() != null){
             #{var} = #{var}Service.getId(#{var}Form.getId());
         }
-        FormBeanUtils.copyProperties(#{var}Form, #{var});
+        FormBeanUtil.copyProperties(#{var}Form, #{var});
 
         // 保存数据
         #{var}Service.save(#{var});
@@ -103,7 +80,7 @@ public class #{obj}Controller {
     public String toDetail(@PathVariable("id") Long id, Model model){
         #{obj} #{var} = #{var}Service.getId(id);
         model.addAttribute("#{var}",#{var});
-        return "/system/#{var}/detail";
+        return "/#{module}/#{var}/detail";
     }
 
     /**

@@ -1,0 +1,13 @@
+##[Class:3-13]
+
+public interface #{obj}Service {
+
+    Page<#{obj}> getPageList(Example<#{obj}> example, Integer pageIndex, Integer pageSize);
+
+    #{obj} getId(Long id);
+
+    #{obj} save(#{obj} #{var});
+
+    @Transactional
+    Integer updateStatus(StatusEnum statusEnum, List<Long> idList);
+}

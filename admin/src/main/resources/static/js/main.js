@@ -226,6 +226,18 @@ layui.use(['element', 'form', 'layer'], function () {
         }
     });
 
+    // 检测列表数据是否为空
+    var timoTable = $(".timo-table tbody");
+    if(timoTable.length > 0){
+        var children = timoTable.children();
+        if(children.length === 0){
+            var length = $(".timo-table thead th").length;
+            var trNullInfo  = "<tr><td class='timo-table-null' colspan='"
+                + length +"'>没有找到匹配的记录</td></tr>";
+            timoTable.append(trNullInfo);
+        }
+    }
+
     // 携带参数跳转
     var paramSkip = function () {
         var getSearch = "";

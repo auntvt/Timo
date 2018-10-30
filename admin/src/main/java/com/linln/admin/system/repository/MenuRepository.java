@@ -25,6 +25,12 @@ public interface MenuRepository extends BaseRepository<Menu, Long> {
     public List<Menu> findByIdInAndStatus(List<Long> ids, Byte status);
 
     /**
+     * 查询菜单URL
+     * @param url id列表
+     */
+    public Menu findByUrlAndStatusIn(String url, Byte[] status);
+
+    /**
      * 根据父ID查找子菜单
      * @param pids pid列表
      */

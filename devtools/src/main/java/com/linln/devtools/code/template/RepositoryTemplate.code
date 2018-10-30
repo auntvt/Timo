@@ -1,0 +1,4 @@
+##[Class:3-4]
+
+public interface #{obj}Repository extends BaseRepository<#{obj}, Long> {
+}

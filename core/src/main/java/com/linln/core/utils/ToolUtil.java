@@ -2,8 +2,11 @@ package com.linln.core.utils;
 
 import org.springframework.util.ResourceUtils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Random;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * 通用方法工具类
@@ -29,17 +32,75 @@ public class ToolUtil {
     }
 
     /**
+     * 首字母转小写
+     */
+    public static String lowerFirst(String word){
+        if(Character.isLowerCase(word.charAt(0)))
+            return word;
+        else
+            return (new StringBuilder()).append(Character.toLowerCase(word.charAt(0))).append(word.substring(1)).toString();
+    }
+
+    /**
+     * 首字母转大写
+     */
+    public static String upperFirst(String word){
+        if(Character.isUpperCase(word.charAt(0)))
+            return word;
+        else
+            return (new StringBuilder()).append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).toString();
+    }
+
+    /**
      * 获取项目根路径
      */
     public static String getProjectPath(){
         try {
-            String path = ResourceUtils.getURL("classpath:").getPath();
-            path = path.replace("/WEB-INF/classes/", "");
-            path = path.replace("/target/classes/", "");
-            path = path.replace("file:/", "");
-            return path;
+            String path = ResourceUtils.getURL("").getPath();
+            File file = new File(path);
+            return file.getAbsolutePath().replaceAll("\\\\","/");
         } catch (FileNotFoundException e) {
             return "";
         }
+    }
+
+    /**
+     * 将枚举转成List集合
+     * @param enumClass 枚举类
+     */
+    public static Map<Long, String> enumToMap(Class<?> enumClass){
+        Map<Long, String> map = new TreeMap<>();
+        try {
+        Object[] objects = enumClass.getEnumConstants();
+        Method getCode = enumClass.getMethod("getCode");
+        Method getMessage = enumClass.getMethod("getMessage");
+        for (Object obj : objects) {
+            Object iCode = getCode.invoke(obj);
+            Object iMessage = getMessage.invoke(obj);
+            map.put(Long.valueOf(String.valueOf(iCode)), String.valueOf(iMessage));
+        }
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) {
+        }
+        return map;
+    }
+
+    /**
+     * 根据枚举code获取枚举对象
+     * @param enumClass 枚举类
+     * @param code code值
+     */
+    public static Object enumCode(Class<?> enumClass, Object code){
+        try {
+            Object[] objects = enumClass.getEnumConstants();
+            Method getCode = enumClass.getMethod("getCode");
+            for (Object obj : objects) {
+                Object iCode = getCode.invoke(obj);
+                if(iCode.equals(code)){
+                    return obj;
+                }
+            }
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+        }
+        return "";
     }
 }

@@ -21,6 +21,8 @@ public interface MenuService {
 
     Menu getId(Long id);
 
+    Menu getUrl(String url);
+
     List<Menu> getList(Sort sort);
 
     Integer getSortMax(Long pid);

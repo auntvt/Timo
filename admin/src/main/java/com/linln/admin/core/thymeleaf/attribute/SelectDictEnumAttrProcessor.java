@@ -11,6 +11,8 @@ import org.thymeleaf.processor.element.IElementTagStructureHandler;
 import org.thymeleaf.standard.expression.*;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,7 +51,7 @@ public class SelectDictEnumAttrProcessor extends AbstractAttributeTagProcessor {
         if(attributeValue.isEmpty() || !elementName.equals("select")) return;
 
         // 获取列表对象，空则不处理
-        Map<String, String> valueList = DictUtil.enumValueList(attributeValue);
+        Map<Long, String> valueList = DictUtil.enumValueList(attributeValue);
         if(valueList != null && valueList.size() > 0) {
             doProcess(context, tag, attributeName, attributeValue, structureHandler, valueList);
         };
@@ -61,11 +63,11 @@ public class SelectDictEnumAttrProcessor extends AbstractAttributeTagProcessor {
             final AttributeName attributeName,
             final String attributeValue,
             final IElementTagStructureHandler structureHandler,
-            Map<String, String> valueList) {
+            Map<Long, String> valueList) {
 
         // 获取默认选中值
         String attributeSelectedValue = tag.getAttributeValue(SELECTED_ATTR_NAME);
-        String selectedValue = null;
+        Object selectedValue = null;
         final IEngineConfiguration configuration = context.getConfiguration();
         if (attributeSelectedValue != null && !attributeSelectedValue.isEmpty()){
             final IStandardExpressionParser expressionParser = StandardExpressions.getExpressionParser(configuration);
@@ -82,15 +84,20 @@ public class SelectDictEnumAttrProcessor extends AbstractAttributeTagProcessor {
             if (expressionResult == NoOpToken.VALUE) {
                 return;
             }
-            selectedValue = (expressionResult == null ? "" : expressionResult.toString());
+            selectedValue = (expressionResult == null ? "" : expressionResult);
         }
 
         // 拼装下拉列表选项
+        List<String> keyList = new ArrayList<>();
+        if (selectedValue instanceof List){
+            ((List) selectedValue).forEach(item -> keyList.add(String.valueOf(item)));
+        }else {
+            keyList.add(selectedValue == null ? "" : selectedValue.toString());
+        }
         StringBuilder optionContent = new StringBuilder();
-        String finalSelectedValue = selectedValue;
         valueList.forEach((key, val) -> {
             optionContent.append("<option value = '").append(key);
-            if(finalSelectedValue != null && finalSelectedValue.equals(key)){
+            if(keyList.contains(String.valueOf(key))){
                 optionContent.append("' ").append("selected='selected");
             }
             optionContent.append("'>").append(val).append("</option>");

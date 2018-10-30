@@ -33,6 +33,11 @@ public enum ResultEnum{
     NO_ADMINROLE_AUTH(500, "不允许操作管理员角色"),
     NO_ADMINROLE_STATUS(501, "不能修改管理员角色状态"),
 
+    /**
+     * 文件操作
+     */
+    
+
     ;
 
     private Integer code;

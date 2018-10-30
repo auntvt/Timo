@@ -2,9 +2,11 @@ package com.linln.admin.system.validator;
 
 import com.linln.admin.system.domain.Dict;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**

@@ -6,11 +6,16 @@
     <div class="timo-detail-page">
         <div class="timo-detail-title">基本信息</div>
         <table class="layui-table timo-detail-table">
+            <colgroup>
+                <col width="100px"><col>
+                <col width="100px"><col>
+            </colgroup>
             <tbody>
+            #{field}
             <tr>
-                <th width='100px'>#{title}编号</th>
+                <th>#{title}编号</th>
                 <td th:text="${#{var}.id}"></td>
-                <th width='100px'>#{title}标题</th>
+                <th>#{title}标题</th>
                 <td th:text="${#{var}.title}"></td>
             </tr>
             <tr>
