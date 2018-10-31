@@ -27,6 +27,8 @@ public interface MenuService {
 
     Integer getSortMax(Long pid);
 
+    List<Menu> getPid(Long pid);
+
     Menu save(Menu menu);
 
     @Transactional

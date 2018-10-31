@@ -2,12 +2,10 @@ package com.linln.devtools.code;
 
 import com.linln.admin.core.constant.AdminConst;
 import com.linln.admin.core.enums.MenuTypeEnum;
-import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.system.controller.MenuController;
 import com.linln.admin.system.controller.RoleController;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.domain.Role;
-import com.linln.admin.system.domain.User;
 import com.linln.admin.system.service.MenuService;
 import com.linln.admin.system.service.RoleService;
 import com.linln.admin.system.validator.MenuForm;
@@ -21,12 +19,11 @@ import com.linln.devtools.code.enums.FieldQuery;
 import com.linln.devtools.code.enums.FieldType;
 import com.linln.devtools.code.enums.FieldVerify;
 import com.linln.devtools.code.template.*;
-import com.linln.devtools.domain.Basic;
+import com.linln.devtools.code.domain.Basic;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 
 /**

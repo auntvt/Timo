@@ -1,7 +1,6 @@
 package com.linln.devtools.code.enums;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author 小懒虫

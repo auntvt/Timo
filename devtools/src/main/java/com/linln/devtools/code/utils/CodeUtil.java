@@ -1,9 +1,5 @@
 package com.linln.devtools.code.utils;
 
-import com.linln.devtools.code.domain.Generate;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 

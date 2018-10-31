@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="pull-right screen-btn-group">
-                        <button class="layui-btn open-popup popup-add" data-title="添加菜单" th:attr="data-url=@{/menu/add}"  data-size="540,515">
+                        <button class="layui-btn open-popup popup-add" data-title="添加菜单" th:attr="data-url=@{/menu/add}"  data-size="540,570">
                             <i class="fa fa-plus"></i> 添加</button>
                         <div class="btn-group">
                             <button class="layui-btn">操作<span class="caret"></span></button>
@@ -82,7 +82,7 @@
                         <td>{{remark}}</td>
                         <td>正常</td>
                         <td>
-                            <a class="open-popup popup-edit" data-title="编辑菜单" th:attr="data-url=@{'/menu/edit/{{id}}'}"  data-size="540,515" href="#">编辑</a>
+                            <a class="open-popup popup-edit" data-title="编辑菜单" th:attr="data-url=@{'/menu/edit/{{id}}'}"  data-size="540,570" href="#">编辑</a>
                             <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/menu/detail/{{id}}'}"  data-size="800,600" href="#">详细</a>
                             <a class="ajax-get popup-delete" th:attr="data-msg='您是否确定删除'" th:href="@{'/menu/status/delete?ids={{id}}'}">删除</a>
                         </td>

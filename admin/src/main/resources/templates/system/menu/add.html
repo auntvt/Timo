@@ -39,12 +39,13 @@
                 <select name="type" mo:dictKey="MENU_TYPE" mo-selected="${menu?.type}" mo-empty="" lay-verify="type"></select>
             </div>
         </div>
-        <!--<div class="layui-form-item">
+        <div class="layui-form-item">
             <label class="layui-form-label">排序</label>
             <div class="layui-input-inline">
-                <input class="layui-input" type="text" name="sort"  placeholder="请输入排序" th:value="${menu?.sort}">
+                <select name="type" mo:list="${sort}" mo-selected="${menu} ? ${menu.sort - 1} : ${sort.size()}" mo-empty="首位" lay-verify="type"></select>
             </div>
-        </div>-->
+            <div class="layui-input-info">（之后）</div>
+        </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">

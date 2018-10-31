@@ -5,7 +5,6 @@ import com.linln.devtools.code.domain.Generate;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.stream.Stream;
 
 /**
  * 标准模板

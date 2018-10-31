@@ -1,6 +1,5 @@
 package com.linln.devtools.code.utils;
 
-import com.linln.admin.core.exception.ResultException;
 import com.linln.core.utils.ToolUtil;
 import com.linln.devtools.code.DefaultValue;
 import com.linln.devtools.code.domain.Generate;

@@ -42,4 +42,11 @@ public interface MenuRepository extends BaseRepository<Menu, Long> {
      */
     @Query("select max(sort) from Menu m where m.pid = ?1")
     public Integer findSortMax(long pid);
+
+    /**
+     * 根据父级菜单ID获取本级全部菜单
+     * @param sort 排序对象
+     * @param pid 父菜单ID
+     */
+    public List<Menu> findByPid(Sort sort, long pid);
 }

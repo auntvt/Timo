@@ -225,6 +225,7 @@ layui.use(['element', 'form', 'layer', 'formSelects'], function () {
             success: function (result) {
                 if(result.code === 200){
                     genDetail(result.data);
+                    basicHistory(basic);
                 }else{
                     layer.msg(result.msg, {offset: '15px', time: 3000, icon: 2});
                 }
@@ -258,5 +259,30 @@ layui.use(['element', 'form', 'layer', 'formSelects'], function () {
             area: ['800px', '540px'],
             content: "<div class='save-detail'>" + panel + "</div>"
         });
+    }
+
+    //记录部分基本参数
+    var local = window.localStorage;
+    function basicHistory(basic){
+        if(window.localStorage){
+            local.setItem("packagePath", basic.packagePath);
+            local.setItem("author", basic.author);
+            local.setItem("genModule", basic.genModule);
+            local.setItem("tablePrefix", basic.tablePrefix);
+        }
+    }
+
+    //还原基本参数
+    if(local.getItem("packagePath")){
+        $("[name='packagePath']").val(local.getItem("packagePath"));
+    }
+    if(local.getItem("author")){
+        $("[name='author']").val(local.getItem("author"));
+    }
+    if(local.getItem("genModule")){
+        $("[name='genModule']").val(local.getItem("genModule"));
+    }
+    if(local.getItem("tablePrefix")){
+        $("[name='tablePrefix']").val(local.getItem("tablePrefix"));
     }
 });

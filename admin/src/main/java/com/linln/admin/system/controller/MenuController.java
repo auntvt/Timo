@@ -25,7 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author 小懒虫
@@ -86,10 +86,22 @@ public class MenuController {
     @GetMapping({"/add", "/add/{pid}"})
     @RequiresPermissions("/menu/add")
     public String toAdd(@PathVariable(value = "pid",required = false) Long pid, Model model){
+        // 父级菜单
         if(pid != null){
             Menu pmenu = menuService.getId(pid);
             model.addAttribute("pmenu",pmenu);
+        }else {
+            pid = (long) 0;
         }
+
+        // 本级排序菜单列表
+        List<Menu> levelMenu = menuService.getPid(pid);
+        Map<Integer, String> sortMap = new TreeMap<>();
+        levelMenu.forEach(menu -> {
+            sortMap.put(menu.getSort(), menu.getTitle());
+        });
+        model.addAttribute("sort", sortMap);
+
         return "/system/menu/add";
     }
 
@@ -107,8 +119,17 @@ public class MenuController {
             newMenu.setTitle("顶级菜单");
             pmenu = newMenu;
         }
-        model.addAttribute("menu",menu);
-        model.addAttribute("pmenu",pmenu);
+
+        // 本级排序菜单列表
+        List<Menu> levelMenu = menuService.getPid(menu.getPid());
+        Map<Integer, String> sortMap = new TreeMap<>();
+        levelMenu.forEach(sortMenu -> {
+            sortMap.put(sortMenu.getSort(), sortMenu.getTitle());
+        });
+
+        model.addAttribute("menu", menu);
+        model.addAttribute("pmenu", pmenu);
+        model.addAttribute("sort", sortMap);
         return "/system/menu/add";
     }
 
@@ -123,11 +144,11 @@ public class MenuController {
     public ResultVo save(@Validated MenuForm menuForm){
         if(menuForm.getId() == null){
             // 添加最后的排序
-            Integer sortMax = menuService.getSortMax(menuForm.getPid());
+            /*Integer sortMax = menuService.getSortMax(menuForm.getPid());
             if(sortMax == null){
                 sortMax = 0;
             }
-            menuForm.setSort(sortMax+1);
+            menuForm.setSort(sortMax+1);*/
 
             // 添加全部上级序号
             if(menuForm.getPid() != 0){
@@ -137,6 +158,11 @@ public class MenuController {
                 menuForm.setPids("[0]");
             }
         }
+
+        // 排序功能
+        Integer sort = menuForm.getSort();
+        sort = sort != null ? sort + 1 : 1;
+        List<Menu> levelMenu = menuService.getPid(menuForm.getPid());
 
         // 将验证的数据复制给实体类
         Menu menu = new Menu();

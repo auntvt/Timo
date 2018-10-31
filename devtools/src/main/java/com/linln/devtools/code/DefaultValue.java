@@ -1,6 +1,7 @@
 package com.linln.devtools.code;
 
 import com.linln.core.utils.ToolUtil;
+import com.linln.devtools.code.domain.Basic;
 import com.linln.devtools.code.domain.Field;
 import com.linln.devtools.code.enums.FieldQuery;
 import com.linln.devtools.code.enums.FieldType;
@@ -22,8 +23,8 @@ public class DefaultValue {
     /**
      * 基本信息
      */
-    public static com.linln.devtools.domain.Basic getBasic(){
-        com.linln.devtools.domain.Basic basic = new com.linln.devtools.domain.Basic();
+    public static Basic getBasic(){
+        Basic basic = new Basic();
         basic.setProjectPath(ToolUtil.getProjectPath() + "/admin/");
         basic.setPackagePath("com.linln.admin");
         basic.setAuthor("小懒虫");

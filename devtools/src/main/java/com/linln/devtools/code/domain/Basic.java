@@ -1,8 +1,6 @@
-package com.linln.devtools.domain;
+package com.linln.devtools.code.domain;
 
 import lombok.Data;
-
-import javax.validation.constraints.NotEmpty;
 
 /**
  * @author 小懒虫

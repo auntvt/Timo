@@ -83,6 +83,16 @@ public class MenuServiceImpl implements MenuService {
     }
 
     /**
+     * 根据父级菜单ID获取本级全部菜单
+     * @param pid 父菜单ID
+     */
+    @Override
+    public List<Menu> getPid(Long pid){
+        Sort sort = new Sort(Sort.Direction.ASC, "sort");
+        return menuRepository.findByPid(sort, pid);
+    }
+
+    /**
      * 保存菜单
      * @param menu 菜单实体类
      */

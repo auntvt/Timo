@@ -21,7 +21,7 @@ public class ToolUtil {
      */
     public static String getRandomString(int length) {
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             // 获取ascii码中的字符 数字48-57 小写65-90 大写97-122
             int range = random.nextInt(75)+48;
@@ -55,13 +55,18 @@ public class ToolUtil {
      * 获取项目根路径
      */
     public static String getProjectPath(){
-        try {
-            String path = ResourceUtils.getURL("").getPath();
-            File file = new File(path);
-            return file.getAbsolutePath().replaceAll("\\\\","/");
-        } catch (FileNotFoundException e) {
-            return "";
+        char[] filePath = ToolUtil.class.getResource("").getPath().toCharArray();
+        char[] projectPath = ToolUtil.class.getResource("/").getPath().toCharArray();
+        StringBuilder path = new StringBuilder();
+        for (int i = 0; i < filePath.length; i++) {
+            if(projectPath.length > i && filePath[i] == projectPath[i]){
+                path.append(filePath[i]);
+            }else {
+                break;
+            }
         }
+        File file = new File(path.toString());
+        return file.getAbsolutePath().replaceAll("\\\\","/");
     }
 
     /**

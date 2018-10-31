@@ -685,6 +685,13 @@ a{
 .timo-compile .layui-input-inline{
 	width: 240px;
 }
+.timo-compile .layui-input-info{
+    float: left;
+    margin-left: 4px;
+    height: 38px;
+    line-height: 38px;
+    color: #747474;
+}
 .timo-compile .layui-form-text{
 	padding-right: 20px;
 }

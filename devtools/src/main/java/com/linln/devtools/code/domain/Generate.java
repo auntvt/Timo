@@ -1,6 +1,5 @@
 package com.linln.devtools.code.domain;
 
-import com.linln.devtools.domain.Basic;
 import lombok.Data;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
  */
 @Data
 public class Generate {
-    private com.linln.devtools.domain.Basic basic = new Basic();
+    private Basic basic = new Basic();
     private List<Field> fields;
     private Template template;
 }

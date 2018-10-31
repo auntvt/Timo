@@ -2,7 +2,6 @@ package com.linln.devtools.code.template;
 
 import com.linln.core.utils.ToolUtil;
 import com.linln.devtools.code.domain.Generate;
-import com.linln.devtools.code.utils.CodeUtil;
 import com.linln.devtools.code.utils.GenerateUtil;
 import com.linln.devtools.code.utils.TemplateUtil;
 
