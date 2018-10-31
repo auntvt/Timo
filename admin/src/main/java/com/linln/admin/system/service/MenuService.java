@@ -27,9 +27,11 @@ public interface MenuService {
 
     Integer getSortMax(Long pid);
 
-    List<Menu> getPid(Long pid);
+    List<Menu> getPid(Long pid, Long notId);
 
     Menu save(Menu menu);
+
+    List<Menu> save(List<Menu> menuList);
 
     @Transactional
     Integer updateStatus(StatusEnum statusEnum, List<Long> idList);

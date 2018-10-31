@@ -113,6 +113,8 @@ public class SelectDictEnumAttrProcessor extends AbstractAttributeTagProcessor {
         // 返回新的HTML节点
         final Set<IPostProcessor> postProcessors = configuration.getPostProcessors(getTemplateMode());
         if (postProcessors.isEmpty()) {
+            structureHandler.removeAttribute(SELECTED_ATTR_NAME);
+            structureHandler.removeAttribute(EMPTY_ATTR_NAME);
             structureHandler.setBody(optionContent, false);
         }
     }

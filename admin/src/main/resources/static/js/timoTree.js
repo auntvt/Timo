@@ -239,6 +239,7 @@
         this.defaults={
             tree: $(".select-tree"),
             rootTree: true,
+            onSelected: function () {}
         }
         this.options=$.extend({},this.defaults,param);
     }
@@ -282,6 +283,7 @@
                         node.val(treeNode.name);
                         node.siblings("[type='hidden']").val(treeNode.id);
                         $(".selectContent").hide();
+                        self.options.onSelected(treeNode.id);
                     }
                 }
             };

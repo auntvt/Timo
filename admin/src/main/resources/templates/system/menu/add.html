@@ -30,7 +30,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">父级菜单</label>
             <div class="layui-input-inline">
-                <input class="layui-input select-tree" th:attr="data-url=@{/menu/list}, data-value=${pmenu?.id}" type="text" name="pid"  placeholder="请输入父级菜单" th:value="${pmenu?.title}">
+                <input class="layui-input select-tree" th:attr="data-url=@{/menu/list}, data-value=${pMenu?.id}" type="text" name="pid"  placeholder="请输入父级菜单" th:value="${pMenu?.title}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -42,7 +42,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">排序</label>
             <div class="layui-input-inline">
-                <select name="type" mo:list="${sort}" mo-selected="${menu} ? ${menu.sort - 1} : ${sort.size()}" mo-empty="首位" lay-verify="type"></select>
+                <select class="select-sort" name="sort"
+                        th:attr="data-url=@{/menu/sortList}, data-id=${menu?.id}, data-sort=${menu?.sort}" lay-verify="sort"></select>
             </div>
             <div class="layui-input-info">（之后）</div>
         </div>
@@ -63,7 +64,43 @@
 <script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.core.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/timoTree.js}"></script>
 <script type="text/javascript">
-    $.fn.selectTree();
+    layui.use(['form'], function () {
+        window.form = layui.form;
+        // 初始化排序下拉选项
+        var pid = $(".select-tree").data('value');
+        if (pid != undefined){
+            sortRender(pid);
+        }
+    });
+
+    // 初始化下拉树
+    $.fn.selectTree({
+        // 选中后事件
+        onSelected: sortRender
+    });
+
+    // 更新渲染排序下拉选项
+    function sortRender(pid) {
+        var sort = $(".select-sort");
+        var id = sort.data('id') ? sort.data('id') : 0;
+        var url = sort.data('url') + "/" + pid + "/" + id;
+        $.get(url, function (result) {
+            var options = '';
+            var sortNum = Object.keys(result).length;
+            if(pid === $(".select-tree").data('value') && sort.data('sort')){
+                sortNum = sort.data('sort') - 1;
+            }
+            result[0] = "首位";
+            for(var key in result){
+                var selected = sortNum == key ? "selected=''" : "";
+                options += "<option value='"+ key +"' " + selected + ">"+ result[key] +"</option>";
+            }
+            sort.html(options);
+            form.render('select');
+        });
+    }
+
+    // 监听变动图标
     $(".icon-input").on("input propertychange", function(){
         $(".icon-show").attr("class", "icon-show "+$(this).val());
     });

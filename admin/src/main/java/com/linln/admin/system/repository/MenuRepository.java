@@ -47,6 +47,7 @@ public interface MenuRepository extends BaseRepository<Menu, Long> {
      * 根据父级菜单ID获取本级全部菜单
      * @param sort 排序对象
      * @param pid 父菜单ID
+     * @param notId 需要排除的菜单ID
      */
-    public List<Menu> findByPid(Sort sort, long pid);
+    public List<Menu> findByPidAndIdNotAndStatusIn(Sort sort, long pid, long notId, Byte[] bytes);
 }

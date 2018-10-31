@@ -85,11 +85,13 @@ public class MenuServiceImpl implements MenuService {
     /**
      * 根据父级菜单ID获取本级全部菜单
      * @param pid 父菜单ID
+     * @param notId 需要排除的菜单ID
      */
     @Override
-    public List<Menu> getPid(Long pid){
+    public List<Menu> getPid(Long pid, Long notId){
         Sort sort = new Sort(Sort.Direction.ASC, "sort");
-        return menuRepository.findByPid(sort, pid);
+        Byte[] bytes = {StatusEnum.OK.getCode(), StatusEnum.FREEZED.getCode()};
+        return menuRepository.findByPidAndIdNotAndStatusIn(sort, pid, notId, bytes);
     }
 
     /**
@@ -99,6 +101,15 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Menu save(Menu menu){
         return menuRepository.save(menu);
+    }
+
+    /**
+     * 保存多个菜单
+     * @param menuList 菜单实体类列表
+     */
+    @Override
+    public List<Menu> save(List<Menu> menuList){
+        return menuRepository.saveAll(menuList);
     }
 
     /**
