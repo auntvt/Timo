@@ -116,7 +116,7 @@ layui.use(['element', 'form', 'layer', 'formSelects'], function () {
             $(field).parent().after(element);
         }
         element.children(".entity-number").click();
-        form.render('select');
+        form.render();
         formSelects.render(random);
         resetNumber();
     });
