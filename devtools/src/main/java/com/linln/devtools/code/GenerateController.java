@@ -114,52 +114,56 @@ public class GenerateController {
                 // 子菜单通用字段
                 menu.setPid(((Menu)menu.getEntity()).getId());
                 menu.setType(MenuTypeEnum.NOT_MENU.getCode());
-            }
 
-            // 生成添加/编辑菜单
-            if(template.isAdd()){
-                url = "/" + entity + "/add";
+                // 生成添加/编辑菜单
+                if(template.isAdd()){
+                    url = "/" + entity + "/add";
+                    if(menuService.getUrl(url) == null){
+                        menu.setTitle("添加");
+                        menu.setUrl(url);
+                        menu.setSort(null);
+                        menuController.save(menu);
+
+                        // 授权给管理员组角色
+                        adminRole.getMenus().add((Menu) menu.getEntity());
+                    }
+                    url = "/" + entity + "/edit";
+                    if(menuService.getUrl(url) == null){
+                        menu.setTitle("编辑");
+                        menu.setUrl(url);
+                        menu.setSort(null);
+                        menuController.save(menu);
+
+                        // 授权给管理员组角色
+                        adminRole.getMenus().add((Menu) menu.getEntity());
+                    }
+                }
+
+                // 生成详细菜单
+                if(template.isDetail()){
+                    url = "/" + entity + "/detail";
+                    if(menuService.getUrl(url) == null){
+                        menu.setTitle("详细");
+                        menu.setUrl(url);
+                        menu.setSort(null);
+                        menuController.save(menu);
+
+                        // 授权给管理员组角色
+                        adminRole.getMenus().add((Menu) menu.getEntity());
+                    }
+                }
+
+                // 生成改变状态菜单
+                url = "/" + entity + "/status";
                 if(menuService.getUrl(url) == null){
-                    menu.setTitle("添加");
+                    menu.setTitle("改变状态");
                     menu.setUrl(url);
+                    menu.setSort(null);
                     menuController.save(menu);
 
                     // 授权给管理员组角色
                     adminRole.getMenus().add((Menu) menu.getEntity());
                 }
-                url = "/" + entity + "/edit";
-                if(menuService.getUrl(url) == null){
-                    menu.setTitle("编辑");
-                    menu.setUrl(url);
-                    menuController.save(menu);
-
-                    // 授权给管理员组角色
-                    adminRole.getMenus().add((Menu) menu.getEntity());
-                }
-            }
-
-            // 生成详细菜单
-            if(template.isDetail()){
-                url = "/" + entity + "/detail";
-                if(menuService.getUrl(url) == null){
-                    menu.setTitle("详细");
-                    menu.setUrl(url);
-                    menuController.save(menu);
-
-                    // 授权给管理员组角色
-                    adminRole.getMenus().add((Menu) menu.getEntity());
-                }
-            }
-
-            // 生成改变状态菜单
-            url = "/" + entity + "/status";
-            if(menuService.getUrl(url) == null){
-                menu.setTitle("改变状态");
-                menu.setUrl(url);
-                menuController.save(menu);
-
-                // 授权给管理员组角色
-                adminRole.getMenus().add((Menu) menu.getEntity());
             }
 
             // 保存管理员组角色

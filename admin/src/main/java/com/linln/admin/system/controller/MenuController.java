@@ -144,13 +144,12 @@ public class MenuController {
     @ResponseBody
     @ActionLog(name = "菜单管理", message = "菜单：${title}", action = SaveAction.class)
     public ResultVo save(@Validated MenuForm menuForm) {
-        if (menuForm.getId() == null) {
-            // 添加最后的排序
-            /*Integer sortMax = menuService.getSortMax(menuForm.getPid());
-            if(sortMax == null){
-                sortMax = 0;
+         if (menuForm.getId() == null) {
+            // 排序为空时，添加到最后
+            if(menuForm.getSort() == null){
+                Integer sortMax = menuService.getSortMax(menuForm.getPid());
+                menuForm.setSort(sortMax !=null ? sortMax - 1 : 0);
             }
-            menuForm.setSort(sortMax+1);*/
 
             // 添加全部上级序号
             if (menuForm.getPid() != 0) {
