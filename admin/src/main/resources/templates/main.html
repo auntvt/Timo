@@ -49,7 +49,7 @@
   <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       <div class="layui-side-user">
-        <img class="layui-side-user-avatar" th:src="@{/images/user.jpeg}" alt="头像">
+        <img class="layui-side-user-avatar" th:src="@{${user.picture}}" alt="头像">
         <div>
           <p class="layui-side-user-name" th:text="${user.nickname}">TIMO</p>
           <p class="layui-side-user-designation">在线</p>

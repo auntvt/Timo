@@ -7,13 +7,16 @@ import com.linln.admin.core.enums.UserIsRoleEnum;
 import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.core.log.action.UserAction;
 import com.linln.admin.core.log.annotation.ActionLog;
+import com.linln.admin.system.domain.File;
 import com.linln.admin.system.validator.UserForm;
 import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.domain.User;
 import com.linln.admin.system.service.UserService;
+import com.linln.core.enums.TimoResultEnum;
 import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
+import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.vo.ResultVo;
 import com.linln.core.wraps.URL;
 import org.apache.shiro.SecurityUtils;
@@ -27,7 +30,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +54,6 @@ public class MainController {
     @RequiresPermissions("/index")
     public String main(Model model){
         User User = ShiroUtil.getSubject();
-
         // 封装菜单树形数据
         Map<Long,Menu> keyMenu = new HashMap<>();
         User.getRoles().forEach(role -> {
@@ -85,6 +89,25 @@ public class MainController {
         User user = ShiroUtil.getSubject();
         model.addAttribute("user", user);
         return "/system/main/user_info";
+    }
+
+    /**
+     * 修改用户头像
+     */
+    @PostMapping("/user_picture")
+    @RequiresPermissions("/index")
+    @ResponseBody
+    public ResultVo userPicture(@RequestParam("picture") MultipartFile picture){
+        FileController fileController = SpringContextUtil.getBean(FileController.class);
+        ResultVo imageResult = fileController.uploadImage(picture);
+        if(imageResult.getCode().equals(TimoResultEnum.SUCCESS.getCode())){
+            User subject = ShiroUtil.getSubject();
+            subject.setPicture(((File) imageResult.getData()).getPath());
+            userService.save(subject);
+            return ResultVoUtil.SAVE_SUCCESS;
+        }else {
+            return imageResult;
+        }
     }
 
     /**

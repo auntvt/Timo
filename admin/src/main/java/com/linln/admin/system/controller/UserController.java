@@ -108,6 +108,12 @@ public class UserController {
 
         // 验证数据是否合格
         if (userForm.getId() == null) {
+            // 判断账号是否重复
+            User soleUser = userService.getByName(userForm.getUsername(), StatusEnum.FREEZED.getCode());
+            if (soleUser != null) {
+                throw new ResultException(ResultEnum.USER_EXIST);
+            }
+
             // 判断密码是否为空
             if (userForm.getPassword().isEmpty() || "".equals(userForm.getPassword().trim())) {
                 throw new ResultException(ResultEnum.USER_PWD_NULL);
@@ -124,11 +130,8 @@ public class UserController {
             userForm.setPassword(encrypt);
             userForm.setSalt(salt);
 
-            // 判断账号是否重复
-            User soleUser = userService.getByName(userForm.getUsername(), StatusEnum.FREEZED.getCode());
-            if (soleUser != null) {
-                throw new ResultException(ResultEnum.USER_EXIST);
-            }
+            // 设置默认头像
+            userForm.setPicture("/images/user.jpg");
         }
 
         // 将验证的数据复制给实体类

@@ -16,6 +16,8 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * 封装Example对象，拦截部分不允许的搜索规则
  * #1：不允许搜索状态为删除的数据
+ * @author 小懒虫
+ * @date 2018/11/4
  */
 public class TimoExample {
 

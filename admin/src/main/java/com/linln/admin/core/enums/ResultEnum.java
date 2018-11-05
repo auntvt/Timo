@@ -36,7 +36,8 @@ public enum ResultEnum{
     /**
      * 文件操作
      */
-    
+    NO_FILE_NULL(401, "文件不能为空"),
+    NO_FILE_TYPE(402, "不支持该文件类型"),
 
     ;
 

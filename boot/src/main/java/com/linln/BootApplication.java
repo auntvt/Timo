@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  * @date 2018/8/14
  */
 @SpringBootApplication
-@EnableJpaAuditing                  // 使用jpa自动赋值
+@EnableJpaAuditing // 使用jpa自动赋值
 public class BootApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
