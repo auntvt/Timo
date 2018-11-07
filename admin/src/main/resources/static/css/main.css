@@ -209,6 +209,7 @@ a{
     position: absolute;
     right: 14px;
     bottom: 10px;
+	display: none;
 }
 .user-info-page .canvas-group .layui-btn-primary:hover{
     opacity: 1;

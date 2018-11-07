@@ -7,6 +7,7 @@ import com.linln.admin.core.enums.UserIsRoleEnum;
 import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.core.log.action.UserAction;
 import com.linln.admin.core.log.annotation.ActionLog;
+import com.linln.admin.core.utils.EhCacheUtil;
 import com.linln.admin.system.domain.File;
 import com.linln.admin.system.validator.UserForm;
 import com.linln.admin.core.shiro.ShiroUtil;
@@ -19,6 +20,8 @@ import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.vo.ResultVo;
 import com.linln.core.wraps.URL;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.Element;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -99,7 +102,7 @@ public class MainController {
     @ResponseBody
     public ResultVo userPicture(@RequestParam("picture") MultipartFile picture){
         FileController fileController = SpringContextUtil.getBean(FileController.class);
-        ResultVo imageResult = fileController.uploadImage(picture);
+        ResultVo imageResult = fileController.uploadPicture(picture);
         if(imageResult.getCode().equals(TimoResultEnum.SUCCESS.getCode())){
             User subject = ShiroUtil.getSubject();
             subject.setPicture(((File) imageResult.getData()).getPath());
@@ -216,6 +219,8 @@ public class MainController {
             // 判断是否拥有后台角色
             User user = ShiroUtil.getSubject();
             if(user.getIsRole().equals(UserIsRoleEnum.YES.getCode())){
+                // 设置超时时间
+                SecurityUtils.getSubject().getSession().setTimeout(5000L);
                 return ResultVoUtil.success("登录成功",new URL("/"));
             }else {
                 return ResultVoUtil.error("您不是后台管理员！");

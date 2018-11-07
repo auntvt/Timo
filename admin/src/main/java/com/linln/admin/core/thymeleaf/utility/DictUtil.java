@@ -1,10 +1,13 @@
 package com.linln.admin.core.thymeleaf.utility;
 
 import com.linln.admin.core.enums.DictTypeEnum;
+import com.linln.admin.core.utils.EhCacheUtil;
 import com.linln.admin.system.domain.Dict;
 import com.linln.admin.system.service.DictService;
 import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.utils.ToolUtil;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.Element;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +18,8 @@ import java.util.Map;
  * @date 2018/8/14
  */
 public class DictUtil {
-    // 缓存字典数据
-    private static Map<String, String> dictValues = new HashMap<>();
-    private static Map<String, Map<Long, String>> dictKeyValues = new HashMap<>();
-    private static Map<String, Map<Long, String>> dictEnums = new HashMap<>();
+
+    private static Cache dictCache = EhCacheUtil.getDictCache();
 
     /**
      * 获取字典值
@@ -26,14 +27,15 @@ public class DictUtil {
      */
     public static String value(String label){
         String value = "";
-        if(dictValues.containsKey(label)){
-            value = dictValues.get(label);
+        Element dictEle = dictCache.get(label);
+        if(dictEle != null){
+            value = String.valueOf(dictEle.getObjectValue());
         }else {
             DictService dictService = SpringContextUtil.getBean(DictService.class);
             Dict dict = dictService.getName(label);
             if(dict != null){
                 value = dict.getValue();
-                dictValues.put(dict.getName(), dict.getValue());
+                dictCache.put(new Element(dict.getName(), dict.getValue()));
             }
         }
         return value;
@@ -45,21 +47,21 @@ public class DictUtil {
      */
     public static Map<Long, String> keyValueList(String label){
         Map<Long, String> value = null;
-        if(dictKeyValues.containsKey(label)){
-            value = dictKeyValues.get(label);
+        Element dictEle = dictCache.get(label);
+        if(dictEle != null){
+            value = (Map<Long, String>) dictEle.getObjectValue();
         }else {
             DictService dictService = SpringContextUtil.getBean(DictService.class);
             Dict dict = dictService.getName(label);
             if(dict != null && dict.getType().equals(DictTypeEnum.KEY_VALUE.getCode())){
                 String dictValue = dict.getValue();
                 String[] outerSplit = dictValue.split("\\r\\n");
-                Map<Long, String> map = new HashMap<>();
+                value = new HashMap<>();
                 for (String osp : outerSplit) {
                     String[] split = osp.split(":");
-                    map.put(Long.valueOf(split[0]), split[1]);
+                    value.put(Long.valueOf(split[0]), split[1]);
                 }
-                dictKeyValues.put(dict.getName(), map);
-                value = dictKeyValues.get(label);
+                dictCache.put(new Element(dict.getName(), value));
             }
         }
         return value;
@@ -85,15 +87,16 @@ public class DictUtil {
      */
     public static Map<Long, String> enumValueList(String label){
         Map<Long, String> value = null;
-        if(dictEnums.containsKey(label)){
-            value = dictEnums.get(label);
+        Element dictEle = dictCache.get(label);
+        if(dictEle != null){
+            value = (Map<Long, String>) dictEle.getObjectValue();
         }else try {
             DictService dictService = SpringContextUtil.getBean(DictService.class);
             Dict dict = dictService.getName(label);
             if(dict != null && dict.getType().equals(DictTypeEnum.ENUM_VALUE.getCode())){
                 Class<?> enumClass = Class.forName(dict.getValue());
-                dictEnums.put(dict.getName(), ToolUtil.enumToMap(enumClass));
-                value = dictEnums.get(label);
+                value = ToolUtil.enumToMap(enumClass);
+                dictCache.put(new Element(dict.getName(), value));
             }
         } catch (ClassNotFoundException ignored) {
         }
@@ -128,10 +131,9 @@ public class DictUtil {
      * @param label 字典标识
      */
     public static void clearCache(String label){
-        if (dictValues.containsKey(label)){
-            dictValues.remove(label);
-        }else if (dictKeyValues.containsKey(label)){
-            dictKeyValues.remove(label);
-        }else dictEnums.remove(label);
+        Element dictEle = dictCache.get(label);
+        if (dictEle != null){
+            dictCache.remove(label);
+        }
     }
 }

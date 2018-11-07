@@ -146,9 +146,9 @@
             ,bindAction: ".upload-btn"
             // 选择文件回调
             ,choose: function(obj){
-                var files = obj.pushFile();
                 obj.preview(function(index, file, result){
                     panel.show();
+                    $(".canvas-group").show();
                     image.src = result;
                     image.onload = function(){
                         bgImg.attr("src", result);
@@ -180,6 +180,7 @@
             ,done: function(res){
                 if(res.code == 200){
                     panel.hide();
+                    $(".canvas-group").hide();
                     layer.msg("修改头像成功", {offset: '15px', time: 3000, icon: 1});
                     $(".user-avatar").attr("src", canvas[0].toDataURL());
                 }else {
@@ -188,9 +189,10 @@
             }
         });
 
-        // 关闭裁切面板
+        // 关闭裁切面板及清空文件
         $(".upload-close").on("click", function () {
             panel.hide();
+            $(".canvas-group").hide();
         });
     });
 </script>

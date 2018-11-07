@@ -18,11 +18,8 @@ public class IndexController {
      */
     @GetMapping("/index")
     @RequiresPermissions("/index")
-    public String index(Model model, String qq){
-        model.addAttribute("qq", "<option value ='volvo'><script>alert(111)</script>Volvo</option>");
-        model.addAttribute("one", 1);
-        int[] list = {111,222,333};
-        model.addAttribute("list", list);
+    public String index(Model model){
+
         return "/system/main/index";
     }
 }

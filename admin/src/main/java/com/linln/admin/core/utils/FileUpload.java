@@ -1,5 +1,6 @@
 package com.linln.admin.core.utils;
 
+import com.linln.admin.core.config.properties.ProjectProperties;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.system.domain.File;
@@ -56,24 +57,16 @@ public class FileUpload {
      * 获取文件上传保存路径
      */
     public static String getUploadPath(){
-        String filePath = SpringContextUtil.getEnvironmentProperty("project.file-upload-path");
-        if (filePath == null){
-            return ToolUtil.getProjectPath() + "/upload/";
-        }else if(!filePath.endsWith("/")){
-            filePath = filePath + "/";
-        }
-        return filePath;
+        ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
+        return properties.getFileUploadPath();
     }
 
     /**
      * 获取文件上传目录的静态资源路径
      */
     public static String getPathPattern(){
-        String pathPattern = SpringContextUtil.getEnvironmentProperty("project.static-path-pattern");
-        if (pathPattern == null){
-            pathPattern = "/upload/**";
-        }
-        return pathPattern;
+        ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
+        return properties.getStaticPathPattern();
     }
 
     /**
@@ -89,7 +82,7 @@ public class FileUpload {
      */
     public static String genDateMkdir(String format){
         SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(new Date()) + "/";
+        return "/" + sdf.format(new Date()) + "/";
     }
 
     /**
@@ -123,7 +116,7 @@ public class FileUpload {
         file.setMd5(MD5Bi.toString(16));
         file.setSha1(SHA1Bi.toString(16));
         // 重新设置File对象的路径
-        file.setPath(getPathPattern().replace("*", "") + file.getPath());
+        file.setPath(getPathPattern().replace("/**", "") + file.getPath());
     }
 
     /**

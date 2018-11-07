@@ -2,7 +2,8 @@ package com.linln.admin.core.config;
 
 
 import com.linln.admin.core.shiro.AuthRealm;
-import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+import net.sf.ehcache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -74,12 +75,24 @@ public class ShiroConfig {
         return securityManager;
     }
 
+    /**
+     * 自定义的Realm
+     */
     @Bean
-    public AuthRealm getRealm(){
+    public AuthRealm getRealm(EhCacheManager ehCacheManager){
         AuthRealm authRealm = new AuthRealm();
-        // 开启内存缓存
-        authRealm.setCacheManager(new MemoryConstrainedCacheManager());
+        authRealm.setCacheManager(ehCacheManager);
         return authRealm;
+    }
+
+    /**
+     * 缓存管理器-使用Ehcache实现缓存
+     */
+    @Bean
+    public EhCacheManager ehCacheManager(CacheManager cacheManager){
+        EhCacheManager ehCacheManager = new EhCacheManager();
+        ehCacheManager.setCacheManager(cacheManager);
+        return ehCacheManager;
     }
 
     /**
@@ -93,7 +106,7 @@ public class ShiroConfig {
     }
 
     /**
-     * rememberMe管理器, cipherKey生成见{@code Base64Test.java}
+     * rememberMe管理器
      */
     @Bean
     public CookieRememberMeManager rememberMeManager(SimpleCookie rememberMeCookie) {
