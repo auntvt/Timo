@@ -147,7 +147,7 @@ public class UserController {
             if (user != null && !user.getId().equals(userForm.getId())) {
                 throw new ResultException(ResultEnum.USER_EXIST);
             }
-            String[] ignore = {"password", "salt", "roles", "isRole"};
+            String[] ignore = {"password", "salt", "picture", "roles", "isRole"};
             FormBeanUtil.copyProperties(userForm, user, ignore);
         } else {
             FormBeanUtil.copyProperties(userForm, user);
