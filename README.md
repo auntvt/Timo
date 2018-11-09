@@ -5,7 +5,7 @@ TIMO后台管理系统，基于SpringBoot 2 + jpa + thymeleaf + shiro 开发的�
 
 #### 技术选型
 
-- 后端技术：SpringBoot + Jpa + Thymeleaf + Shiro 
+- 后端技术：SpringBoot + Spring Data Jpa + Thymeleaf + Shiro + EhCache
 
 
 - 前端技术：Layui + Jquery  + zTree + Font-awesome
@@ -26,15 +26,15 @@ TIMO后台管理系统，基于SpringBoot 2 + jpa + thymeleaf + shiro 开发的�
 │			└─system----------------系统模板目录
 │
 ├─boot		--引导模块
-|	|
-|	├─java
-|	|	└─com.linln.BootApplication----------------启动项目入口
-|	|
-|	└─resources
-|		└─application.properties----------------项目配置文件
-|	
+│	│
+│	├─java
+│	│	└─com.linln.BootApplication----------------启动项目入口
+│	│
+│	└─resources
+│		└─application.properties----------------项目配置文件
+│	
 ├─core		--核心模块
-|	
+│	
 └─devtools	--开发中心模块
 ```
 
@@ -63,8 +63,9 @@ TIMO后台管理系统，基于SpringBoot 2 + jpa + thymeleaf + shiro 开发的�
 
 #### 使用说明
 
-1. 文档：doc/使用文档.docx
-2. SQL文件：doc/timo.sql
+1. 使用文档：doc/使用文档.docx（编写中~）
+2. 开发手册：doc/开发手册.docx（编写中~）
+3. SQL文件：doc/timo.sql（经常忘记同步！）
 
 #### 预览图
 
