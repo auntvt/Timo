@@ -1,7 +1,7 @@
 # Timo
 
 #### 项目介绍
-TIMO后台管理系统，基于SpringBoot 2 + jpa + thymeleaf + shiro 开发的通用型后台管理，采用分模块的方式便于开发和维护，目前已开发的功能：权限管理、字典管理、日志记录、代码生成功能，为快速开发后台管理提供解决方案！
+TIMO后台管理系统，基于SpringBoot 2 + jpa + thymeleaf + shiro 开发的通用型后台管理，采用分模块的方式便于开发和维护，目前已开发的功能：权限管理、字典管理、日志记录、文件上传、代码生成功能，为快速开发后台管理提供解决方案！
 
 #### 技术选型
 
@@ -64,7 +64,7 @@ TIMO后台管理系统，基于SpringBoot 2 + jpa + thymeleaf + shiro 开发的�
 #### 使用说明
 
 1. 使用文档：doc/使用文档.docx（编写中~）
-2. 开发手册：doc/开发手册.docx（编写中~）
+2. 开发手册：[TIMO开发文档.看云](https://www.kancloud.cn/timo/timo-doc)（编写中~）
 3. SQL文件：doc/timo.sql（经常忘记同步！）
 
 #### 预览图

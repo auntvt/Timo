@@ -28,15 +28,14 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +44,7 @@ import java.util.Map;
  * @date 2018/8/14
  */
 @Controller
-public class MainController {
+public class MainController implements ErrorController {
 
     @Autowired
     private UserService userService;
@@ -243,9 +242,31 @@ public class MainController {
      * 权限不足页面
      */
     @GetMapping("/noAuth")
-    @ResponseBody
     public String noAuth(){
-        return "您的权限不足，无法访问本页面";
+        return "/system/main/no_auth";
     }
 
+    /**
+     * 自定义错误页面
+     */
+    @Override
+    public String getErrorPath() {
+        return "/error";
+    }
+
+    /**
+     * 处理错误页面
+     */
+    @RequestMapping("/error")
+    public String handleError(Model model, HttpServletRequest request){
+        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+        String errorMsg = "好像出错了呢！";
+        if(statusCode == 404){
+            errorMsg="页面未找到！抱歉，页面好像去火星了~";
+        }
+
+        model.addAttribute("statusCode", statusCode);
+        model.addAttribute("msg", errorMsg);
+        return "/system/main/error";
+    }
 }
