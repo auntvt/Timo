@@ -91,6 +91,21 @@ layui.use(['element', 'form', 'layer'], function () {
         location.reload();
     });
 
+    /* AJAX请求默认选项，处理连接超时问题 */
+    $.ajaxSetup({
+        complete: function(xhr, status) {
+            if(xhr.status == 401) {
+                layer.confirm('session连接超时，是否重新登录？', {
+                    btn: ['是','否']
+                }, function(){
+                    if (window.parent.window != window) {
+                        window.top.location = window.location.pathname + '/login';
+                    }
+                });
+            }
+        }
+    });
+
     /*  漂浮消息 */
     $.Messager = function (result) {
         if (result.code === 200) {

@@ -67,6 +67,11 @@ TIMO后台管理系统，基于SpringBoot 2 + jpa + thymeleaf + shiro 开发的�
 2. 开发手册：[TIMO开发文档.看云](https://www.kancloud.cn/timo/timo-doc)（编写中~）
 3. SQL文件：doc/timo.sql（经常忘记同步！）
 
+#### 更新记录
+
+- 2018-11-13更新
+  修复session超时问题
+
 #### 预览图
 
 ![项目结构图](./doc/images/项目结构图.jpg)

@@ -2,30 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
     <title>TIMO登录</title>
-  </head>
-  <body class="layui-layout-login">
-      <div class="login-bg">
-        <div class="cover"></div>
-      </div>
-      <div class="login-content">
-        <h1 class="login-box-title"><i class="fa fa-fw fa-user"></i>登录</h1>
-        <form class="layui-form" th:action="@{/login}" method="post">
-          <div class="layui-form-item">
+</head>
+<body class="layui-layout-login">
+<div class="login-bg">
+    <div class="cover"></div>
+</div>
+<div class="login-content">
+    <h1 class="login-box-title"><i class="fa fa-fw fa-user"></i>登录</h1>
+    <form class="layui-form" th:action="@{/login}" method="post">
+        <div class="layui-form-item">
             <label class="layui-icon layui-icon-username" for="username"></label>
-            <input class="layui-input" type="text" name="username" id="username" placeholder="用户名" >
-          </div>
-          <div class="layui-form-item">
+            <input class="layui-input" type="text" name="username" id="username" placeholder="用户名">
+        </div>
+        <div class="layui-form-item">
             <label class="layui-icon layui-icon-password" for="password"></label>
-            <input class="layui-input" type="password" name="password" id="password" placeholder="密码" >
-          </div>
-          <div class="layui-form-item">
+            <input class="layui-input" type="password" name="password" id="password" placeholder="密码">
+        </div>
+        <div class="layui-form-item">
             <input type="checkbox" name="rememberMe" title="记住我" lay-skin="primary">
             <a class="layui-layout-right forget-password" href="javascript:alert('请联系超级管理员！')">忘记密码?</a>
-          </div>
-          <button type="submit" class="layui-btn layui-btn-fluid ajax-submit"><i class="fa fa-sign-in fa-lg fa-fw"></i> 登录</button>
-        </form>
-      </div>
-      <script th:replace="/common/template :: script"></script>
-  </body>
+        </div>
+        <button type="submit" class="layui-btn layui-btn-fluid ajax-submit"><i class="fa fa-sign-in fa-lg fa-fw"></i> 登录
+        </button>
+    </form>
+</div>
+<script th:replace="/common/template :: script"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        if (window.parent.window != window) {
+            window.top.location = window.location.pathname + "/login";
+        }
+    }
+</script>
+</body>
 </html>
 

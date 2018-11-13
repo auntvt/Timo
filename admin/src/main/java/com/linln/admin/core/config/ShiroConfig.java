@@ -1,7 +1,9 @@
 package com.linln.admin.core.config;
 
 
+import com.linln.admin.core.config.properties.ProjectProperties;
 import com.linln.admin.core.shiro.AuthRealm;
+import com.linln.admin.core.shiro.UserAuthFilter;
 import net.sf.ehcache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -14,6 +16,8 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -29,11 +33,11 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         /**
-         * 覆盖默认的user拦截器，实现动态权限拦截
+         * 添加自定义拦截器，重写user认证方式，处理session超时问题
          */
-        /*HashMap<String, Filter> myFilters = new HashMap<>();
-        myFilters.put("timo_user", new AuthFilter());
-        shiroFilterFactoryBean.setFilters(myFilters);*/
+        HashMap<String, Filter> myFilters = new HashMap<>();
+        myFilters.put("userAuth", new UserAuthFilter());
+        shiroFilterFactoryBean.setFilters(myFilters);
 
         /**
          *  过滤规则（注意优先级）
@@ -52,7 +56,7 @@ public class ShiroConfig {
         filterMap.put("/images/**","anon");
         filterMap.put("/lib/**","anon");
         filterMap.put("/favicon.ico","anon");
-        filterMap.put("/**","user");
+        filterMap.put("/**","userAuth");
 
         // 设置过滤规则
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
@@ -96,11 +100,17 @@ public class ShiroConfig {
     }
 
     /**
-     * 去掉登录页面地址栏jsessionid
+     * session管理器
      */
     @Bean
-    public DefaultWebSessionManager getDefaultWebSessionManager(){
+    public DefaultWebSessionManager getDefaultWebSessionManager(EhCacheManager cacheManager, ProjectProperties properties){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setCacheManager(cacheManager);
+        sessionManager.setGlobalSessionTimeout(properties.getGlobalSessionTimeout() * 1000);
+        sessionManager.setSessionValidationInterval(properties.getSessionValidationInterval() * 1000);
+        sessionManager.setDeleteInvalidSessions(true);
+        sessionManager.validateSessions();
+        // 去掉登录页面地址栏jsessionid
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         return sessionManager;
     }
@@ -111,7 +121,7 @@ public class ShiroConfig {
     @Bean
     public CookieRememberMeManager rememberMeManager(SimpleCookie rememberMeCookie) {
         CookieRememberMeManager manager = new CookieRememberMeManager();
-        manager.setCipherKey(Base64.decode("Z3VucwAAAAAAAAAAAAAAAA=="));
+        manager.setCipherKey(Base64.decode("WcfHGU25gNnTxTlmJMeSpw=="));
         manager.setCookie(rememberMeCookie);
         return manager;
     }
@@ -120,10 +130,11 @@ public class ShiroConfig {
      * 创建一个简单的Cookie对象
      */
     @Bean
-    public SimpleCookie rememberMeCookie() {
+    public SimpleCookie rememberMeCookie(ProjectProperties properties) {
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         simpleCookie.setHttpOnly(true);
-        simpleCookie.setMaxAge(7 * 24 * 60 * 60);   //7天
+        // cookie记住登录信息时间，默认7天
+        simpleCookie.setMaxAge(properties.getRememberMeTimeout() * 24 * 60 * 60);   //7天
         return simpleCookie;
     }
 

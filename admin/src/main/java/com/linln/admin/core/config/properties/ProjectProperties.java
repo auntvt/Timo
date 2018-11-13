@@ -14,8 +14,16 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "project")
 public class ProjectProperties {
+    // 上传文件路径
     private String fileUploadPath;
+    // 上传文件静态访问路径
     private String staticPathPattern = "/upload/";
+    // cookie记住登录信息时间，默认7天
+    private Integer rememberMeTimeout = 7;
+    // Session会话超时时间，默认30分钟
+    private Integer globalSessionTimeout = 1800;
+    // Session会话检测间隔时间，默认15分钟
+    private Integer sessionValidationInterval = 900;
 
     public String getFileUploadPath() {
         if(fileUploadPath == null){
