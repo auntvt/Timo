@@ -18,6 +18,7 @@ public enum ResultEnum{
     USER_INEQUALITY(403, "两次密码不一致"),
     USER_OLD_PWD_ERROR(404, "原来密码不正确"),
     USER_NAME_PWD_NULL(405, "用户名和密码不能为空"),
+    USER_CAPTCHA_ERROR(406, "验证码错误"),
 
     /**
      * 非法操作

@@ -3,11 +3,7 @@ package com.linln.admin.system.controller;
 import com.linln.admin.core.enums.MenuTypeEnum;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
-import com.linln.admin.core.enums.UserIsRoleEnum;
 import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.core.log.action.UserAction;
-import com.linln.admin.core.log.annotation.ActionLog;
-import com.linln.admin.core.utils.EhCacheUtil;
 import com.linln.admin.system.domain.File;
 import com.linln.admin.system.validator.UserForm;
 import com.linln.admin.core.shiro.ShiroUtil;
@@ -20,22 +16,14 @@ import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.vo.ResultVo;
 import com.linln.core.wraps.URL;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +32,7 @@ import java.util.Map;
  * @date 2018/8/14
  */
 @Controller
-public class MainController implements ErrorController {
+public class MainController{
 
     @Autowired
     private UserService userService;
@@ -71,7 +59,9 @@ public class MainController implements ErrorController {
                 if(keyMenu.get(menu.getPid()) != null){
                     keyMenu.get(menu.getPid()).getChildren().put(Long.valueOf(menu.getSort()), menu);
                 }else{
-                    treeMenu.put(Long.valueOf(menu.getSort()), menu);
+                    if(menu.getType().equals(MenuTypeEnum.TOP_LEVEL.getCode())){
+                        treeMenu.put(Long.valueOf(menu.getSort()), menu);
+                    }
                 }
             }
         });
@@ -79,6 +69,16 @@ public class MainController implements ErrorController {
         model.addAttribute("user",User);
         model.addAttribute("treeMenu",treeMenu);
         return "/main";
+    }
+
+    /**
+     * 主页
+     */
+    @GetMapping("/index")
+    @RequiresPermissions("/index")
+    public String index(Model model){
+
+        return "/system/main/index";
     }
 
 
@@ -177,96 +177,5 @@ public class MainController implements ErrorController {
         // 保存数据
         userService.save(newPwdUser);
         return ResultVoUtil.success("修改成功");
-    }
-
-    /**
-     * 跳转到登录页面
-     */
-    @GetMapping("/login")
-    public String toLogin(){
-        return "/login";
-    }
-
-    /**
-     * 实现登录
-     */
-    @PostMapping("/login")
-    @ResponseBody
-    @ActionLog(key = UserAction.USER_LOGIN, action = UserAction.class)
-    public ResultVo login(String username, String password, String rememberMe){
-        // 判断账号密码是否为空
-        if(username.isEmpty() || "".equals(username.trim()) ||
-                password.isEmpty() || "".equals(password.trim())){
-            throw new ResultException(ResultEnum.USER_NAME_PWD_NULL);
-        }
-
-        // 1.获取Subject主体对象
-        Subject subject = SecurityUtils.getSubject();
-
-        // 2.封装用户数据
-        UsernamePasswordToken token = new UsernamePasswordToken( username, password );
-
-        // 3.执行登录，进入自定义Realm类中
-        try {
-            // 判断是否自动登录
-            if (rememberMe != null){
-                token.setRememberMe(true);
-            }else{
-                token.setRememberMe(false);
-            }
-            subject.login(token);
-            // 判断是否拥有后台角色
-            User user = ShiroUtil.getSubject();
-            if(user.getIsRole().equals(UserIsRoleEnum.YES.getCode())){
-                // 设置超时时间
-                SecurityUtils.getSubject().getSession().setTimeout(5000L);
-                return ResultVoUtil.success("登录成功",new URL("/"));
-            }else {
-                return ResultVoUtil.error("您不是后台管理员！");
-            }
-        } catch (AuthenticationException e){
-            return ResultVoUtil.error("用户名或密码错误");
-        }
-    }
-
-    /**
-     * 退出登录
-     */
-    @GetMapping("/logout")
-    public String logout() {
-        SecurityUtils.getSubject().logout();
-        return "redirect:/login";
-    }
-
-    /**
-     * 权限不足页面
-     */
-    @GetMapping("/noAuth")
-    public String noAuth(){
-        return "/system/main/no_auth";
-    }
-
-    /**
-     * 自定义错误页面
-     */
-    @Override
-    public String getErrorPath() {
-        return "/error";
-    }
-
-    /**
-     * 处理错误页面
-     */
-    @RequestMapping("/error")
-    public String handleError(Model model, HttpServletRequest request){
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        String errorMsg = "好像出错了呢！";
-        if(statusCode == 404){
-            errorMsg="页面未找到！抱歉，页面好像去火星了~";
-        }
-
-        model.addAttribute("statusCode", statusCode);
-        model.addAttribute("msg", errorMsg);
-        return "/system/main/error";
     }
 }

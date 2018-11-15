@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "project")
 public class ProjectProperties {
+    // 是否开启验证码
+    private boolean captchaOpen = false;
     // 上传文件路径
     private String fileUploadPath;
     // 上传文件静态访问路径

@@ -7,7 +7,7 @@
 <div class="login-bg">
     <div class="cover"></div>
 </div>
-<div class="login-content">
+<div class="login-content" th:th:classappend="${isCaptcha} ? 'captcha'">
     <h1 class="login-box-title"><i class="fa fa-fw fa-user"></i>登录</h1>
     <form class="layui-form" th:action="@{/login}" method="post">
         <div class="layui-form-item">
@@ -17,6 +17,11 @@
         <div class="layui-form-item">
             <label class="layui-icon layui-icon-password" for="password"></label>
             <input class="layui-input" type="password" name="password" id="password" placeholder="密码">
+        </div>
+        <div th:if="${isCaptcha}" class="layui-form-item captcha-item">
+            <label class="layui-icon layui-icon-vercode"></label>
+            <input class="layui-input" type="text" name="captcha" autocomplete="off" placeholder="验证码">
+            <img class="captcha-img" th:src="@{/captcha}" />
         </div>
         <div class="layui-form-item">
             <input type="checkbox" name="rememberMe" title="记住我" lay-skin="primary">
@@ -32,7 +37,14 @@
         if (window.parent.window != window) {
             window.top.location = window.location.pathname + "/login";
         }
-    }
+    };
+    layui.use(['element'], function () {
+        var $ = layui.jquery;
+        $(".captcha-img").on("click", function () {
+            var src = this.src.split("?")[0];
+            this.src = src + "?" + Math.random();
+        });
+    });
 </script>
 </body>
 </html>

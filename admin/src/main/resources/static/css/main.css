@@ -457,6 +457,22 @@ a{
 	-webkit-box-shadow: 0px 3px 20px 3px rgba(0, 0, 0, 0.15);
 	box-shadow: 0px 3px 20px 3px rgba(0, 0, 0, 0.15);
 }
+.layui-layout-login .login-content.captcha{
+    width:300px;
+    padding-bottom: 38px;
+}
+.layui-layout-login .login-content.captcha .captcha-item .layui-icon{
+    font-size: 16px;
+}
+.layui-layout-login .login-content.captcha .captcha-item .layui-input{
+    float: left;
+    width: 180px;
+}
+.layui-layout-login .login-content.captcha .captcha-item .captcha-img{
+    float: right;
+    height: 38px;
+    cursor: pointer;
+}
 .layui-layout-login .login-box-title{
 	font-size: 26px;
 	margin-bottom: 20px;

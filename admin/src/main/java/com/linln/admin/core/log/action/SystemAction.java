@@ -2,8 +2,9 @@ package com.linln.admin.core.log.action;
 
 import com.linln.admin.core.log.action.base.ActionMap;
 import com.linln.admin.core.log.action.base.ResetLog;
-import com.linln.admin.core.log.action.model.BusinessMethod;
 import com.linln.admin.core.log.action.model.SystemMethod;
+import com.linln.admin.system.domain.ActionLog;
+import com.linln.admin.system.domain.User;
 
 /**
  * @author 小懒虫
@@ -28,6 +29,12 @@ public class SystemAction extends ActionMap {
         for (StackTraceElement stack : stackTrace) {
             message.append("\n\t").append(stack.toString());
         }
-        resetLog.getActionLog().setMessage(String.valueOf(message));
+        ActionLog actionLog = resetLog.getActionLog();
+        if(actionLog.getCreateBy() == null){
+            User user = new User();
+            user.setNickname("系统");
+            actionLog.setCreateBy(user);
+        }
+        actionLog.setMessage(String.valueOf(message));
     }
 }

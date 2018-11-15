@@ -68,7 +68,9 @@ TIMO后台管理系统，基于SpringBoot 2 + jpa + thymeleaf + shiro 开发的�
 3. SQL文件：doc/timo.sql（经常忘记同步！）
 
 #### 更新记录
-
+- 2018-11-14更新
+  1.添加登录验证码
+  2.修复分页选择条数问题
 - 2018-11-13更新
   修复session超时问题
 
