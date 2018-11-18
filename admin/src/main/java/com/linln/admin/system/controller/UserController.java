@@ -1,6 +1,7 @@
 package com.linln.admin.system.controller;
 
 
+import com.linln.admin.core.config.properties.ProjectProperties;
 import com.linln.admin.core.constant.AdminConst;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
@@ -21,15 +22,23 @@ import com.linln.core.vo.ResultVo;
 import com.linln.admin.core.utils.TimoExample;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -129,9 +138,6 @@ public class UserController {
             String encrypt = ShiroUtil.encrypt(userForm.getPassword(), salt);
             userForm.setPassword(encrypt);
             userForm.setSalt(salt);
-
-            // 设置默认头像
-            userForm.setPicture("/images/user.jpg");
         }
 
         // 将验证的数据复制给实体类
@@ -139,7 +145,7 @@ public class UserController {
         if (userForm.getId() != null) {
             // 不允许操作超级管理员数据
             if (userForm.getId().equals(AdminConst.ADMIN_ID) &&
-                    !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)){
+                    !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)) {
                 throw new ResultException(ResultEnum.NO_ADMIN_AUTH);
             }
             // 判断账号是否重复
@@ -188,7 +194,7 @@ public class UserController {
     @ResponseBody
     @ActionLog(key = UserAction.EDIT_PWD, action = UserAction.class)
     public ResultVo editPassword(String password, String confirm,
-            @RequestParam(value = "ids", required = false) List<Long> idList) {
+                                 @RequestParam(value = "ids", required = false) List<Long> idList) {
 
         // 判断密码是否为空
         if (password.isEmpty() || "".equals(password.trim())) {
@@ -202,7 +208,7 @@ public class UserController {
 
         // 不允许操作超级管理员数据
         if (idList.contains(AdminConst.ADMIN_ID) &&
-                !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)){
+                !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)) {
             throw new ResultException(ResultEnum.NO_ADMIN_AUTH);
         }
 
@@ -259,7 +265,7 @@ public class UserController {
 
         // 不允许操作超级管理员数据
         if (id.equals(AdminConst.ADMIN_ID) &&
-                !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)){
+                !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)) {
             throw new ResultException(ResultEnum.NO_ADMIN_AUTH);
         }
 
@@ -281,6 +287,26 @@ public class UserController {
     }
 
     /**
+     * 获取用户头像
+     */
+    @GetMapping("/picture")
+    public void picture(String p, HttpServletResponse response, ProjectProperties properties) throws IOException {
+        String defaultPath = "/images/user-picture.jpg";
+        if (!(StringUtils.isEmpty(p) || p.equals(defaultPath))) {
+            String fuPath = properties.getFileUploadPath();
+            String spPath = properties.getStaticPathPattern().replace("*", "");
+            String s = fuPath + p.replace(spPath, "");
+            File file = new File(fuPath + p.replace(spPath, ""));
+            if(file.exists()){
+                FileCopyUtils.copy(new FileInputStream(file), response.getOutputStream());
+                return;
+            }
+        }
+        Resource resource = new ClassPathResource("static" + defaultPath);
+        FileCopyUtils.copy(resource.getInputStream(), response.getOutputStream());
+    }
+
+    /**
      * 设置一条或者多条数据的状态
      */
     @RequestMapping("/status/{param}")
@@ -291,7 +317,7 @@ public class UserController {
             @PathVariable("param") String param,
             @RequestParam(value = "ids", required = false) List<Long> idList) {
         // 不能修改超级管理员状态
-        if(idList.contains(AdminConst.ADMIN_ID)){
+        if (idList.contains(AdminConst.ADMIN_ID)) {
             throw new ResultException(ResultEnum.NO_ADMIN_STATUS);
         }
 

@@ -1,10 +1,17 @@
 package com.linln.admin.core.shiro;
 
+import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.domain.User;
+import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.utils.ToolUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.util.ByteSource;
+
+import java.util.Set;
 
 /**
  * Shiro工具类
@@ -45,5 +52,20 @@ public class ShiroUtil {
      */
     public static User getSubject(){
         return (User) SecurityUtils.getSubject().getPrincipal();
+    }
+
+    /**
+     * 重置Cookie“记住我”序列化信息
+     */
+    public static void resetCookieRememberMe(){
+        Set<Role> roles = getSubject().getRoles();
+        getSubject().setRoles(null);
+        RememberMeManager meManager = SpringContextUtil.getBean(RememberMeManager.class);
+        UsernamePasswordToken token = new UsernamePasswordToken();
+        token.setRememberMe(true);
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo();
+        info.setPrincipals(SecurityUtils.getSubject().getPrincipals());
+        meManager.onSuccessfulLogin(SecurityUtils.getSubject(), token, info);
+        getSubject().setRoles(roles);
     }
 }

@@ -4,6 +4,18 @@ a{
     cursor: pointer;
 }
 
+/* 滚动条样式 */
+::-webkit-scrollbar-track {
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #999;
+}
+
 /* 导航栏样式 */
 .layui-layout-admin .layui-header{
 	height: 50px;

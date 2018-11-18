@@ -4,12 +4,12 @@ import com.linln.admin.core.enums.MenuTypeEnum;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.system.domain.File;
-import com.linln.admin.system.validator.UserForm;
 import com.linln.admin.core.shiro.ShiroUtil;
+import com.linln.admin.system.domain.File;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.domain.User;
 import com.linln.admin.system.service.UserService;
+import com.linln.admin.system.validator.UserForm;
 import com.linln.core.enums.TimoResultEnum;
 import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
@@ -21,9 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,13 +103,14 @@ public class MainController{
     @PostMapping("/user_picture")
     @RequiresPermissions("/index")
     @ResponseBody
-    public ResultVo userPicture(@RequestParam("picture") MultipartFile picture){
+    public ResultVo userPicture(@RequestParam("picture") MultipartFile picture, HttpServletResponse response){
         FileController fileController = SpringContextUtil.getBean(FileController.class);
         ResultVo imageResult = fileController.uploadPicture(picture);
         if(imageResult.getCode().equals(TimoResultEnum.SUCCESS.getCode())){
             User subject = ShiroUtil.getSubject();
             subject.setPicture(((File) imageResult.getData()).getPath());
             userService.save(subject);
+            ShiroUtil.resetCookieRememberMe();
             return ResultVoUtil.SAVE_SUCCESS;
         }else {
             return imageResult;
@@ -131,6 +136,7 @@ public class MainController{
 
         // 保存数据
         userService.save(user);
+        ShiroUtil.resetCookieRememberMe();
         return ResultVoUtil.success("保存成功", new URL("/user_info"));
     }
 

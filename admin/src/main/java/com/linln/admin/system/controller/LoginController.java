@@ -43,7 +43,7 @@ public class LoginController implements ErrorController {
      * 跳转到登录页面
      */
     @GetMapping("/login")
-    public String toLogin(Model model){
+    public String toLogin(Model model) {
         ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
         model.addAttribute("isCaptcha", properties.isCaptchaOpen());
         return "/login";
@@ -55,9 +55,9 @@ public class LoginController implements ErrorController {
     @PostMapping("/login")
     @ResponseBody
     @ActionLog(key = UserAction.USER_LOGIN, action = UserAction.class)
-    public ResultVo login(String username, String password, String captcha, String rememberMe){
+    public ResultVo login(String username, String password, String captcha, String rememberMe) {
         // 判断账号密码是否为空
-        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             throw new ResultException(ResultEnum.USER_NAME_PWD_NULL);
         }
 
@@ -65,9 +65,9 @@ public class LoginController implements ErrorController {
         ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
         if (properties.isCaptchaOpen()) {
             Session session = SecurityUtils.getSubject().getSession();
-            String code = (String)session.getAttribute("captcha");
-            if(StringUtils.isEmpty(captcha) || StringUtils.isEmpty(code)
-                    || !captcha.toUpperCase().equals(code.toUpperCase())){
+            String code = (String) session.getAttribute("captcha");
+            if (StringUtils.isEmpty(captcha) || StringUtils.isEmpty(code)
+                    || !captcha.toUpperCase().equals(code.toUpperCase())) {
                 throw new ResultException(ResultEnum.USER_CAPTCHA_ERROR);
             }
             session.removeAttribute("captcha");
@@ -77,26 +77,26 @@ public class LoginController implements ErrorController {
         Subject subject = SecurityUtils.getSubject();
 
         // 2.封装用户数据
-        UsernamePasswordToken token = new UsernamePasswordToken( username, password );
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
         // 3.执行登录，进入自定义Realm类中
         try {
             // 判断是否自动登录
-            if (rememberMe != null){
+            if (rememberMe != null) {
                 token.setRememberMe(true);
-            }else{
+            } else {
                 token.setRememberMe(false);
             }
             subject.login(token);
 
             // 判断是否拥有后台角色
             User user = ShiroUtil.getSubject();
-            if(user.getIsRole().equals(UserIsRoleEnum.YES.getCode())){
-                return ResultVoUtil.success("登录成功",new URL("/"));
-            }else {
+            if (user.getIsRole().equals(UserIsRoleEnum.YES.getCode())) {
+                return ResultVoUtil.success("登录成功", new URL("/"));
+            } else {
                 return ResultVoUtil.error("您不是后台管理员！");
             }
-        } catch (AuthenticationException e){
+        } catch (AuthenticationException e) {
             return ResultVoUtil.error("用户名或密码错误");
         }
     }
@@ -107,15 +107,15 @@ public class LoginController implements ErrorController {
     @GetMapping("/captcha")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //设置响应头信息，通知浏览器不要缓存
-        response.setHeader("Expires","-1");
-        response.setHeader("Cache-Control","no-cache");
-        response.setHeader("Pragma","-1");
+        response.setHeader("Expires", "-1");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Pragma", "-1");
         response.setContentType("image/jpeg");
 
         // 获取验证码
         String code = CaptchaUtil.getRandomCode();
         // 将验证码输入到session中，用来验证
-        request.getSession().setAttribute("captcha",code);
+        request.getSession().setAttribute("captcha", code);
         // 输出到web页面
         ImageIO.write(CaptchaUtil.genCaptcha(code), "jpg", response.getOutputStream());
     }
@@ -133,7 +133,7 @@ public class LoginController implements ErrorController {
      * 权限不足页面
      */
     @GetMapping("/noAuth")
-    public String noAuth(){
+    public String noAuth() {
         return "/system/main/no_auth";
     }
 
@@ -149,11 +149,11 @@ public class LoginController implements ErrorController {
      * 处理错误页面
      */
     @RequestMapping("/error")
-    public String handleError(Model model, HttpServletRequest request){
+    public String handleError(Model model, HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         String errorMsg = "好像出错了呢！";
-        if(statusCode == 404){
-            errorMsg="页面未找到！抱歉，页面好像去火星了~";
+        if (statusCode == 404) {
+            errorMsg = "页面未找到！抱歉，页面好像去火星了~";
         }
 
         model.addAttribute("statusCode", statusCode);

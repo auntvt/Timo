@@ -6,7 +6,7 @@
 <div class="layui-form timo-compile user-info-page">
     <div class="user-info">
         <div class="user-avatar-box">
-            <img class="user-avatar" th:src="@{${user.picture}}" alt="头像">
+            <img class="user-avatar" th:src="@{'/user/picture?p='+${user.picture}}" alt="头像">
             <span class="edit-avatar" th:attr="data-url=@{/user_picture}">修改头像</span>
         </div>
         <ul class="detail-info">

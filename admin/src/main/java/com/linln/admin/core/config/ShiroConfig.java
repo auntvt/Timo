@@ -135,7 +135,7 @@ public class ShiroConfig {
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         simpleCookie.setHttpOnly(true);
         // cookie记住登录信息时间，默认7天
-        simpleCookie.setMaxAge(properties.getRememberMeTimeout() * 24 * 60 * 60);   //7天
+        simpleCookie.setMaxAge(properties.getRememberMeTimeout() * 24 * 60 * 60);
         return simpleCookie;
     }
 

@@ -1,78 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
-  <title>后台主页</title>
+    <title>后台主页</title>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-  <!-- 导航栏 -->
-  <div class="layui-header">
-    <a href="#" class="layui-logo">
-      <span class="layui-logo-mini">TIMO</span>
-      <span class="layui-logo-lg">TIMO 后台</span>
-    </a>
-    <a class="side-toggle layui-layout-left" href="#">
-      <i class="layui-icon layui-icon-shrink-right"></i>
-      <i class="layui-icon layui-icon-spread-left"></i>
-    </a>
-    <ul class="layui-nav layui-layout-right">
-      <!--<li class="layui-nav-item timo-search">
-        <input class="timo-search-input" type="search" placeholder="搜索">
-        <button class="timo-search-button"><i class="fa fa-search"></i></button>
-      </li>-->
-      <li class="layui-nav-item">
-        <a href="#">
-          <i class="fa fa-bell-o fa-lg"></i>
+    <!-- 导航栏 -->
+    <div class="layui-header">
+        <a href="#" class="layui-logo">
+            <span class="layui-logo-mini">TIMO</span>
+            <span class="layui-logo-lg">TIMO 后台</span>
         </a>
-      </li>
-      <li class="layui-nav-item">
-        <a class="timo-screen-full" href="#">
-          <i class="fa layui-icon layui-icon-screen-full"></i>
+        <a class="side-toggle layui-layout-left" href="#">
+            <i class="layui-icon layui-icon-shrink-right"></i>
+            <i class="layui-icon layui-icon-spread-left"></i>
         </a>
-      </li>
-      <li class="layui-nav-item timo-nav-user">
-        <a class="timo-header-nickname" th:text="${user.nickname}">TIMO</a>
-        <div class="layui-nav-child">
-          <div class="timo-nav-child-box">
-            <div><a class="open-popup" data-title="个人信息" th:attr="data-url=@{/user_info}" data-size="680,464"><!--
+        <ul class="layui-nav layui-layout-right">
+            <!--<li class="layui-nav-item timo-search">
+              <input class="timo-search-input" type="search" placeholder="搜索">
+              <button class="timo-search-button"><i class="fa fa-search"></i></button>
+            </li>-->
+            <li class="layui-nav-item">
+                <a href="#">
+                    <i class="fa fa-bell-o fa-lg"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a class="timo-screen-full" href="#">
+                    <i class="fa layui-icon layui-icon-screen-full"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item timo-nav-user">
+                <a class="timo-header-nickname" th:text="${user.nickname}">TIMO</a>
+                <div class="layui-nav-child">
+                    <div class="timo-nav-child-box">
+                        <div><a class="open-popup" data-title="个人信息" th:attr="data-url=@{/user_info}"
+                                data-size="680,464"><!--
               --><i class="fa fa-user-o"></i>个人信息</a></div>
-            <div><a class="open-popup" data-title="修改密码" th:attr="data-url=@{/edit_pwd}" data-size="456,295"><!--
+                        <div><a class="open-popup" data-title="修改密码" th:attr="data-url=@{/edit_pwd}"
+                                data-size="456,295"><!--
               --><i class="fa fa-lock" style="font-size:17px;width:12px;"></i>修改密码</a></div>
-            <div><a th:href="@{/logout}"><i class="fa fa-power-off"></i>退出登录</a></div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  <!-- 侧边栏 -->
-  <div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-      <div class="layui-side-user">
-        <img class="layui-side-user-avatar" th:src="@{${user.picture}}" alt="头像">
-        <div>
-          <p class="layui-side-user-name" th:text="${user.nickname}">TIMO</p>
-          <p class="layui-side-user-designation">在线</p>
-        </div>
-      </div>
-      <!-- 导航区域 -->
-      <ul class="layui-nav layui-nav-tree"  lay-filter="layui-nav-side">
-        <li class="layui-nav-item" th:each="item:${treeMenu}">
-          <a href="javascript:;" th:attr="lay-url=@{${item.value.url}}"><i th:class="${item.value.icon}"></i><span class="layui-nav-title" th:text="${item.value.title}">菜单项</span></a>
-          <dl class="layui-nav-child" th:if="${item.value.children.size()}">
-            <dd th:each="subItem:${item.value.children}"><a href="javascript:;" th:attr="lay-url=@{${subItem.value.url}}"><span class="layui-nav-title" th:text="${subItem.value.title}">子菜单项</span></a></dd>
-          </dl>
-        </li>
-      </ul>
+                        <div><a th:href="@{/logout}"><i class="fa fa-power-off"></i>退出登录</a></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
-  </div>
-  <!-- 主体区域 -->
-  <div class="layui-body layui-tab layui-tab-brief" lay-allowclose="true" lay-filter="iframe-tabs">
-    <!-- 标签栏 -->
-    <ul class="layui-tab-title"></ul>
-    <!-- 内容区域 -->
-    <div class="layui-tab-content"></div>
-  </div>
+
+    <!-- 侧边栏 -->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <div class="layui-side-user">
+                <img class="layui-side-user-avatar" th:src="@{'/user/picture?p='+${user.picture}}" alt="头像">
+                <div>
+                    <p class="layui-side-user-name" th:text="${user.nickname}">TIMO</p>
+                    <p class="layui-side-user-designation">在线</p>
+                </div>
+            </div>
+            <!-- 导航区域 -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="layui-nav-side">
+                <li class="layui-nav-item" th:each="item:${treeMenu}">
+                    <a href="javascript:;" th:attr="lay-url=@{${item.value.url}}"><i
+                            th:class="${item.value.icon}"></i><span class="layui-nav-title"
+                                                                    th:text="${item.value.title}">菜单项</span></a>
+                    <dl class="layui-nav-child" th:if="${item.value.children.size()}">
+                        <dd th:each="subItem:${item.value.children}"><a href="javascript:;"
+                                                                        th:attr="lay-url=@{${subItem.value.url}}"><span
+                                class="layui-nav-title" th:text="${subItem.value.title}">子菜单项</span></a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 主体区域 -->
+    <div class="layui-body layui-tab layui-tab-brief" lay-allowclose="true" lay-filter="iframe-tabs">
+        <!-- 标签栏 -->
+        <ul class="layui-tab-title"></ul>
+        <!-- 内容区域 -->
+        <div class="layui-tab-content"></div>
+    </div>
 </div>
 <script th:replace="/common/template :: script"></script>
 </body>
