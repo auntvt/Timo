@@ -18,6 +18,7 @@ import com.linln.admin.system.service.RoleService;
 import com.linln.admin.system.service.UserService;
 import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
+import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.vo.ResultVo;
 import com.linln.admin.core.utils.TimoExample;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -290,9 +291,10 @@ public class UserController {
      * 获取用户头像
      */
     @GetMapping("/picture")
-    public void picture(String p, HttpServletResponse response, ProjectProperties properties) throws IOException {
+    public void picture(String p, HttpServletResponse response) throws IOException {
         String defaultPath = "/images/user-picture.jpg";
         if (!(StringUtils.isEmpty(p) || p.equals(defaultPath))) {
+            ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
             String fuPath = properties.getFileUploadPath();
             String spPath = properties.getStaticPathPattern().replace("*", "");
             String s = fuPath + p.replace(spPath, "");

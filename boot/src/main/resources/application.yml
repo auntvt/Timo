@@ -1,0 +1,44 @@
+### 服务器配置
+server:
+  port: 8080
+
+### TIMO配置
+project:
+  captcha-open: false                       #是否开启登录验证码
+  remember-me-timeout: 7                    #cookie记住登录信息时间，默认7天（天）
+  global-session-timeout: 1800              #Session会话超时时间，默认30分钟（秒）
+  #file-upload-path: c:/upload/             #文件上传路径，默认在项目根目录upload下
+  static-path-pattern: /upload/**           #上传文件静态访问路径
+
+### spring配置
+spring:
+## 数据库配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/timo?useSSL=false&characterEncoding=utf-8
+    username: root
+    password: root
+
+## jpa配置
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: com.linln.core.mysql.MySQLDialectUTF8
+      hibernate.format_sql: false
+
+## thymeleaf模板设置
+  thymeleaf:
+    prefix: classpath:/templates
+    suffix: .html
+    mode: HTML
+    encoding: utf-8
+    servlet.content-type: text/html
+    cache: false
+
+## 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB

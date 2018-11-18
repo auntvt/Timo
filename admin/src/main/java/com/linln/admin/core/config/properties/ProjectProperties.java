@@ -19,7 +19,7 @@ public class ProjectProperties {
     // 上传文件路径
     private String fileUploadPath;
     // 上传文件静态访问路径
-    private String staticPathPattern = "/upload/";
+    private String staticPathPattern = "/upload/**";
     // cookie记住登录信息时间，默认7天
     private Integer rememberMeTimeout = 7;
     // Session会话超时时间，默认30分钟
