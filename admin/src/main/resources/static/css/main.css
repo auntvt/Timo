@@ -315,13 +315,23 @@ a{
 .layui-layout-admin .layui-body .layui-tab-title{
 	z-index: 999;
 	background-color: #ffffff;
-	webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+	-webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
 }
 .layui-layout-admin .layui-body .layui-tab-title li{
-	padding-left: 12px;
-    padding-right: 4px;
+    padding-left: 16px;
+    padding-right: 8px;
     border-right: 1px solid #f6f6f6;
+}
+.layui-layout-admin .layui-body .layui-tab-title li:hover{
+    background-color: #f8f8f8;
+}
+.layui-layout-admin .layui-body .layui-tab-title .layui-this{
+    color: #009688;
+    background-color: #f8f8f8;
+}
+.layui-layout-admin .layui-body .layui-tab-title .layui-this:after{
+    border-bottom: 2px solid #009688;
 }
 .layui-layout-admin .layui-body .layui-tab-title .layui-icon-home{
 	text-align: left;
@@ -330,7 +340,13 @@ a{
     width: 22px;
 }
 .layui-layout-admin .layui-body .layui-tab-title .layui-tab-close{
-	border-radius: 50%;
+	width: 16px;
+	height: 16px;
+	line-height: 18px;
+    font-weight: bold;
+}
+.layui-layout-admin .layui-body .layui-tab-title .layui-tab-close:hover{
+    background-color: #cccccc;
 }
 .layui-layout-admin .layui-body .layui-tab-content,
 .layui-layout-admin .layui-body .layui-tab-content .layui-tab-item,
@@ -521,6 +537,13 @@ a{
 	height: 14px;
 	top: 1px;
 	line-height: 14px;
+}
+.layui-layout-login .layui-form-item .layui-form-checkbox[lay-skin=primary]:hover i {
+    border-color: #009688;
+}
+.layui-layout-login .layui-form-item .layui-form-checked[lay-skin=primary] i{
+    border-color: #009688;
+    background-color: #009688;
 }
 .layui-layout-login .layui-form-item .forget-password{
 	color: #009688;
