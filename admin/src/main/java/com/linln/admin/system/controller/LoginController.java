@@ -153,7 +153,7 @@ public class LoginController implements ErrorController {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         String errorMsg = "好像出错了呢！";
         if (statusCode == 404) {
-            errorMsg = "页面未找到！抱歉，页面好像去火星了~";
+            errorMsg = "页面找不到了！好像是去火星了~";
         }
 
         model.addAttribute("statusCode", statusCode);

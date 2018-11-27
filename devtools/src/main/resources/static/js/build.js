@@ -18,7 +18,7 @@ layui.use(['element', 'laydate', 'form'], function () {
     // 移动操作
     var downPosi, target = null, dragDom = null, timer = null;
     var areaPosi;
-    $(".element-panel").on("mousedown", ".layui-form-item", function (e) {
+    $(document).on("mousedown", ".layui-form-item", function (e) {
         $this = $(this);
         timer = setTimeout(function () {
             downPosi = {'left': e.clientX - $this.offset().left,
@@ -36,6 +36,10 @@ layui.use(['element', 'laydate', 'form'], function () {
             dragDom.addClass("drag-box");
             dragDom.css("width", target.width());
             $("body").append(dragDom);
+            var buildItem = target.parent('.build-item');
+            if(buildItem.length > 0){
+                buildItem.remove();
+            }
         }
         if(dragDom != null){
             dragDom.css("left", e.clientX - downPosi.left);
@@ -45,8 +49,10 @@ layui.use(['element', 'laydate', 'form'], function () {
             if(e.clientX > areaPosi.ltX && e.clientY > areaPosi.ltY
                 && e.clientX < areaPosi.rbX && e.clientY < areaPosi.rbY){
                 build.addClass("active");
+                buildItemPosi(e.clientY);
             }else{
                 build.removeClass("active");
+                shellItem.remove();
             }
         }
     });
@@ -59,12 +65,34 @@ layui.use(['element', 'laydate', 'form'], function () {
             dragDom = null;
             target = null;
             build.removeClass("active");
+            shellItem.remove();
         }
         if(timer != null){
             clearTimeout(timer);
             timer = null;
         }
     });
+
+    // 构建项位置
+    var shellItem = $("<div id='shell-item'></div>");
+    var buildItemPosi = function(clientY){
+        build.children('.build-item').each(function(key, val){
+            var $this = $(val);
+            var ty = $this.offset().top;
+            var by = $this.offset().top + $this.height();
+            if(clientY > ty &&  clientY < by ){
+                if(clientY < (ty + by) / 2){
+                    $this.before(shellItem);
+                }else{
+                    $this.after(shellItem);
+                }
+            }
+        });
+        shellItem.css('height', dragDom.height());
+        if($('#shell-item').length == 0){
+            build.append(shellItem);
+        }
+    };
 
     // 加入构建面板
     var buildAdd = function(dragDom){
@@ -76,7 +104,8 @@ layui.use(['element', 'laydate', 'form'], function () {
             "<div class='control'><a class='edit'>编辑HTML</a> | " +
             "<a class='remove'>删除</a></div>" +
             "</div>");
-        build.append(item.append(elem));
+        shellItem.after(item.append(elem));
+
         form.render();
     };
 
@@ -121,7 +150,7 @@ layui.use(['element', 'laydate', 'form'], function () {
         build.find(".layui-form-item").each(function (key, val) {
             var item = $(val).clone();
             item.children('div').children('div').remove();
-            genHtml += item.prop('outerHTML');
+            genHtml += item.prop('outerHTML') + "\n";
         });
         var box = $("<div class='build-edit-box'></div>");
         var edit = $("<textarea class='build-edit'></textarea>").text(genHtml);

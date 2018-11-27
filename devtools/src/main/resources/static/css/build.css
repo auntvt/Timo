@@ -4,10 +4,11 @@
 .element-panel{
     padding-top: 10px;
 }
-.element-panel .layui-form-item {
-    cursor: move;
-}
-.element-panel .layui-form-item .layui-form-label{
+.element-panel .layui-form-item,
+.element-panel .layui-form-item .layui-form-label,
+.build-panel .build-item,
+.build-panel .build-item .layui-form-label
+{
     cursor: move;
 }
 .drag-box{
@@ -35,9 +36,12 @@
 .build-panel.active{
     background-color: #fdffcd;
 }
+.build-panel #shell-item{
+    background-color: #eeeeee;
+    border: 1px dashed #c3c3c3;
+}
 .build-panel .build-item{
     position: relative;
-    /*cursor: move;*/
 }
 .build-panel .build-item:hover{
     padding-top: 10px;

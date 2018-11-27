@@ -5,7 +5,7 @@
     <div class="layui-row" th:if="${#pageUtil.pageInit(page,#request)}">
         <div class="layui-col-sm6">
             <div class="page-info">
-                <span>显示 [[${(page.number*page.size)+1}]]/[[${(page.number*page.size)+page.numberOfElements}]] 条记录，总共 [[${page.totalElements}]] 条记录</span>
+                <span>显示 [[${(page.number*page.size)+1}]]/[[${(page.number*page.size)+page.numberOfElements}]] 条，共 [[${page.totalElements}]] 条记录</span>
                 <select class="timo-select page-number">
                     <option th:value="${num*10}" th:selected="${page.size} eq ${num*10}" th:each="num:${#numbers.sequence(1,3)}">[[${num*10}]] 条/页</option>
                 </select>

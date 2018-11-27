@@ -23,8 +23,8 @@
 </head>
 <body>
 <div class="page-error" style="color: #009688">
-    <div style="font-size: 120px">[[${statusCode}]]</div>
-    <div style="font-size: 24px">[[${msg}]]</div>
+    <div style="font-size: 120px" th:text="${statusCode}"></div>
+    <div style="font-size: 24px" th:text="${msg}"></div>
 </div>
 </body>
 </html>
