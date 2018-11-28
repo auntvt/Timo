@@ -1,8 +1,9 @@
-layui.use(['element', 'form', 'layer'], function () {
+layui.use(['element', 'form', 'layer', 'upload'], function () {
     var $ = layui.jquery;
     var element = layui.element; //加载element模块
     var form = layui.form; //加载form模块
     var layer = layui.layer; //加载layer模块
+    var upload = layui.upload;  //加载upload模块
 
     /* 侧边栏开关 */
     $(".side-toggle").on("click", function (e) {
@@ -11,14 +12,13 @@ layui.use(['element', 'form', 'layer'], function () {
         to.toggleClass("layui-side-shrink");
         to.attr("toggle") === 'on' ? to.attr("toggle", "off") : to.attr("toggle", "on");
     });
-    $(".layui-side").on("click", function(){
+    $(".layui-side").on("click", function () {
         var to = $(".layui-layout-admin");
-        if (to.attr("toggle") === 'on'){
+        if (to.attr("toggle") === 'on') {
             to.attr("toggle", "off");
             to.removeClass("layui-side-shrink");
         }
     });
-
 
     /* 最大化窗口 */
     $(".timo-screen-full").on("click", function (e) {
@@ -32,7 +32,7 @@ layui.use(['element', 'form', 'layer'], function () {
             document.exitFullscreen ? document.exitFullscreen()
                 : document.mozCancelFullScreen ? document.mozCancelFullScreen()
                 : document.webkitCancelFullScreen ? document.webkitCancelFullScreen()
-                : document.msExitFullscreen && document.msExitFullscreen()
+                    : document.msExitFullscreen && document.msExitFullscreen()
         }
         $(this).toggleClass("full-on");
     });
@@ -93,11 +93,11 @@ layui.use(['element', 'form', 'layer'], function () {
 
     /* AJAX请求默认选项，处理连接超时问题 */
     $.ajaxSetup({
-        complete: function(xhr, status) {
-            if(xhr.status == 401) {
+        complete: function (xhr, status) {
+            if (xhr.status == 401) {
                 layer.confirm('session连接超时，是否重新登录？', {
-                    btn: ['是','否']
-                }, function(){
+                    btn: ['是', '否']
+                }, function () {
                     if (window.parent.window != window) {
                         window.top.location = window.location.pathname + '/login';
                     }
@@ -215,7 +215,7 @@ layui.use(['element', 'form', 'layer'], function () {
 
     /* 关闭弹出层 */
     $(".close-popup").click(function (e) {
-		e.preventDefault();
+        e.preventDefault();
         parent.layer.close(window.parent.layerIndex);
     });
 
@@ -244,12 +244,12 @@ layui.use(['element', 'form', 'layer'], function () {
 
     // 检测列表数据是否为空
     var timoTable = $(".timo-table tbody");
-    if(timoTable.length > 0){
+    if (timoTable.length > 0) {
         var children = timoTable.children();
-        if(children.length === 0){
+        if (children.length === 0) {
             var length = $(".timo-table thead th").length;
-            var trNullInfo  = "<tr><td class='timo-table-null' colspan='"
-                + length +"'>没有找到匹配的记录</td></tr>";
+            var trNullInfo = "<tr><td class='timo-table-null' colspan='"
+                + length + "'>没有找到匹配的记录</td></tr>";
             timoTable.append(trNullInfo);
         }
     }
@@ -280,4 +280,43 @@ layui.use(['element', 'form', 'layer'], function () {
     $(document).on("change", ".page-number", function () {
         paramSkip();
     });
+
+    /** 上传图片操作 */
+    upload.render({
+        elem: '.upload-image' //绑定元素
+        ,url: $('.upload-image').attr('up-url') //上传接口
+        ,field: 'image' //文件域的字段名
+        ,acceptMime: 'image/*' //选择文件类型
+        ,exts: 'jpg|jpeg|png|gif' //支持的图片格式
+        ,multiple: true //开启多文件选择
+        ,choose: function (obj) {
+            var files = obj.pushFile();
+            obj.preview(function (index, file, result) {
+                var upload = $('.upload-image');
+                var name = upload.attr('name');
+                var show = upload.parents('.layui-form-item').children('.upload-show');
+                show.append("<div class='upload-item'><img src='"+ result +"'/>" +
+                    "<input id='"+ index +"' type='hidden' name='"+name+"'/>" +
+                    "<i class='upload-item-close layui-icon layui-icon-close'></i></div>");
+            });
+        }
+        ,done: function(res, index, upload){
+            var field = $('.upload-image').attr('up-field') || 'id';
+            var hide = $("#"+index);
+            var item = hide.parent('.upload-item');
+            if (res.code === 200) {
+                hide.val(res.data[field]);
+                item.addClass('succeed');
+            }else {
+                hide.remove();
+                item.addClass('error');
+            }
+        }
+    });
+
+    // 删除上传图片展示项
+    $(document).on("click", ".upload-item-close", function () {
+        $(this).parent('.upload-item').remove();
+    });
+
 });

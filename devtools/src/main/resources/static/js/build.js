@@ -115,6 +115,7 @@ layui.use(['element', 'laydate', 'form'], function () {
         buildItem = $(this).parents('.build-item');
         var elem = buildItem.children('.layui-form-item').clone();
         elem.children('div').children('div').remove();
+        elem.find('.layui-upload-file').remove();
 
         var box = $("<div class='build-edit-box'></div>");
         var edit = $("<textarea class='build-edit'></textarea>").text(elem.prop('outerHTML'));
@@ -150,6 +151,7 @@ layui.use(['element', 'laydate', 'form'], function () {
         build.find(".layui-form-item").each(function (key, val) {
             var item = $(val).clone();
             item.children('div').children('div').remove();
+            item.find('.layui-upload-file').remove();
             genHtml += item.prop('outerHTML') + "\n";
         });
         var box = $("<div class='build-edit-box'></div>");

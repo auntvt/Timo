@@ -889,3 +889,54 @@ a{
 	border-top-color: #c2c2c2;
 	border-top-style: solid;
 }
+
+/* 上传图片展示 */
+.upload-show{
+	clear: both;
+	overflow: hidden;
+	margin-left: 110px;
+}
+.upload-show .upload-item{
+    position: relative;
+	float: left;
+}
+.upload-show .upload-item:after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 0;
+    right: 12px;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.25);
+}
+.upload-show .upload-item.succeed:after{
+    display: none;
+}
+.upload-show .upload-item.error:after {
+    background-color: rgba(255, 10, 0, 0.25);
+}
+.upload-show .upload-item img{
+	height: 84px;
+    margin-top: 12px;
+	margin-right: 12px;
+	padding: 8px;
+	border: 1px solid #cccccc;
+}
+.upload-show .upload-item .upload-item-close{
+    display: block;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 999999;
+    color: #FFFFFF;
+    background-color: rgba(0, 150, 136, 0.69);
+    font-size: 11px;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    line-height: 15px;
+    cursor: pointer;
+}
+.upload-show .upload-item .upload-item-close:hover{
+    background-color: #009688;
+}

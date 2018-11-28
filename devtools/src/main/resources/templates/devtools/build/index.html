@@ -41,6 +41,16 @@
     </div>
 </div>
 <div class="layui-form-item">
+    <label class="layui-form-label">上传图片</label>
+    <div class="layui-input-inline">
+        <button type="button" class="layui-btn upload-image" name="image[]"
+                th:attr="up-url=@{/upload/image}" up-field="path">
+            <i class="layui-icon">&#xe67c;</i>上传图片
+        </button>
+    </div>
+    <div class="upload-show"></div>
+</div>
+<div class="layui-form-item">
     <label class="layui-form-label">时间选择</label>
     <div class="layui-input-inline">
         <input type="text" class="layui-input" id="laydate" placeholder="yyyy-MM-dd">
