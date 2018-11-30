@@ -12,7 +12,7 @@
     <parent>
         <groupId>com.linln</groupId>
         <artifactId>timo</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <dependencies>
@@ -35,8 +35,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <!--<finalName>Timo-${project.version}</finalName>-->
-        <finalName>Timo</finalName>
+        <finalName>Timo-${project.version}</finalName>
     </build>
 
 </project>

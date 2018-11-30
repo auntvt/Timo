@@ -1,6 +1,5 @@
 package com.linln.admin.core.log.action;
 
-import com.linln.admin.core.enums.ActionLogEnum;
 import com.linln.admin.core.log.action.base.ActionMap;
 import com.linln.admin.core.log.action.base.ResetLog;
 import com.linln.admin.core.log.action.model.BusinessMethod;
@@ -9,7 +8,6 @@ import com.linln.admin.system.domain.ActionLog;
 import com.linln.admin.system.domain.User;
 import com.linln.admin.system.service.ActionLogService;
 import com.linln.admin.system.service.UserService;
-import com.linln.admin.system.validator.UserForm;
 import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.SpringContextUtil;
 

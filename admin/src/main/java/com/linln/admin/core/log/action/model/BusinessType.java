@@ -1,7 +1,6 @@
 package com.linln.admin.core.log.action.model;
 
 import com.linln.admin.core.enums.ActionLogEnum;
-import lombok.Data;
 import lombok.Getter;
 
 /**

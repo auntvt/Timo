@@ -3,16 +3,11 @@ package com.linln.admin.core.log.action;
 import com.linln.admin.core.log.action.base.ActionMap;
 import com.linln.admin.core.log.action.base.ResetLog;
 import com.linln.admin.core.log.action.model.BusinessMethod;
-import com.linln.admin.core.log.action.model.LoginMethod;
-import com.linln.admin.system.domain.ActionLog;
 import com.linln.admin.system.domain.Role;
-import com.linln.admin.system.domain.User;
 import com.linln.admin.system.service.RoleService;
-import com.linln.admin.system.service.UserService;
 import com.linln.core.utils.SpringContextUtil;
 
 import javax.persistence.Table;
-import java.util.List;
 
 /**
  * 角色日志行为

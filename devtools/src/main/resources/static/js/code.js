@@ -274,15 +274,24 @@ layui.use(['element', 'form', 'layer', 'formSelects'], function () {
 
     //还原基本参数
     if(local.getItem("packagePath")){
-        $("[name='packagePath']").val(local.getItem("packagePath"));
+        var packagePath = local.getItem("packagePath");
+        basic.packagePath = packagePath;
+        $("[name='packagePath']").val(packagePath);
     }
     if(local.getItem("author")){
-        $("[name='author']").val(local.getItem("author"));
+        var author = local.getItem("author");
+        basic.author = author;
+        $("[name='author']").val(author);
+
     }
     if(local.getItem("genModule")){
-        $("[name='genModule']").val(local.getItem("genModule"));
+        var genModule = local.getItem("genModule");
+        basic.genModule = genModule;
+        $("[name='genModule']").val(genModule);
     }
     if(local.getItem("tablePrefix")){
-        $("[name='tablePrefix']").val(local.getItem("tablePrefix"));
+        var tablePrefix = local.getItem("tablePrefix");
+        basic.tablePrefix = tablePrefix;
+        $("[name='tablePrefix']").val(tablePrefix);
     }
 });

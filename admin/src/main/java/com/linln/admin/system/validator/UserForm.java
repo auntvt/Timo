@@ -3,7 +3,6 @@ package com.linln.admin.system.validator;
 import com.linln.admin.system.domain.User;
 import lombok.Data;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;

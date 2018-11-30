@@ -2,7 +2,6 @@ package com.linln.admin.core.log.action.base;
 
 import com.linln.admin.core.log.action.model.BusinessMethod;
 import com.linln.admin.core.log.action.model.BusinessType;
-import com.linln.admin.system.domain.ActionLog;
 
 import java.util.HashMap;
 

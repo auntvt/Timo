@@ -1,12 +1,9 @@
 package com.linln.admin.system.service.impl;
 
 import com.linln.admin.core.enums.StatusEnum;
-
 import com.linln.admin.system.domain.Dict;
 import com.linln.admin.system.repository.DictRepository;
 import com.linln.admin.system.service.DictService;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;

@@ -1,18 +1,10 @@
 package com.linln.admin.system.service.impl;
 
-import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.system.domain.File;
 import com.linln.admin.system.repository.FileRepository;
 import com.linln.admin.system.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author 小懒虫

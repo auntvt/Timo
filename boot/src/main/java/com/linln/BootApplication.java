@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  */
 @SpringBootApplication
 @EnableJpaAuditing // 使用jpa自动赋值
-@EnableCaching
+@EnableCaching // 使用缓存
 public class BootApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

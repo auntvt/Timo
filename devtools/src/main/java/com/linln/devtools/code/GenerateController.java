@@ -13,18 +13,21 @@ import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.utils.ToolUtil;
 import com.linln.core.vo.ResultVo;
+import com.linln.devtools.code.domain.Basic;
 import com.linln.devtools.code.domain.Generate;
 import com.linln.devtools.code.domain.Template;
 import com.linln.devtools.code.enums.FieldQuery;
 import com.linln.devtools.code.enums.FieldType;
 import com.linln.devtools.code.enums.FieldVerify;
 import com.linln.devtools.code.template.*;
-import com.linln.devtools.code.domain.Basic;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 小懒虫

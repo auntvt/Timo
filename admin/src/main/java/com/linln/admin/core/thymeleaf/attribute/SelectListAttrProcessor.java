@@ -9,7 +9,9 @@ import org.thymeleaf.standard.expression.*;
 import org.thymeleaf.templatemode.TemplateMode;
 
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 自定义下拉列表生成标签

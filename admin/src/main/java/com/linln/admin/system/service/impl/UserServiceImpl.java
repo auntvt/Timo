@@ -5,7 +5,10 @@ import com.linln.admin.system.domain.User;
 import com.linln.admin.system.repository.UserRepository;
 import com.linln.admin.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 根据用户名查询用户数据
      * @param username 用户名
+     * @param status 用户状态
      * @return 用户数据
      */
     @Override
@@ -55,7 +59,6 @@ public class UserServiceImpl implements UserService {
     public List<User> getIdList(List<Long> ids) {
         return userRepository.findByIdInAndStatus(ids, StatusEnum.OK.getCode());
     }
-
 
     /**
      * 获取分页列表数据

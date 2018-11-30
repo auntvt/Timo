@@ -1,6 +1,5 @@
 package com.linln.admin.core.enums;
 
-import lombok.Data;
 import lombok.Getter;
 
 /**

@@ -1,6 +1,5 @@
 package com.linln.admin.system.service.impl;
 
-import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.system.domain.ActionLog;
 import com.linln.admin.system.repository.ActionLogRepository;
 import com.linln.admin.system.service.ActionLogService;

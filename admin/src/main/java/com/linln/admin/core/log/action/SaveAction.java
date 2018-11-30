@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
 import javax.persistence.Table;
-import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
 
 /**

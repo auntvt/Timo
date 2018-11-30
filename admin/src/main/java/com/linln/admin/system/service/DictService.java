@@ -14,14 +14,36 @@ import java.util.List;
  */
 public interface DictService {
 
+    /**
+     * 根据字典标识获取字典数据
+     * @param name 字典标识
+     */
     Dict getName(String name);
 
+    /**
+     * 获取分页列表数据
+     * @param example 查询实例
+     * @param pageIndex 页码
+     * @param pageSize 获取列表长度
+     * @return 返回分页数据
+     */
     Page<Dict> getPageList(Example<Dict> example, Integer pageIndex, Integer pageSize);
 
+    /**
+     * 根据字典ID查询字典数据
+     * @param id 字典ID
+     */
     Dict getId(Long id);
 
+    /**
+     * 保存字典
+     * @param dict 字典实体类
+     */
     Dict save(Dict dict);
 
+    /**
+     * 状态(启用，冻结，删除)/批量状态处理
+     */
     @Transactional
     Integer updateStatus(StatusEnum statusEnum, List<Long> idList);
 }

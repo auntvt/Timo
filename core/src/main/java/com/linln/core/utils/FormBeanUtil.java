@@ -1,7 +1,8 @@
 package com.linln.core.utils;
 
-import org.springframework.beans.*;
-import org.springframework.util.ClassUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.FatalBeanException;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,6 +1,5 @@
 package com.linln.admin.core.config;
 
-
 import com.linln.admin.core.config.properties.ProjectProperties;
 import com.linln.admin.core.shiro.AuthRealm;
 import com.linln.admin.core.shiro.UserAuthFilter;
@@ -28,7 +27,7 @@ import java.util.LinkedHashMap;
 public class ShiroConfig {
 
     @Bean
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager){
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
@@ -48,16 +47,16 @@ public class ShiroConfig {
          * 	—user 认证和自动登录可访问
          */
         LinkedHashMap<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/login","anon");
-        filterMap.put("/logout","anon");
-        filterMap.put("/captcha","anon");
-        filterMap.put("/noAuth","anon");
-        filterMap.put("/css/**","anon");
-        filterMap.put("/js/**","anon");
-        filterMap.put("/images/**","anon");
-        filterMap.put("/lib/**","anon");
-        filterMap.put("/favicon.ico","anon");
-        filterMap.put("/**","userAuth");
+        filterMap.put("/login", "anon");
+        filterMap.put("/logout", "anon");
+        filterMap.put("/captcha", "anon");
+        filterMap.put("/noAuth", "anon");
+        filterMap.put("/css/**", "anon");
+        filterMap.put("/js/**", "anon");
+        filterMap.put("/images/**", "anon");
+        filterMap.put("/lib/**", "anon");
+        filterMap.put("/favicon.ico", "anon");
+        filterMap.put("/**", "userAuth");
 
         // 设置过滤规则
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
@@ -72,7 +71,7 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSecurityManager getDefaultWebSecurityManager(AuthRealm authRealm,
                                                                   DefaultWebSessionManager sessionManager,
-                                                                  CookieRememberMeManager rememberMeManager){
+                                                                  CookieRememberMeManager rememberMeManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(authRealm);
         securityManager.setSessionManager(sessionManager);
@@ -84,7 +83,7 @@ public class ShiroConfig {
      * 自定义的Realm
      */
     @Bean
-    public AuthRealm getRealm(EhCacheManager ehCacheManager){
+    public AuthRealm getRealm(EhCacheManager ehCacheManager) {
         AuthRealm authRealm = new AuthRealm();
         authRealm.setCacheManager(ehCacheManager);
         return authRealm;
@@ -94,7 +93,7 @@ public class ShiroConfig {
      * 缓存管理器-使用Ehcache实现缓存
      */
     @Bean
-    public EhCacheManager ehCacheManager(CacheManager cacheManager){
+    public EhCacheManager ehCacheManager(CacheManager cacheManager) {
         EhCacheManager ehCacheManager = new EhCacheManager();
         ehCacheManager.setCacheManager(cacheManager);
         return ehCacheManager;
@@ -104,7 +103,7 @@ public class ShiroConfig {
      * session管理器
      */
     @Bean
-    public DefaultWebSessionManager getDefaultWebSessionManager(EhCacheManager cacheManager, ProjectProperties properties){
+    public DefaultWebSessionManager getDefaultWebSessionManager(EhCacheManager cacheManager, ProjectProperties properties) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setCacheManager(cacheManager);
         sessionManager.setGlobalSessionTimeout(properties.getGlobalSessionTimeout() * 1000);

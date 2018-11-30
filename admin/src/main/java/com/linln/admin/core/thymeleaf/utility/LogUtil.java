@@ -6,7 +6,6 @@ import com.linln.core.utils.ReflexBeanUtil;
 import com.linln.core.utils.SpringContextUtil;
 
 import javax.persistence.Table;
-import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
