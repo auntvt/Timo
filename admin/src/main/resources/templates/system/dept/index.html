@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:mo="https://gitee.com/aun/Timo">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+    <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+</head>
+<body class="timo-layout-page">
+<div class="layui-card timo-tree" th:attr="data-url=@{'/dept/list?'+${search}}">
+    <div class="layui-card-header timo-card-header">
+        <span><i class="fa fa-bars"></i> 部门管理</span>
+        <i class="layui-icon layui-icon-refresh refresh-btn"></i>
+    </div>
+    <div class="layui-card-body layui-row">
+        <div class="layui-col-lg2 layui-col-sm3">
+            <div class="layui-card timo-nav-tree">
+                <div class="layui-card-header">部门结构</div>
+                <div class="layui-card-body">
+                    <ul class="ztree"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg10 layui-col-sm9">
+            <div class="layui-row timo-card-screen">
+                <div class="pull-left layui-form-pane timo-search-box">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-block timo-search-status">
+                            <select class="timo-search-select" name="status" mo:dictKey="SEARCH_STATUS" mo-selected="${param.status}"></select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" th:value="${param.title}" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn timo-search-btn">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="pull-right screen-btn-group">
+                    <button class="layui-btn open-popup popup-add" data-title="添加部门" th:attr="data-url=@{/dept/add}"  data-size="500,410">
+                        <i class="fa fa-plus"></i> 添加</button>
+                    <div class="btn-group">
+                        <button class="layui-btn">操作<span class="caret"></span></button>
+                        <dl class="layui-nav-child layui-anim layui-anim-upbit">
+                            <dd><a class="ajax-status" th:href="@{/dept/status/ok}">启用</a></dd>
+                            <dd><a class="ajax-status" th:href="@{/dept/status/freezed}">冻结</a></dd>
+                            <dd><a class="ajax-status" th:href="@{/dept/status/delete}">删除</a></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <table class="layui-table timo-table timo-tree-table">
+                <thead>
+                <tr>
+                    <th class="timo-table-checkbox">
+                        <label class="timo-checkbox"><input type="checkbox">
+                            <i class="layui-icon layui-icon-ok"></i></label>
+                    </th>
+                    <th>名称</th>
+                    <th>序号	</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody class="tree-hide">
+                <tr class="{{$hide}}" tree-pid="{{pid}}" tree-id="{{id}}">
+                    <td><label class="timo-checkbox"><input type="checkbox" value="{{id}}">
+                        <i class="layui-icon layui-icon-ok"></i></label></td>
+                    <td>{{title}}</td>
+                    <td>{{sort}}</td>
+                    <td>正常</td>
+                    <td>
+                        <a class="open-popup popup-edit" data-title="编辑部门" th:attr="data-url=@{'/dept/edit/{{id}}'}"  data-size="500,410" href="#">编辑</a>
+                        <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/dept/detail/{{id}}'}"  data-size="800,600" href="#">详细</a>
+                        <a class="ajax-get popup-delete" th:attr="data-msg='您是否确定删除'" th:href="@{'/dept/status/delete?ids={{id}}'}">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script th:replace="/common/template :: script"></script>
+<script type="text/javascript" th:src="@{/js/plugins/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.core.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.exedit.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/timoTree.js}"></script>
+<script type="text/javascript">
+    $.fn.timoTree();
+</script>
+</body>
+</html>

@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:mo="https://gitee.com/aun/Timo">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+    <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
 </head>
 <body class="timo-layout-page">
     <div class="layui-card">
@@ -16,6 +17,12 @@
                         <label class="layui-form-label">状态</label>
                         <div class="layui-input-block timo-search-status">
                             <select class="timo-search-select" name="status" mo:dictKey="SEARCH_STATUS" mo-selected="${param.status}"></select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">所在部门</label>
+                        <div class="layui-input-block">
+                            <input class="layui-input select-tree" th:attr="data-url=@{/dept/list}" th:value="${param.deptId}" type="text" name="deptId" placeholder="请选择部门">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -44,7 +51,7 @@
                             <i class="fa fa-user-secret"></i> 角色分配</button>
                     </div>
                     <div class="btn-group-right">
-                        <button class="layui-btn open-popup" data-title="添加用户" th:attr="data-url=@{/user/add}"  data-size="560,620">
+                        <button class="layui-btn open-popup" data-title="添加用户" th:attr="data-url=@{/user/add}"  data-size="600,520">
                             <i class="fa fa-plus"></i> 添加</button>
                         <div class="btn-group">
                             <button class="layui-btn">操作<span class="caret"></span></button>
@@ -86,7 +93,7 @@
                     <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
                     <td th:text="${#dicts.dataStatus(item.status)}">状态</td>
                     <td>
-                        <a class="open-popup" data-title="编辑用户" th:attr="data-url=@{'/user/edit/'+${item.id}}"  data-size="560,515" href="#">编辑</a>
+                        <a class="open-popup" data-title="编辑用户" th:attr="data-url=@{'/user/edit/'+${item.id}}"  data-size="600,570" href="#">编辑</a>
                         <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/user/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
                         <a class="ajax-get" th:attr="data-msg='您是否删除'+${item.nickname}" th:href="@{/user/status/delete(ids=${item.id})}">删除</a>
                     </td>
@@ -97,5 +104,24 @@
         </div>
     </div>
 <script th:replace="/common/template :: script"></script>
+<script type="text/javascript" th:src="@{/js/plugins/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.core.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/timoTree.js}"></script>
+<script type="text/javascript">
+    var local = window.localStorage;
+    // 树形菜单
+    $.fn.selectTree({
+        rootTree: '全部',
+        onSelected: function(treeNode){
+            local.setItem('deptTitle', treeNode.name);
+        }
+    });
+    $(function(){
+        var dept = $('.select-tree');
+        if(dept.attr('value').length > 0){
+            dept.val(local.getItem('deptTitle'));
+        }
+    });
+</script>
 </body>
 </html>

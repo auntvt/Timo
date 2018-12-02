@@ -20,6 +20,7 @@ public class ActionLog implements Serializable {
     private Long id;
     private String name;
     private Byte type;
+    private String ipaddr;
     private String clazz;
     private String method;
     private String model;

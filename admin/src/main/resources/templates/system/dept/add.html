@@ -6,51 +6,32 @@
 </head>
 <body>
 <div class="layui-form timo-compile">
-    <form th:action="@{/menu/save}">
-        <input type="hidden" name="id" th:if="${menu}" th:value="${menu.id}"/>
+    <form th:action="@{/dept/save}">
+        <input type="hidden" name="id" th:if="${dept}" th:value="${dept.id}"/>
         <div class="layui-form-item">
-            <label class="layui-form-label">标题</label>
+            <label class="layui-form-label">部门名称</label>
             <div class="layui-input-inline">
-                <input class="layui-input" type="text" name="title"  placeholder="请输入标题" th:value="${menu?.title}">
+                <input class="layui-input" type="text" name="title"  placeholder="请输入标题" th:value="${dept?.title}">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">URL地址</label>
+            <label class="layui-form-label">父级部门</label>
             <div class="layui-input-inline">
-                <input class="layui-input" type="text" name="url"  placeholder="请输入URL地址" th:value="${menu?.url}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">菜单图标</label>
-            <div class="layui-input-inline">
-                <input class="layui-input icon-input" type="text" name="icon"  placeholder="请输入菜单图标" th:value="${menu?.icon}">
-            </div>
-            <i th:class="'icon-show '+${menu?.icon}" style="line-height: 38px;"></i>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">父级菜单</label>
-            <div class="layui-input-inline">
-                <input class="layui-input select-tree" th:attr="data-url=@{/menu/list}, data-value=${pMenu?.id}" type="text" name="pid"  placeholder="请输入父级菜单" th:value="${pMenu?.title}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">菜单类型</label>
-            <div class="layui-input-inline">
-                <select name="type" mo:dictKey="MENU_TYPE" mo-selected="${menu?.type}" mo-empty="" lay-verify="type"></select>
+                <input class="layui-input select-tree" th:attr="data-url=@{/dept/list}, data-value=${pDept?.id}" type="text" name="pid"  placeholder="请输入父级部门" th:value="${pDept?.title}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">排序</label>
             <div class="layui-input-inline">
                 <select class="select-sort" name="sort"
-                        th:attr="data-url=@{/menu/sortList}, data-id=${menu?.id}, data-sort=${menu?.sort}" lay-verify="sort"></select>
+                        th:attr="data-url=@{/dept/sortList}, data-id=${dept?.id}, data-sort=${dept?.sort}" lay-verify="sort"></select>
             </div>
             <div class="layui-input-info">（之后）</div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" class="layui-textarea" name="remark">[[${menu?.remark}]]</textarea>
+                <textarea placeholder="请输入内容" class="layui-textarea" name="remark">[[${dept?.remark}]]</textarea>
             </div>
         </div>
         <div class="layui-form-item timo-finally">
@@ -75,7 +56,7 @@
 
     // 初始化下拉树
     $.fn.selectTree({
-        rootTree: '顶级菜单',
+        rootTree: '顶级',
         // 选中后事件
         onSelected: sortRender
     });
@@ -101,11 +82,6 @@
             form.render('select');
         });
     }
-
-    // 监听变动图标
-    $(".icon-input").on("input propertychange", function(){
-        $(".icon-show").attr("class", "icon-show "+$(this).val());
-    });
 </script>
 </body>
 </html>

@@ -5,7 +5,7 @@
 [![star](https://gitee.com/aun/Timo/badge/star.svg?theme=dark)](https://gitee.com/aun/Timo/stargazers)
 [![fork](https://gitee.com/aun/Timo/badge/fork.svg?theme=dark)](https://gitee.com/aun/Timo/members)
 #### 项目介绍
-TIMO后台管理系统，基于SpringBoot2.0 + jpa + thymeleaf + shiro 开发的通用型后台管理，采用分模块的方式便于开发和维护，目前已开发的功能：权限管理、字典管理、日志记录、文件上传、代码生成功能，为快速开发后台管理提供解决方案！
+TIMO后台管理系统，基于SpringBoot2.0 + jpa + thymeleaf + shiro 开发的通用型后台管理，采用分模块的方式便于开发和维护，目前已开发的功能：权限管理、部门管理、字典管理、日志记录、文件上传、代码生成功能，为快速开发后台管理提供解决方案！
 
 #### 技术选型
 
@@ -71,6 +71,7 @@ TIMO后台管理系统，基于SpringBoot2.0 + jpa + thymeleaf + shiro 开发的
 3. SQL文件：doc/timo.sql（经常忘记同步！）
 
 #### 更新记录
+- 2018-12-03更新 1.加入部门管理功能 2.更新开源协议 3.修复若干问题
 - 2018-12-01更新 发布v1.0版本！功能没有变动，优化部分代码
 - 2018-11-28更新 表单构建开发工具-加入图片上传选项
 - 2018-11-27更新 表单构建开发工具-加入拖拽位置功能

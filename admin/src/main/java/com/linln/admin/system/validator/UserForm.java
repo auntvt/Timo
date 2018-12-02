@@ -4,6 +4,7 @@ import com.linln.admin.system.domain.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -20,4 +21,6 @@ public class UserForm extends User implements Serializable {
     @Size(min = 2, message = "用户昵称：请输入至少2个字符")
     private String nickname;
     private String confirm;
+    @NotNull(message = "所在部门不能为空")
+    private Long deptId;
 }

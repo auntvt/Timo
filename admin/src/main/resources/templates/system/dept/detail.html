@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+    <div class="timo-detail-page">
+        <div class="timo-detail-title">基本信息</div>
+        <table class="layui-table timo-detail-table">
+            <colgroup>
+                <col width="100px"><col>
+                <col width="100px"><col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>主键ID</th>
+                <td th:text="${dept.id}"></td>
+                <th>部门名称</th>
+                <td th:text="${dept.title}"></td>
+            </tr>
+            <tr>
+                <th>父级编号</th>
+                <td th:text="${dept.pid}"></td>
+                <th>排序</th>
+                <td th:text="${dept.sort}"></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <th>创建时间</th>
+                <td th:text="${#dates.format(dept.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <th>更新时间</th>
+                <td th:text="${#dates.format(dept.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <th>创建者</th>
+                <td th:text="${dept.createBy?.nickname}"></td>
+                <th>更新者</th>
+                <td th:text="${dept.updateBy?.nickname}"></td>
+            </tr>
+            <tr>
+                <th>备注</th>
+                <td th:text="${dept.remark}" colspan="4"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>

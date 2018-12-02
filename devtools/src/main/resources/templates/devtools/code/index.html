@@ -40,12 +40,6 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">业务名称</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="genTitle" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
                         <label class="layui-form-label">模块名称</label>
                         <div class="layui-input-inline">
                             <input type="text" name="genModule" th:value="${basic.genModule}" autocomplete="off" class="layui-input">
@@ -55,6 +49,12 @@
                         <label class="layui-form-label">父级菜单</label>
                         <div class="layui-input-inline">
                             <input class="layui-input select-tree" th:attr="data-url=@{/menu/list}" type="text" name="genPMenu" value="顶级菜单" data-value="0" placeholder="请选择父级菜单">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">业务名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="genTitle" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,9 @@
 <script type="text/javascript" th:src="@{/js/timoTree.js}"></script>
 <script type="text/javascript">
     // 树形菜单
-    $.fn.selectTree();
+    $.fn.selectTree({
+        rootTree: '顶级菜单'
+    });
 
     // 验证下拉选择器
     layui.config({

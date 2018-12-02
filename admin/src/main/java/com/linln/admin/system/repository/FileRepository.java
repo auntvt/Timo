@@ -3,7 +3,6 @@ package com.linln.admin.system.repository;
 import com.linln.admin.system.domain.File;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
 /**
  * @author 小懒虫
  * @date 2018/11/02

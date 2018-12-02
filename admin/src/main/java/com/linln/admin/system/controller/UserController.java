@@ -11,8 +11,10 @@ import com.linln.admin.core.log.action.UserAction;
 import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.core.utils.TimoExample;
+import com.linln.admin.system.domain.Dept;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.domain.User;
+import com.linln.admin.system.service.DeptService;
 import com.linln.admin.system.service.RoleService;
 import com.linln.admin.system.service.UserService;
 import com.linln.admin.system.validator.UserForm;
@@ -57,6 +59,9 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private DeptService deptService;
+
     /**
      * 列表页面
      *
@@ -68,6 +73,11 @@ public class UserController {
     public String index(Model model, User user,
                         @RequestParam(value = "page", defaultValue = "1") int pageIndex,
                         @RequestParam(value = "size", defaultValue = "10") int pageSize) {
+
+        // 判断部门是否为0，如果是则查询全部
+        if(Long.valueOf(0L).equals(user.getDeptId())){
+            user.setDeptId(null);
+        }
 
         // 创建匹配器，进行动态查询匹配
         ExampleMatcher matcher = ExampleMatcher.matching().
@@ -100,7 +110,10 @@ public class UserController {
     @RequiresPermissions("/user/edit")
     public String toEdit(@PathVariable("id") Long id, Model model) {
         User user = userService.getId(id);
+        Dept dept = deptService.getId(user.getDeptId());
+
         model.addAttribute("user", user);
+        model.addAttribute("dept", dept);
         return "/system/user/add";
     }
 
@@ -171,7 +184,10 @@ public class UserController {
     @RequiresPermissions("/user/detail")
     public String toDetail(@PathVariable("id") Long id, Model model) {
         User user = userService.getId(id);
+        Dept dept = deptService.getId(user.getDeptId());
+
         model.addAttribute("user", user);
+        model.addAttribute("dept", dept);
         return "/system/user/detail";
     }
 

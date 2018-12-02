@@ -45,6 +45,7 @@
                     <th>日志名称</th>
                     <th>操作人</th>
                     <th>日志类型</th>
+                    <th>IP地址</th>
                     <th>日志消息</th>
                     <th>记录时间</th>
                     <th>操作</th>
@@ -57,6 +58,7 @@
                     <td th:text="${item.name}">日志名称</td>
                     <td th:text="${item.createBy?.nickname}">操作人</td>
                     <td th:text="${#dicts.keyValue('LOG_TYPE', item.type)}">日志类型</td>
+                    <td th:text="${item.ipaddr}">IP地址</td>
                     <td th:text="${item.message}">日志消息</td>
                     <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
                     <td>

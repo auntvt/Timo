@@ -55,6 +55,14 @@ public class ShiroUtil {
     }
 
     /**
+     * 获取用户IP地址
+     */
+    public static String getIp()
+    {
+        return SecurityUtils.getSubject().getSession().getHost();
+    }
+
+    /**
      * 重置Cookie“记住我”序列化信息
      */
     public static void resetCookieRememberMe(){

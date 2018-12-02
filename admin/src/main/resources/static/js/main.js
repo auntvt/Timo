@@ -45,9 +45,10 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
             if (bootLay.length === 0) {
                 var title = item.attr("lay-icon") === 'true' ? item.html()
                     : item.children(".layui-nav-title").text();
+                var iframeUrl = (window.location.pathname + url).replace('//','/');
                 element.tabAdd('iframe-tabs', {
                     title: title
-                    , content: '<iframe src="' + url + '" frameborder="0" class="layui-layout-iframe"></iframe>'
+                    , content: '<iframe src="' + iframeUrl + '" frameborder="0" class="layui-layout-iframe"></iframe>'
                     , id: url
                 });
             }

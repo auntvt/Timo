@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="pull-right screen-btn-group">
-                    <button class="layui-btn open-popup" data-title="添加角色" th:attr="data-url=@{/role/add}"  data-size="460,355">
+                    <button class="layui-btn open-popup" data-title="添加角色" th:attr="data-url=@{/role/add}"  data-size="460,357">
                         <i class="fa fa-plus"></i> 添加</button>
                     <button class="layui-btn open-popup-param" data-type="radio" data-title="授权管理" th:attr="data-url=@{/role/auth}"  data-size="600,500">
                         <i class="fa fa-user-secret"></i> 授权</button>
@@ -78,7 +78,7 @@
                         <a class="open-popup" data-title="用户列表" th:attr="data-url=@{'/role/userList/'+${item.id}}"  data-size="800,600" href="#">用户列表</a>
                     </td>
                     <td>
-                        <a class="open-popup" data-title="编辑角色" th:attr="data-url=@{'/role/edit/'+${item.id}}"  data-size="460,355" href="#">编辑</a>
+                        <a class="open-popup" data-title="编辑角色" th:attr="data-url=@{'/role/edit/'+${item.id}}"  data-size="460,357" href="#">编辑</a>
                         <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/role/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
                         <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/role/status/delete(ids=${item.id})}">删除</a>
                     </td>

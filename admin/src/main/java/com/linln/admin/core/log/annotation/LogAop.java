@@ -4,6 +4,7 @@ import com.linln.admin.core.log.action.base.ResetLog;
 import com.linln.admin.core.log.action.model.ActionModel;
 import com.linln.admin.core.log.action.model.BusinessMethod;
 import com.linln.admin.core.log.action.model.BusinessType;
+import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.system.domain.ActionLog;
 import com.linln.admin.core.log.action.base.ActionMap;
 import com.linln.admin.system.service.ActionLogService;
@@ -55,6 +56,7 @@ public class LogAop {
 
         // 封装日志实例对象
         ActionLog actionLog = new ActionLog();
+        actionLog.setIpaddr(ShiroUtil.getIp());
         actionLog.setClazz(point.getTarget().getClass().getName());
         actionLog.setMethod(targetMethod.getName());
         actionLog.setType(((ActionModel) actionModel).getType());

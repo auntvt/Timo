@@ -37,7 +37,6 @@
         zTreeReady: function(listData){
             var setting = {
                 view: {
-                    showLine: false,
                     addHoverDom: addHoverDom,
                     removeHoverDom: removeHoverDom,
                 },
@@ -238,7 +237,7 @@
         self=this;
         this.defaults={
             tree: $(".select-tree"),
-            rootTree: true,
+            rootTree: null,
             onSelected: function () {}
         }
         this.options=$.extend({},this.defaults,param);
@@ -257,12 +256,12 @@
             tree.click(function(){
                 var node = $(this);
                 $.get(node.data('url'),function(result){
-                    if(result.data.length > 0){
+                    //if(result.data.length > 0){
                         // 显示定位悬浮选择器
                         self.position(node);
                         // zTree传递列表数据
                         self.zTreeReady(result.data, node);
-                    }
+                    //}
                 });
             });
         },
@@ -283,15 +282,15 @@
                         node.val(treeNode.name);
                         node.siblings("[type='hidden']").val(treeNode.id);
                         $(".selectContent").hide();
-                        self.options.onSelected(treeNode.id);
+                        self.options.onSelected(treeNode);
                     }
                 }
             };
 
             // 封装zTree数据
             var zNodes = [];
-            if(self.options.rootTree){
-                zNodes.push({id: 0, name: '顶级菜单', open: true});
+            if(self.options.rootTree != null){
+                zNodes.push({id: 0, name: self.options.rootTree, open: true});
             }
             listData.forEach(function (val) {
                 var nav = {
@@ -335,10 +334,12 @@
 
         // 显示定位悬浮选择器
         position: function (tree) {
+            var source = self.options.tree;
             var offset = tree.offset();
             $(".selectContent").css({
                 top: offset.top + tree.outerHeight() + 'px',
-                left: offset.left + 'px'
+                left: offset.left + 'px',
+                width: source.innerWidth()
             }).show();
 
             $("body").bind("click", function (e) {

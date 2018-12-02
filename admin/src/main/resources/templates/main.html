@@ -60,12 +60,12 @@
             <!-- 导航区域 -->
             <ul class="layui-nav layui-nav-tree" lay-filter="layui-nav-side">
                 <li class="layui-nav-item" th:each="item:${treeMenu}">
-                    <a href="javascript:;" th:attr="lay-url=@{${item.value.url}}"><i
+                    <a href="javascript:;" th:attr="lay-url=${item.value.url}"><i
                             th:class="${item.value.icon}"></i><span class="layui-nav-title"
                                                                     th:text="${item.value.title}">菜单项</span></a>
                     <dl class="layui-nav-child" th:if="${item.value.children.size()}">
                         <dd th:each="subItem:${item.value.children}"><a href="javascript:;"
-                                                                        th:attr="lay-url=@{${subItem.value.url}}"><span
+                                                                        th:attr="lay-url=${subItem.value.url}"><span
                                 class="layui-nav-title" th:text="${subItem.value.title}">子菜单项</span></a></dd>
                     </dl>
                 </li>

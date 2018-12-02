@@ -32,6 +32,7 @@ public class User implements Serializable {
     private String password;
     private String salt;
     private String nickname;
+    private Long deptId;
     private String picture;
     private String sex;
     private String phone;
