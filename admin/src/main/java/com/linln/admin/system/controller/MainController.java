@@ -1,5 +1,6 @@
 package com.linln.admin.system.controller;
 
+import com.linln.admin.core.constant.AdminConst;
 import com.linln.admin.core.enums.MenuTypeEnum;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
@@ -8,6 +9,7 @@ import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.system.domain.File;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.domain.User;
+import com.linln.admin.system.service.MenuService;
 import com.linln.admin.system.service.UserService;
 import com.linln.admin.system.validator.UserForm;
 import com.linln.core.enums.TimoResultEnum;
@@ -18,6 +20,7 @@ import com.linln.core.vo.ResultVo;
 import com.linln.core.wraps.URL;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,22 +45,38 @@ public class MainController{
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MenuService menuService;
+
     /**
      * 后台主体内容
      */
     @GetMapping("/")
     @RequiresPermissions("/index")
     public String main(Model model){
-        User User = ShiroUtil.getSubject();
-        // 封装菜单树形数据
+        // 获取当前登录的用户
+        User user = ShiroUtil.getSubject();
+
+        // 菜单键值对(ID->菜单)
         Map<Long,Menu> keyMenu = new HashMap<>();
-        User.getRoles().forEach(role -> {
-            role.getMenus().forEach(menu -> {
-                if(menu.getStatus().equals(StatusEnum.OK.getCode())){
-                    keyMenu.put(menu.getId(), menu);
-                }
+
+        // 管理员实时更新菜单
+        if(user.getId().equals(AdminConst.ADMIN_ID)){
+            Sort sort = new Sort(Sort.Direction.ASC, "sort");
+            List<Menu> menus = menuService.getList(sort);
+            menus.forEach(menu -> keyMenu.put(menu.getId(), menu));
+        }else{
+            // 其他用户需从相应的角色中获取菜单资源
+            user.getRoles().forEach(role -> {
+                role.getMenus().forEach(menu -> {
+                    if(menu.getStatus().equals(StatusEnum.OK.getCode())){
+                        keyMenu.put(menu.getId(), menu);
+                    }
+                });
             });
-        });
+        }
+
+        // 封装菜单树形数据
         Map<Long,Menu> treeMenu = new HashMap<>();
         keyMenu.forEach((id, menu) -> {
             if(!menu.getType().equals(MenuTypeEnum.NOT_MENU.getCode())){
@@ -70,8 +90,8 @@ public class MainController{
             }
         });
 
-        model.addAttribute("user",User);
-        model.addAttribute("treeMenu",treeMenu);
+        model.addAttribute("user", user);
+        model.addAttribute("treeMenu", treeMenu);
         return "/main";
     }
 

@@ -4,6 +4,7 @@ import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.core.log.action.SaveAction;
+import com.linln.admin.core.log.action.StatusAction;
 import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.utils.TimoExample;
 import com.linln.admin.system.domain.Dept;
@@ -190,6 +191,7 @@ public class DeptController {
     @RequestMapping("/status/{param}")
     @RequiresPermissions("/dept/status")
     @ResponseBody
+    @ActionLog(name = "部门状态", action = StatusAction.class)
     public ResultVo status(
             @PathVariable("param") String param,
             @RequestParam(value = "ids", required = false) List<Long> idList){

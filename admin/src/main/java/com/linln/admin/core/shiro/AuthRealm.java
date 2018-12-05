@@ -1,5 +1,6 @@
 package com.linln.admin.core.shiro;
 
+import com.linln.admin.core.constant.AdminConst;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.domain.User;
@@ -38,9 +39,16 @@ public class AuthRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 获取用户Principal对象
         User user = (User) principal.getPrimaryPrincipal();
+
+        // 管理员拥有所有权限
+        if(user.getId().equals(AdminConst.ADMIN_ID)){
+            info.addRole(AdminConst.ADMIN_ROLE_NAME);
+            info.addStringPermission("*");
+            return info;
+        }
+
         // 获取角色和资源（JPA延迟加载超时，通过用户ID获取角色列表）
         Set<Role> roles = roleService.getUserRoleList(user.getId());
-
         if(roles != null){
             // 将角色和菜单封装到Subject主体对象
             user.setRoles(roles);
@@ -66,6 +74,10 @@ public class AuthRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 获取数据库中的用户名密码
         User user = userService.getByName(token.getUsername());
+        // 判断用户名是否存在
+        if(user == null){
+            throw new UnknownAccountException();
+        }
         // 对盐进行加密处理
         ByteSource salt = ByteSource.Util.bytes(user.getSalt());
         /** 传入密码自动判断是否正确

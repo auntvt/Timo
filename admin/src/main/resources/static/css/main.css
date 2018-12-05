@@ -255,6 +255,7 @@ a{
     color: #fff;
 }
 .layui-layout-admin .layui-side .layui-side-user-avatar{
+    cursor: pointer;
 	-webkit-box-flex: 0;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
@@ -267,6 +268,9 @@ a{
 }
 .layui-layout-admin .layui-side .layui-side-user-name{
 	font-size: 16px;
+}
+.layui-layout-admin .layui-side .layui-side-user-designation{
+    margin-top: 2px;
 }
 .layui-layout-admin .layui-side .layui-side-user-designation:before{
 	content:"";
@@ -300,6 +304,9 @@ a{
 }
 .layui-layout-admin .layui-side .layui-nav-child a{
 	padding-left: 44px;
+}
+.layui-layout-admin .layui-side .layui-nav-child .layui-nav-child a{
+	padding-left: 64px;
 }
 
 /* 主体区域 */
@@ -658,7 +665,7 @@ a{
 	background-color: #ffffff;
 }
 .timo-layout-page .timo-table .timo-table-checkbox{
-    width: 18px;
+    width: 20px;
 }
 .timo-layout-page .timo-table .timo-checkbox{
     margin: 0 1px;

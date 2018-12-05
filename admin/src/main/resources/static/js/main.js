@@ -84,7 +84,7 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
     window.onhashchange();
 
     /* 初始化时展开子菜单 */
-    $("dd.layui-this").parents(".layui-nav-item")
+    $("dd.layui-this").parents(".layui-nav-child").parent()
         .addClass("layui-nav-itemed");
 
     /* 刷新iframe页面 */

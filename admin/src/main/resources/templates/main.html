@@ -38,7 +38,7 @@
                                 data-size="680,464"><!--
               --><i class="fa fa-user-o"></i>个人信息</a></div>
                         <div><a class="open-popup" data-title="修改密码" th:attr="data-url=@{/edit_pwd}"
-                                data-size="456,295"><!--
+                                data-size="456,296"><!--
               --><i class="fa fa-lock" style="font-size:17px;width:12px;"></i>修改密码</a></div>
                         <div><a th:href="@{/logout}"><i class="fa fa-power-off"></i>退出登录</a></div>
                     </div>
@@ -51,7 +51,8 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <div class="layui-side-user">
-                <img class="layui-side-user-avatar" th:src="@{'/user/picture?p='+${user.picture}}" alt="头像">
+                <img class="layui-side-user-avatar open-popup" th:attr="data-url=@{/user_info}" data-size="680,464"
+                     th:src="@{'/user/picture?p='+${user.picture}}" alt="头像">
                 <div>
                     <p class="layui-side-user-name" th:text="${user.nickname}">TIMO</p>
                     <p class="layui-side-user-designation">在线</p>
@@ -60,13 +61,16 @@
             <!-- 导航区域 -->
             <ul class="layui-nav layui-nav-tree" lay-filter="layui-nav-side">
                 <li class="layui-nav-item" th:each="item:${treeMenu}">
-                    <a href="javascript:;" th:attr="lay-url=${item.value.url}"><i
-                            th:class="${item.value.icon}"></i><span class="layui-nav-title"
-                                                                    th:text="${item.value.title}">菜单项</span></a>
+                    <a href="javascript:;" th:attr="lay-url=${item.value.url}"><i th:class="${item.value.icon}"></i><span class="layui-nav-title" th:text="${item.value.title}">一级菜单</span></a>
                     <dl class="layui-nav-child" th:if="${item.value.children.size()}">
-                        <dd th:each="subItem:${item.value.children}"><a href="javascript:;"
-                                                                        th:attr="lay-url=${subItem.value.url}"><span
-                                class="layui-nav-title" th:text="${subItem.value.title}">子菜单项</span></a></dd>
+                        <dd th:each="sItem:${item.value.children}">
+                            <a href="javascript:;" th:attr="lay-url=${sItem.value.url}"><span class="layui-nav-title" th:text="${sItem.value.title}">二级菜单</span></a>
+                            <dl class="layui-nav-child" th:if="${sItem.value.children.size()}">
+                                <dd th:each="tItem:${sItem.value.children}">
+                                    <a href="javascript:;" th:attr="lay-url=${tItem.value.url}"><span class="layui-nav-title" th:text="${tItem.value.title}">三级菜单</span></a>
+                                </dd>
+                            </dl>
+                        </dd>
                     </dl>
                 </li>
             </ul>

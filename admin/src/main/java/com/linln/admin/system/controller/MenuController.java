@@ -72,7 +72,7 @@ public class MenuController {
 
         // 获取用户列表
         Example<Menu> example = TimoExample.of(menu, matcher);
-        Sort sort = new Sort(Sort.Direction.ASC, "type", "sort");
+        Sort sort = new Sort(Sort.Direction.ASC, "sort");
         List<Menu> list = menuService.getList(example, sort);
         list.forEach(editMenu -> {
             String type = String.valueOf(editMenu.getType());
