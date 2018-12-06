@@ -291,7 +291,6 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
         ,exts: 'jpg|jpeg|png|gif' //支持的图片格式
         ,multiple: true //开启多文件选择
         ,choose: function (obj) {
-            var files = obj.pushFile();
             obj.preview(function (index, file, result) {
                 var upload = $('.upload-image');
                 var name = upload.attr('name');
@@ -303,15 +302,21 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
         }
         ,done: function(res, index, upload){
             var field = $('.upload-image').attr('up-field') || 'id';
-            var hide = $("#"+index);
-            var item = hide.parent('.upload-item');
-            if (res.code === 200) {
-                hide.val(res.data[field]);
-                item.addClass('succeed');
-            }else {
-                hide.remove();
-                item.addClass('error');
-            }
+            // 解决节点渲染和异步上传不同步问题
+            var interval = window.setInterval(function(){
+                var hide = $("#"+index);
+                if(hide.length > 0){
+                    var item = hide.parent('.upload-item');
+                    if (res.code === 200) {
+                        hide.val(res.data[field]);
+                        item.addClass('succeed');
+                    }else {
+                        hide.remove();
+                        item.addClass('error');
+                    }
+                    clearInterval(interval);
+                }
+            }, 100);
         }
     });
 

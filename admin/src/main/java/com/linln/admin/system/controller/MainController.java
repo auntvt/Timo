@@ -6,10 +6,11 @@ import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.core.shiro.ShiroUtil;
-import com.linln.admin.system.domain.File;
+import com.linln.admin.system.domain.Upload;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.domain.User;
 import com.linln.admin.system.service.MenuService;
+import com.linln.admin.system.service.UploadService;
 import com.linln.admin.system.service.UserService;
 import com.linln.admin.system.validator.UserForm;
 import com.linln.core.enums.TimoResultEnum;
@@ -124,11 +125,11 @@ public class MainController{
     @RequiresPermissions("/index")
     @ResponseBody
     public ResultVo userPicture(@RequestParam("picture") MultipartFile picture, HttpServletResponse response){
-        FileController fileController = SpringContextUtil.getBean(FileController.class);
-        ResultVo imageResult = fileController.uploadPicture(picture);
+        UploadController uploadController = SpringContextUtil.getBean(UploadController.class);
+        ResultVo imageResult = uploadController.uploadPicture(picture);
         if(imageResult.getCode().equals(TimoResultEnum.SUCCESS.getCode())){
             User subject = ShiroUtil.getSubject();
-            subject.setPicture(((File) imageResult.getData()).getPath());
+            subject.setPicture(((Upload) imageResult.getData()).getPath());
             userService.save(subject);
             ShiroUtil.resetCookieRememberMe();
             return ResultVoUtil.SAVE_SUCCESS;

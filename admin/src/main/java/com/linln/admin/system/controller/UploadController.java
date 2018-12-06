@@ -3,8 +3,8 @@ package com.linln.admin.system.controller;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.core.utils.FileUpload;
-import com.linln.admin.system.domain.File;
-import com.linln.admin.system.service.FileService;
+import com.linln.admin.system.domain.Upload;
+import com.linln.admin.system.service.UploadService;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ import java.security.NoSuchAlgorithmException;
  * @date 2018/11/02
  */
 @Controller
-public class FileController {
+public class UploadController {
 
     @Autowired
-    private FileService fileService;
+    private UploadService uploadService;
 
     /**
      * 上传web格式图片
@@ -34,11 +34,13 @@ public class FileController {
     @ResponseBody
     public ResultVo uploadImage(@RequestParam("image") MultipartFile multipartFile) {
 
-        // 创建File实体对象
-        File file = FileUpload.getFile(multipartFile);
-        file.setPath("/images" + file.getPath());
-
-        return saveImage(multipartFile, file);
+        // 创建Upload实体对象
+        Upload upload = FileUpload.getFile(multipartFile, "/images");
+        try {
+            return saveImage(multipartFile, upload);
+        } catch (IOException | NoSuchAlgorithmException e) {
+            return ResultVoUtil.error("上传图片失败");
+        }
     }
 
     /**
@@ -48,17 +50,19 @@ public class FileController {
     @ResponseBody
     public ResultVo uploadPicture(@RequestParam("picture") MultipartFile multipartFile) {
 
-        // 创建File实体对象
-        File file = FileUpload.getFile(multipartFile);
-        file.setPath("/picture" + file.getPath());
-
-        return saveImage(multipartFile, file);
+        // 创建Upload实体对象
+        Upload upload = FileUpload.getFile(multipartFile, "/picture");
+        try {
+            return saveImage(multipartFile, upload);
+        } catch (IOException | NoSuchAlgorithmException e) {
+            return ResultVoUtil.error("上传头像失败");
+        }
     }
 
     /**
      * 保存上传的web格式图片
      */
-    private ResultVo saveImage(MultipartFile multipartFile, File file) {
+    private ResultVo saveImage(MultipartFile multipartFile, Upload upload) throws IOException, NoSuchAlgorithmException {
         // 判断是否为支持的图片格式
         String[] types = {
                 "image/gif",
@@ -71,20 +75,15 @@ public class FileController {
         }
 
         // 判断图片是否存在
-        File isFile = fileService.isFile(FileUpload.getFileSHA1(multipartFile));
+        Upload isFile = uploadService.isFile(FileUpload.getFileSHA1(multipartFile));
         if (isFile != null) {
             return ResultVoUtil.success(isFile);
         }
 
-        try {
-            FileUpload.transferTo(multipartFile, file);
-        } catch (IOException | NoSuchAlgorithmException e) {
-            return ResultVoUtil.error("上传头像失败");
-        }
-
+        FileUpload.transferTo(multipartFile, upload);
         // 将文件信息保存到数据库中
-        fileService.save(file);
-        return ResultVoUtil.success(file);
+        uploadService.save(upload);
+        return ResultVoUtil.success(upload);
     }
 
 }

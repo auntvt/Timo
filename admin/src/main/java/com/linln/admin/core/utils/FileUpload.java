@@ -3,11 +3,12 @@ package com.linln.admin.core.utils;
 import com.linln.admin.core.config.properties.ProjectProperties;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.system.domain.File;
+import com.linln.admin.system.domain.Upload;
 import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.utils.ToolUtil;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,18 +30,20 @@ import java.util.UUID;
 public class FileUpload {
 
     /**
-     * 创建一个File实体对象
+     * 创建一个Upload实体对象
+     * @param multipartFile MultipartFile对象
+     * @param modulePath 文件模块路径
      */
-    public static File getFile(MultipartFile multipartFile){
+    public static Upload getFile(MultipartFile multipartFile, String modulePath){
         if (multipartFile.getSize() == 0){
             throw new ResultException(ResultEnum.NO_FILE_NULL);
         }
-        File file = new File();
-        file.setMime(multipartFile.getContentType());
-        file.setSize(multipartFile.getSize());
-        file.setName(FileUpload.genFileName(multipartFile.getOriginalFilename()));
-        file.setPath(FileUpload.genDateMkdir("yyyyMMdd") + file.getName());
-        return file;
+        Upload upload = new Upload();
+        upload.setMime(multipartFile.getContentType());
+        upload.setSize(multipartFile.getSize());
+        upload.setName(FileUpload.genFileName(multipartFile.getOriginalFilename()));
+        upload.setPath(getPathPattern() + modulePath + FileUpload.genDateMkdir("yyyyMMdd") + upload.getName());
+        return upload;
     }
 
     /**
@@ -66,7 +69,7 @@ public class FileUpload {
      */
     public static String getPathPattern(){
         ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
-        return properties.getStaticPathPattern();
+        return properties.getStaticPathPattern().replace("/**", "");
     }
 
     /**
@@ -86,23 +89,34 @@ public class FileUpload {
     }
 
     /**
-     * 保存文件及获取文件MD5值和SHA1值
-     * @param multipartFile MultipartFile对象
-     * @param file File实体对象
+     * 获取目标文件对象
+     * @param upload 上传实体类
      */
-    public static void transferTo(MultipartFile multipartFile, File file) throws IOException, NoSuchAlgorithmException {
+    public static File getDestFile(Upload upload) throws IOException {
+
         // 创建保存文件对象
-        String filePath = getUploadPath() + file.getPath();
-        java.io.File dest = new java.io.File(filePath);
+        String path = upload.getPath().replace(getPathPattern(), "");
+        String filePath = getUploadPath() + path;
+        File dest = new File(filePath.replace("//", "/"));
         if(!dest.exists()){
             dest.getParentFile().mkdirs();
             dest.createNewFile();
         }
 
+        return dest;
+    }
+
+    /**
+     * 保存文件及获取文件MD5值和SHA1值
+     * @param multipartFile MultipartFile对象
+     * @param upload Upload
+     */
+    public static void transferTo(MultipartFile multipartFile, Upload upload) throws IOException, NoSuchAlgorithmException {
+
         byte[] buffer = new byte[4096];
         MessageDigest md5 = MessageDigest.getInstance("MD5");
         MessageDigest sha1 = MessageDigest.getInstance("SHA1");
-        try (OutputStream fos = Files.newOutputStream(dest.toPath()); InputStream fis = multipartFile.getInputStream()) {
+        try (OutputStream fos = Files.newOutputStream(getDestFile(upload).toPath()); InputStream fis = multipartFile.getInputStream()) {
             int len = 0;
             while ((len = fis.read(buffer)) != -1) {
                 fos.write(buffer, 0, len);
@@ -113,10 +127,8 @@ public class FileUpload {
         }
         BigInteger MD5Bi = new BigInteger(1, md5.digest());
         BigInteger SHA1Bi = new BigInteger(1, sha1.digest());
-        file.setMd5(MD5Bi.toString(16));
-        file.setSha1(SHA1Bi.toString(16));
-        // 重新设置File对象的路径
-        file.setPath(getPathPattern().replace("/**", "") + file.getPath());
+        upload.setMd5(MD5Bi.toString(16));
+        upload.setSha1(SHA1Bi.toString(16));
     }
 
     /**

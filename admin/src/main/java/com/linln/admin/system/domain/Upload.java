@@ -18,7 +18,7 @@ import java.util.Date;
 @Table(name="sys_file")
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class File implements Serializable {
+public class Upload implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
