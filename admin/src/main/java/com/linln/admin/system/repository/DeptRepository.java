@@ -20,7 +20,7 @@ public interface DeptRepository extends BaseRepository<Dept, Long> {
     public Integer findSortMax(long pid);
 
     /**
-     * 根据父ID查找子部门
+     * 根据父ID查找子孙部门
      * @param pids pid列表
      */
     public List<Dept> findByPidsLikeAndStatus(String pids, Byte status);

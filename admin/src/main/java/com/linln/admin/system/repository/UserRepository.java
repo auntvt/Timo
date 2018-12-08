@@ -1,6 +1,7 @@
 package com.linln.admin.system.repository;
 
 import com.linln.admin.system.domain.User;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
@@ -8,7 +9,8 @@ import java.util.List;
  * @author 小懒虫
  * @date 2018/8/14
  */
-public interface UserRepository extends BaseRepository<User, Long>{
+public interface UserRepository extends BaseRepository<User, Long>, JpaSpecificationExecutor<User> {
+
     /**
      * 根据用户名查询用户数据
      *

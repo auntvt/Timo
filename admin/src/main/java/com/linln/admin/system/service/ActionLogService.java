@@ -12,11 +12,9 @@ public interface ActionLogService {
     /**
      * 获取分页列表数据
      * @param example 查询实例
-     * @param pageIndex 页码
-     * @param pageSize 获取列表长度
      * @return 返回分页数据
      */
-    Page<ActionLog> getPageList(Example<ActionLog> example, Integer pageIndex, Integer pageSize);
+    Page<ActionLog> getPageList(Example<ActionLog> example);
 
     /**
      * 根据日志ID查询日志数据

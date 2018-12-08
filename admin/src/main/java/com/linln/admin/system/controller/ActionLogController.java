@@ -1,6 +1,6 @@
 package com.linln.admin.system.controller;
 
-import com.linln.admin.core.utils.TimoExample;
+import com.linln.admin.core.web.TimoExample;
 import com.linln.admin.system.domain.ActionLog;
 import com.linln.admin.system.service.ActionLogService;
 import com.linln.core.utils.ResultVoUtil;
@@ -23,21 +23,17 @@ public class ActionLogController {
 
     /**
      * 列表页面
-     * @param pageIndex 页码
-     * @param pageSize 获取数据长度
      */
     @GetMapping("/index")
     @RequiresPermissions("/actionLog/index")
-    public String index(Model model, ActionLog actionLog,
-                        @RequestParam(value="page",defaultValue="1") int pageIndex,
-                        @RequestParam(value="size",defaultValue="10") int pageSize){
+    public String index(Model model, ActionLog actionLog){
 
         // 创建匹配器，进行动态查询匹配
         ExampleMatcher matcher = ExampleMatcher.matching();
 
         // 获取日志列表
         Example<ActionLog> example = TimoExample.of(actionLog, matcher);
-        Page<ActionLog> list = actionLogService.getPageList(example, pageIndex, pageSize);
+        Page<ActionLog> list = actionLogService.getPageList(example);
 
         // 封装数据
         model.addAttribute("list",list.getContent());

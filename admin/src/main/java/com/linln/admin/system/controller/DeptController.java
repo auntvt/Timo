@@ -6,7 +6,7 @@ import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.core.log.action.SaveAction;
 import com.linln.admin.core.log.action.StatusAction;
 import com.linln.admin.core.log.annotation.ActionLog;
-import com.linln.admin.core.utils.TimoExample;
+import com.linln.admin.core.web.TimoExample;
 import com.linln.admin.system.domain.Dept;
 import com.linln.admin.system.service.DeptService;
 import com.linln.admin.system.validator.DeptForm;

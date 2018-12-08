@@ -47,6 +47,12 @@ public interface DeptService {
     Dept getId(Long id);
 
     /**
+     * 根据ID查找子孙部门
+     * @param id [id]形式
+     */
+    List<Dept> getPidsLike(Long id);
+
+    /**
      * 保存部门管理
      * @param dept 部门管理实体类
      */

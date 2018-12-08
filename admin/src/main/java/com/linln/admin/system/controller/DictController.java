@@ -7,7 +7,7 @@ import com.linln.admin.core.log.action.SaveAction;
 import com.linln.admin.core.log.action.StatusAction;
 import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.thymeleaf.utility.DictUtil;
-import com.linln.admin.core.utils.TimoExample;
+import com.linln.admin.core.web.TimoExample;
 import com.linln.admin.system.domain.Dict;
 import com.linln.admin.system.service.DictService;
 import com.linln.admin.system.validator.DictForm;
@@ -39,14 +39,10 @@ public class DictController {
 
     /**
      * 列表页面
-     * @param pageIndex 页码
-     * @param pageSize 获取数据长度
      */
     @GetMapping("/index")
     @RequiresPermissions("/dict/index")
-    public String index(Model model, Dict dict,
-                        @RequestParam(value="page",defaultValue="1") int pageIndex,
-                        @RequestParam(value="size",defaultValue="10") int pageSize){
+    public String index(Model model, Dict dict){
 
         // 创建匹配器，进行动态查询匹配
         ExampleMatcher matcher = ExampleMatcher.matching().
@@ -54,7 +50,7 @@ public class DictController {
 
         // 获取字典列表
         Example<Dict> example = TimoExample.of(dict, matcher);
-        Page<Dict> list = dictService.getPageList(example, pageIndex, pageSize);
+        Page<Dict> list = dictService.getPageList(example);
 
         // 封装数据
         model.addAttribute("list",list.getContent());

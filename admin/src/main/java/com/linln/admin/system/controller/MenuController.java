@@ -7,7 +7,7 @@ import com.linln.admin.core.log.action.SaveAction;
 import com.linln.admin.core.log.action.StatusAction;
 import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.thymeleaf.utility.DictUtil;
-import com.linln.admin.core.utils.TimoExample;
+import com.linln.admin.core.web.TimoExample;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.service.MenuService;
 import com.linln.admin.system.validator.MenuForm;

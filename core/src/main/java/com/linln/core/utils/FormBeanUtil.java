@@ -30,7 +30,7 @@ public class FormBeanUtil {
      * @param target 目标对象
      */
     public static void copyProperties(Object source, Object target) throws BeansException {
-        BeanUtils.copyProperties(source,target,defaultIgnoreProperties);
+        BeanUtils.copyProperties(source, target, defaultIgnoreProperties);
         referenceEntity(source, target);
     }
 
@@ -44,7 +44,7 @@ public class FormBeanUtil {
         String[] jointIgnoreProperties = new String[defaultIgnoreProperties.length + ignoreProperties.length];
         System.arraycopy(defaultIgnoreProperties, 0, jointIgnoreProperties, 0, defaultIgnoreProperties.length);
         System.arraycopy(ignoreProperties, 0, jointIgnoreProperties, defaultIgnoreProperties.length, ignoreProperties.length);
-        BeanUtils.copyProperties(source,target,jointIgnoreProperties);
+        BeanUtils.copyProperties(source, target, jointIgnoreProperties);
         referenceEntity(source, target);
     }
 

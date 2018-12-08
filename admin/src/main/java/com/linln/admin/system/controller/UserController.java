@@ -10,7 +10,6 @@ import com.linln.admin.core.log.action.StatusAction;
 import com.linln.admin.core.log.action.UserAction;
 import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.shiro.ShiroUtil;
-import com.linln.admin.core.utils.TimoExample;
 import com.linln.admin.system.domain.Dept;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.domain.User;
@@ -26,8 +25,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -41,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,33 +62,30 @@ public class UserController {
 
     /**
      * 列表页面
-     *
-     * @param pageIndex 页码
-     * @param pageSize  获取数据长度
      */
     @GetMapping("/index")
     @RequiresPermissions("/user/index")
-    public String index(Model model, User user,
-                        @RequestParam(value = "page", defaultValue = "1") int pageIndex,
-                        @RequestParam(value = "size", defaultValue = "10") int pageSize) {
+    public String index(Model model, User user) {
 
-        // 判断部门是否为0，如果是则查询全部
-        if(Long.valueOf(0L).equals(user.getDeptId())){
-            user.setDeptId(null);
+        // 设置部门动态查询
+        Dept dept = user.getDept();
+        List<Long> deptIn = null;
+        if(dept != null){
+            deptIn = new ArrayList<>();
+            deptIn.add(dept.getId());
+            List<Dept> deptList = deptService.getPidsLike(dept.getId());
+            for (Dept item : deptList) {
+                deptIn.add(item.getId());
+            }
         }
 
-        // 创建匹配器，进行动态查询匹配
-        ExampleMatcher matcher = ExampleMatcher.matching().
-                withMatcher("nickname", match -> match.contains()).
-                withIgnorePaths("password", "salt", "roles", "isRole");
-
         // 获取用户列表
-        Example<User> example = TimoExample.of(user, matcher);
-        Page<User> list = userService.getPageList(example, pageIndex, pageSize);
+        Page<User> list = userService.getPageList(user, deptIn);
 
         // 封装数据
         model.addAttribute("list", list.getContent());
         model.addAttribute("page", list);
+        model.addAttribute("dept", dept);
         return "/system/user/index";
     }
 
@@ -110,10 +105,7 @@ public class UserController {
     @RequiresPermissions("/user/edit")
     public String toEdit(@PathVariable("id") Long id, Model model) {
         User user = userService.getId(id);
-        Dept dept = deptService.getId(user.getDeptId());
-
         model.addAttribute("user", user);
-        model.addAttribute("dept", dept);
         return "/system/user/add";
     }
 
@@ -173,7 +165,9 @@ public class UserController {
         }
 
         // 保存数据
-        userService.save(user);
+        User save = userService.save(user);
+        // 处理由于Jpa延迟加载特性导致注入entity实体对象失败的问题。
+        userForm.setEntity(save);
         return ResultVoUtil.SAVE_SUCCESS;
     }
 
@@ -184,10 +178,7 @@ public class UserController {
     @RequiresPermissions("/user/detail")
     public String toDetail(@PathVariable("id") Long id, Model model) {
         User user = userService.getId(id);
-        Dept dept = deptService.getId(user.getDeptId());
-
         model.addAttribute("user", user);
-        model.addAttribute("dept", dept);
         return "/system/user/detail";
     }
 

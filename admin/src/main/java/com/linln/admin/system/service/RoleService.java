@@ -41,11 +41,9 @@ public interface RoleService {
     /**
      * 获取分页列表数据
      * @param example 查询实例
-     * @param pageIndex 页码
-     * @param pageSize 获取列表长度
      * @return 返回分页数据
      */
-    Page<Role> getPageList(Example<Role> example, Integer pageIndex, Integer pageSize);
+    Page<Role> getPageList(Example<Role> example);
 
     /**
      * 获取角色列表数据

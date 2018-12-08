@@ -1,9 +1,11 @@
 package com.linln.admin.system.service.impl;
 
 import com.linln.admin.core.enums.StatusEnum;
+import com.linln.admin.core.web.PageSort;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.repository.RoleRepository;
 import com.linln.admin.system.service.RoleService;
+import com.linln.core.utils.HttpServletUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -61,17 +63,13 @@ public class RoleServiceImpl implements RoleService {
     /**
      * 获取分页列表数据
      * @param example 查询实例
-     * @param pageIndex 页码
-     * @param pageSize 获取列表长度
      * @return 返回分页数据
      */
     @Override
-    public Page<Role> getPageList(Example<Role> example, Integer pageIndex, Integer pageSize) {
+    public Page<Role> getPageList(Example<Role> example) {
         // 创建分页对象
-        Sort sort = new Sort(Sort.Direction.ASC, "createDate");
-        PageRequest page = PageRequest.of(pageIndex-1, pageSize, sort);
-        Page<Role> list = roleRepository.findAll(example, page);
-        return list;
+        PageRequest page = PageSort.pageRequest(Sort.Direction.ASC.toString());
+        return roleRepository.findAll(example, page);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.linln.admin.core.utils;
+package com.linln.admin.core.web;
 
 
 import com.linln.admin.core.enums.ResultEnum;

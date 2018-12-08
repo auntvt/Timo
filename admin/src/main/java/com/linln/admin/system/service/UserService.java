@@ -4,6 +4,7 @@ import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.system.domain.User;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,12 +17,11 @@ public interface UserService {
 
     /**
      * 获取分页列表数据
-     * @param example 查询实例
-     * @param pageIndex 页码
-     * @param pageSize 获取列表长度
+     * @param user 实体对象
+     * @param deptIn 部门in查询数据
      * @return 返回分页数据
      */
-    Page<User> getPageList(Example<User> example, Integer pageIndex, Integer pageSize);
+    Page<User> getPageList(User user, List<Long> deptIn);
 
     /**
      * 保存用户

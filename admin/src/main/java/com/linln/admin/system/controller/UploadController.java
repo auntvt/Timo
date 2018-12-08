@@ -2,7 +2,7 @@ package com.linln.admin.system.controller;
 
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.core.utils.FileUpload;
+import com.linln.admin.core.web.FileUpload;
 import com.linln.admin.system.domain.Upload;
 import com.linln.admin.system.service.UploadService;
 import com.linln.core.utils.ResultVoUtil;

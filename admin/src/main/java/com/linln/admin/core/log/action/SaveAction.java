@@ -33,13 +33,14 @@ public class SaveAction extends ActionMap {
     public static void defaultMethod(ResetLog resetLog) {
         ActionLog actionLog = resetLog.getActionLog();
         Object validated = resetLog.getValidated();
-        Assert.notNull(validated, "未发现@Validated注解参数，将不做数据日志记录");
+        Assert.notNull(validated, "日志记录失败：未发现@Validated注解参数，将不做数据日志记录");
 
         try {
             Object vEntity = resetLog.getValidatedEntity(validated);
-            Assert.notNull(vEntity, "验证类中没有发现entity成员属性，无法使用本行为");
+            Assert.notNull(vEntity, "日志记录失败：验证类中没有发现entity成员属性，无法使用本行为");
             // 获取实体类的@Table表名
             Table table = vEntity.getClass().getAnnotation(Table.class);
+            Assert.notNull(table, "日志记录失败：由于Jpa延迟加载特性导致注入entity实体对象失败，需要手动将实体对象赋给验证对象entity字段。");
             actionLog.setModel(table.name());
             // 获取实体对象数据ID
             Object entityId = ReflexBeanUtil.getField(vEntity, "id");

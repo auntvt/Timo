@@ -3,7 +3,7 @@ package com.linln.devtools.code.template;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.core.utils.TimoExample;
+import com.linln.admin.core.web.TimoExample;
 import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.utils.ToolUtil;

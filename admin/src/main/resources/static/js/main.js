@@ -258,15 +258,29 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
     // 携带参数跳转
     var paramSkip = function () {
         var getSearch = "";
+        // 搜索框参数
         $('.timo-search-box [name]').each(function (key, val) {
             if ($(val).val() !== "" && $(val).val() !== undefined) {
                 getSearch += $(val).attr("name") + "=" + $(val).val() + "&";
             }
         });
+
+        // 页数参数
         var pageSize = $(".page-number").val();
         if (pageSize !== undefined && pageSize !== "") {
             getSearch += "size=" + pageSize + "&";
         }
+
+        // 排序参数
+        var asc = $(".sortable.asc").data("field");
+        if(asc !== undefined){
+            getSearch += "orderByColumn=" + asc + "&isAsc=asc&";
+        }
+        var desc = $(".sortable.desc").data("field");
+        if(desc !== undefined){
+            getSearch += "orderByColumn=" + desc + "&isAsc=desc&";
+        }
+
         if (getSearch !== "") {
             getSearch = "?" + getSearch.substr(0, getSearch.length - 1);
         }
@@ -281,6 +295,29 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
     $(document).on("change", ".page-number", function () {
         paramSkip();
     });
+    /* 触发字段排序 */
+    $(document).on("click", ".sortable", function () {
+        $(".sortable").not(this).removeClass("asc").removeClass("desc");
+        if($(this).hasClass("asc")){
+            $(this).removeClass("asc").addClass("desc");
+        }else {
+            $(this).removeClass("desc").addClass("asc");
+        }
+        paramSkip();
+    });
+
+    /* 参数化字段排序 */
+    var getSearch = function(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    };
+    var field = getSearch("orderByColumn");
+    var isAsc = getSearch("isAsc");
+    if(field != null){
+        $("[data-field='"+ field +"']").addClass(isAsc);
+    }
 
     /** 上传图片操作 */
     upload.render({

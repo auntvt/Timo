@@ -23,11 +23,9 @@ public interface DictService {
     /**
      * 获取分页列表数据
      * @param example 查询实例
-     * @param pageIndex 页码
-     * @param pageSize 获取列表长度
      * @return 返回分页数据
      */
-    Page<Dict> getPageList(Example<Dict> example, Integer pageIndex, Integer pageSize);
+    Page<Dict> getPageList(Example<Dict> example);
 
     /**
      * 根据字典ID查询字典数据

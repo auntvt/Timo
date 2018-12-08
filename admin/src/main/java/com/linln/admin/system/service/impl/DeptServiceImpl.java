@@ -68,6 +68,15 @@ public class DeptServiceImpl implements DeptService {
     }
 
     /**
+     * 根据ID查找子孙部门
+     * @param id [id]形式
+     */
+    @Override
+    public List<Dept> getPidsLike(Long id){
+        return deptRepository.findByPidsLikeAndStatus("%["+id+"]%", StatusEnum.OK.getCode());
+    }
+
+    /**
      * 保存部门管理
      * @param dept 部门管理实体类
      */

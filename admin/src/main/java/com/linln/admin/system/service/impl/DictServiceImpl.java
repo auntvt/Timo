@@ -1,9 +1,11 @@
 package com.linln.admin.system.service.impl;
 
 import com.linln.admin.core.enums.StatusEnum;
+import com.linln.admin.core.web.PageSort;
 import com.linln.admin.system.domain.Dict;
 import com.linln.admin.system.repository.DictRepository;
 import com.linln.admin.system.service.DictService;
+import com.linln.core.utils.HttpServletUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -47,15 +49,12 @@ public class DictServiceImpl implements DictService {
     /**
      * 获取分页列表数据
      * @param example 查询实例
-     * @param pageIndex 页码
-     * @param pageSize 获取列表长度
      * @return 返回分页数据
      */
     @Override
-    public Page<Dict> getPageList(Example<Dict> example, Integer pageIndex, Integer pageSize) {
+    public Page<Dict> getPageList(Example<Dict> example) {
         // 创建分页对象
-        Sort sort = new Sort(Sort.Direction.DESC, "createDate");
-        PageRequest page = PageRequest.of(pageIndex-1, pageSize, sort);
+        PageRequest page = PageSort.pageRequest();
         return dictRepository.findAll(example, page);
     }
 

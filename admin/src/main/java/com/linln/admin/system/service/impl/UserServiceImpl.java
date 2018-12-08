@@ -1,17 +1,22 @@
 package com.linln.admin.system.service.impl;
 
 import com.linln.admin.core.enums.StatusEnum;
+import com.linln.admin.core.web.PageSort;
+import com.linln.admin.system.domain.Dept;
 import com.linln.admin.system.domain.User;
 import com.linln.admin.system.repository.UserRepository;
 import com.linln.admin.system.service.UserService;
+import com.linln.core.utils.HttpServletUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,17 +67,45 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 获取分页列表数据
-     * @param example 查询实例
-     * @param pageIndex 页码
-     * @param pageSize 获取列表长度
+     * @param user 实体对象
+     * @param deptIn 部门in查询数据
      * @return 返回分页数据
      */
     @Override
-    public Page<User> getPageList(Example<User> example, Integer pageIndex, Integer pageSize) {
+    public Page<User> getPageList(User user, List<Long> deptIn) {
         // 创建分页对象
-        Sort sort = new Sort(Sort.Direction.ASC, "createDate");
-        PageRequest page = PageRequest.of(pageIndex-1, pageSize, sort);
-        return userRepository.findAll(example, page);
+        PageRequest page = PageSort.pageRequest(Sort.Direction.ASC.toString());
+
+        // 使用Specification复杂查询
+        return userRepository.findAll(new Specification<User>(){
+
+            @Override
+            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> preList = new ArrayList<>();
+
+                if(user.getUsername() != null){
+                    preList.add(cb.equal(root.get("username").as(String.class), user.getUsername()));
+                }
+                if(user.getNickname() != null){
+                    preList.add(cb.like(root.get("nickname").as(String.class), "%"+ user.getNickname() + "%"));
+                }
+                if(deptIn != null){
+                    Join<User, Dept> join = root.join("dept", JoinType.INNER);
+                    CriteriaBuilder.In<Long> in = cb.in(join.get("id").as(Long.class));
+                    deptIn.forEach(in::value);
+                    preList.add(in);
+                }
+
+                // 数据状态
+                if(!user.getStatus().equals(StatusEnum.DELETE.getCode())){
+                    preList.add(cb.equal(root.get("status").as(Byte.class), user.getStatus()));
+                }
+
+                Predicate[] pres = new Predicate[preList.size()];
+                return query.where(preList.toArray(pres)).getRestriction();
+            }
+
+        }, page);
     }
 
     /**

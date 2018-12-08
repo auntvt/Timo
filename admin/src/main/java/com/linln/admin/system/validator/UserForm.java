@@ -1,5 +1,6 @@
 package com.linln.admin.system.validator;
 
+import com.linln.admin.system.domain.Dept;
 import com.linln.admin.system.domain.User;
 import lombok.Data;
 
@@ -22,5 +23,5 @@ public class UserForm extends User implements Serializable {
     private String nickname;
     private String confirm;
     @NotNull(message = "所在部门不能为空")
-    private Long deptId;
+    private Dept dept;
 }

@@ -35,8 +35,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">所在部门</label>
             <div class="layui-input-inline">
-                <input class="layui-input select-tree" th:attr="data-url=@{/dept/list}, data-value=${dept?.id}"
-                       type="text" name="deptId"  placeholder="请选择所在部门" th:value="${dept?.title}">
+                <input class="layui-input select-tree" th:attr="data-url=@{/dept/list}, data-value=${user?.dept?.id}"
+                       type="text" name="dept"  placeholder="请选择所在部门" th:value="${user?.dept?.title}">
             </div>
         </div>
         <div class="layui-form-item">

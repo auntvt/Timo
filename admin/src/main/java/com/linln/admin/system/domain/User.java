@@ -32,7 +32,7 @@ public class User implements Serializable {
     private String password;
     private String salt;
     private String nickname;
-    private Long deptId;
+//    private Long deptId;
     private String picture;
     private String sex;
     private String phone;
@@ -44,6 +44,11 @@ public class User implements Serializable {
     private Date updateDate;
     private Byte isRole = UserIsRoleEnum.NO.getCode();
     private Byte status = StatusEnum.OK.getCode();
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="dept_id")
+    @JsonIgnore
+    private Dept dept;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "sys_user_role",

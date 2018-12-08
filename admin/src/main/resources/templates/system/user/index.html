@@ -22,7 +22,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">所在部门</label>
                         <div class="layui-input-block">
-                            <input class="layui-input select-tree" th:attr="data-url=@{/dept/list}" th:value="${param.deptId}" type="text" name="deptId" placeholder="请选择部门">
+                            <input class="layui-input select-tree" th:attr="data-url=@{/dept/list}, data-value=${dept?.id}" th:value="${dept?.title}" type="text" name="dept" placeholder="请选择部门">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -71,12 +71,13 @@
                         <label class="timo-checkbox"><input type="checkbox">
                             <i class="layui-icon layui-icon-ok"></i></label>
                     </th>
-                    <th>用户名</th>
-                    <th>用户昵称</th>
-                    <th>性别</th>
-                    <th>电话</th>
-                    <th>邮箱</th>
-                    <th>创建时间</th>
+                    <th class="sortable" data-field="username">用户名</th>
+                    <th class="sortable" data-field="nickname">用户昵称</th>
+                    <th>所在部门</th>
+                    <th class="sortable" data-field="sex">性别</th>
+                    <th class="sortable" data-field="phone">电话</th>
+                    <th class="sortable" data-field="email">邮箱</th>
+                    <th class="sortable" data-field="createDate">创建时间</th>
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
@@ -87,6 +88,7 @@
                         <i class="layui-icon layui-icon-ok"></i></label></td>
                     <td th:text="${item.username}">用户名</td>
                     <td th:text="${item.nickname}">用户昵称</td>
+                    <td th:text="${item.dept?.title}">用户昵称</td>
                     <td th:text="${#dicts.keyValue('USER_SEX', item.sex)}">性别</td>
                     <td th:text="${item.phone}">电话</td>
                     <td th:text="${item.email}">邮箱</td>
@@ -114,12 +116,6 @@
         rootTree: '全部',
         onSelected: function(treeNode){
             local.setItem('deptTitle', treeNode.name);
-        }
-    });
-    $(function(){
-        var dept = $('.select-tree');
-        if(dept.attr('value').length > 0){
-            dept.val(local.getItem('deptTitle'));
         }
     });
 </script>

@@ -8,7 +8,7 @@ import com.linln.admin.core.log.action.RoleAction;
 import com.linln.admin.core.log.action.StatusAction;
 import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.shiro.ShiroUtil;
-import com.linln.admin.core.utils.TimoExample;
+import com.linln.admin.core.web.TimoExample;
 import com.linln.admin.system.domain.Menu;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.service.MenuService;
@@ -48,14 +48,10 @@ public class RoleController {
 
     /**
      * 列表页面
-     * @param pageIndex 页码
-     * @param pageSize 获取数据长度
      */
     @GetMapping("/index")
     @RequiresPermissions("/role/index")
-    public String index(Model model, Role role,
-                        @RequestParam(value="page",defaultValue="1") int pageIndex,
-                        @RequestParam(value="size",defaultValue="10") int pageSize){
+    public String index(Model model, Role role){
 
         // 创建匹配器，进行动态查询匹配
         ExampleMatcher matcher = ExampleMatcher.matching().
@@ -63,7 +59,7 @@ public class RoleController {
 
         // 获取角色列表
         Example<Role> example = TimoExample.of(role, matcher);
-        Page<Role> list = roleService.getPageList(example, pageIndex, pageSize);
+        Page<Role> list = roleService.getPageList(example);
 
         // 封装数据
         model.addAttribute("list",list.getContent());
