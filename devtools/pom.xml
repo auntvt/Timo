@@ -24,6 +24,18 @@
             <artifactId>admin</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!--swagger2接口文档-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
     </dependencies>
 
     <!-- 修复部分idea版本无法发布code文件到target目录下的问题 -->

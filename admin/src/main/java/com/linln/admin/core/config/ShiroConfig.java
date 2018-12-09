@@ -1,6 +1,6 @@
 package com.linln.admin.core.config;
 
-import com.linln.admin.core.config.properties.ProjectProperties;
+import com.linln.core.config.properties.ProjectProperties;
 import com.linln.admin.core.shiro.AuthRealm;
 import com.linln.admin.core.shiro.UserAuthFilter;
 import net.sf.ehcache.CacheManager;

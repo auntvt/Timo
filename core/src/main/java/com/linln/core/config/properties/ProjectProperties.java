@@ -1,4 +1,4 @@
-package com.linln.admin.core.config.properties;
+package com.linln.core.config.properties;
 
 import com.linln.core.utils.ToolUtil;
 import lombok.Data;
@@ -26,6 +26,15 @@ public class ProjectProperties {
     private Integer globalSessionTimeout = 1800;
     // Session会话检测间隔时间，默认15分钟
     private Integer sessionValidationInterval = 900;
+
+    /* xss防护设置 */
+    // xss防护开关
+    private boolean xssEnabled = true;
+    // 拦截规则，可通过“,”隔开多个
+    private String xssUrlPatterns = "/*";
+    // 忽略规则，可通过“,”隔开多个
+    private String xssExcludes = "/favicon.ico,/img/*,/js/*,/css/*,/lib/*";
+
 
     public String getFileUploadPath() {
         if(fileUploadPath == null){

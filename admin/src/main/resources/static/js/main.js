@@ -108,7 +108,7 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
     });
 
     /*  漂浮消息 */
-    $.Messager = function (result) {
+    $.fn.Messager = function (result) {
         if (result.code === 200) {
             layer.msg(result.msg, {offset: '15px', time: 3000, icon: 1});
             setTimeout(function () {
@@ -137,7 +137,7 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
             if (result.data == null) {
                 result.data = 'submit[refresh]';
             }
-            $.Messager(result);
+            $.fn.Messager(result);
         });
     });
 
@@ -151,12 +151,12 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
                 btn: ['确认', '取消']
             }, function () {
                 $.get(e.target.href, function (result) {
-                    $.Messager(result);
+                    $.fn.Messager(result);
                 });
             });
         } else {
             $.get(e.target.href, function (result) {
-                $.Messager(result);
+                $.fn.Messager(result);
             });
         }
     });
@@ -171,7 +171,7 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
                 checked.push("ids=" + $(val).attr("value"));
             });
             $.post(e.target.href, checked.join("&"), function (result) {
-                $.Messager(result);
+                $.fn.Messager(result);
             });
         } else {
             layer.msg('请选择一条记录');

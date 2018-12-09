@@ -1,6 +1,5 @@
 package com.linln.admin.system.controller;
 
-import com.linln.admin.core.config.properties.ProjectProperties;
 import com.linln.admin.core.constant.AdminConst;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
@@ -17,6 +16,7 @@ import com.linln.admin.system.service.DeptService;
 import com.linln.admin.system.service.RoleService;
 import com.linln.admin.system.service.UserService;
 import com.linln.admin.system.validator.UserForm;
+import com.linln.core.config.properties.ProjectProperties;
 import com.linln.core.utils.FormBeanUtil;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.utils.SpringContextUtil;

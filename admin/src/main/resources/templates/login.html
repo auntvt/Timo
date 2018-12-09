@@ -27,25 +27,11 @@
             <input type="checkbox" name="rememberMe" title="记住我" lay-skin="primary">
             <a class="layui-layout-right forget-password" href="javascript:alert('请联系超级管理员！')">忘记密码?</a>
         </div>
-        <button type="submit" class="layui-btn layui-btn-fluid ajax-submit"><i class="fa fa-sign-in fa-lg fa-fw"></i> 登录
-        </button>
+        <button type="submit" class="layui-btn layui-btn-fluid ajax-login"><i class="fa fa-sign-in fa-lg fa-fw"></i> 登录</button>
     </form>
 </div>
 <script th:replace="/common/template :: script"></script>
-<script type="text/javascript">
-    window.onload = function () {
-        if (window.parent.window != window) {
-            window.top.location = window.location.pathname + "/login";
-        }
-    };
-    layui.use(['element'], function () {
-        var $ = layui.jquery;
-        $(".captcha-img").on("click", function () {
-            var src = this.src.split("?")[0];
-            this.src = src + "?" + Math.random();
-        });
-    });
-</script>
+<script th:src="@{/js/login.js}" charset="utf-8"></script>
 </body>
 </html>
 

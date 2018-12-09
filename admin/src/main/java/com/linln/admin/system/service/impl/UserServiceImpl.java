@@ -6,7 +6,6 @@ import com.linln.admin.system.domain.Dept;
 import com.linln.admin.system.domain.User;
 import com.linln.admin.system.repository.UserRepository;
 import com.linln.admin.system.service.UserService;
-import com.linln.core.utils.HttpServletUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,6 +1,5 @@
 package com.linln.admin.system.controller;
 
-import com.linln.admin.core.config.properties.ProjectProperties;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.UserIsRoleEnum;
 import com.linln.admin.core.exception.ResultException;
@@ -9,6 +8,7 @@ import com.linln.admin.core.log.annotation.ActionLog;
 import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.core.utils.CaptchaUtil;
 import com.linln.admin.system.domain.User;
+import com.linln.core.config.properties.ProjectProperties;
 import com.linln.core.utils.ResultVoUtil;
 import com.linln.core.utils.SpringContextUtil;
 import com.linln.core.vo.ResultVo;

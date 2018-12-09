@@ -5,7 +5,6 @@ import com.linln.admin.core.web.PageSort;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.repository.RoleRepository;
 import com.linln.admin.system.service.RoleService;
-import com.linln.core.utils.HttpServletUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;

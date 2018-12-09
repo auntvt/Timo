@@ -1,6 +1,6 @@
 package com.linln.admin.core.web;
 
-import com.linln.admin.core.config.properties.ProjectProperties;
+import com.linln.core.config.properties.ProjectProperties;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.system.domain.Upload;
