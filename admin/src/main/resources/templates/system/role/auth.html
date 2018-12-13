@@ -82,7 +82,6 @@
             var authList = zTreeObj.getCheckedNodes(true);
             var authIds = [];
             authIds.push("id="+$(this).data("id"));
-            console.log(authList);
             authList.forEach(function(item){
                 if(item.id > 0){
                     authIds.push("authId="+item.id);

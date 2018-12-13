@@ -76,7 +76,7 @@ public class ToolUtil {
             projectPath = projectPath.replace("/WEB-INF/classes/", "");
             projectPath = projectPath.replace("/target/classes/", "");
             try {
-                path.append(URLDecoder.decode(projectPath,"utf-8"));
+                path.append(URLDecoder.decode(projectPath,"UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 return projectPath;
             }
@@ -90,7 +90,13 @@ public class ToolUtil {
         }
 
         File file = new File(path.toString());
-        return file.getAbsolutePath().replaceAll("\\\\","/");
+        String rootPath = "/";
+        try {
+            rootPath = URLDecoder.decode(file.getAbsolutePath(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return rootPath.replaceAll("\\\\","/");
     }
 
     /**

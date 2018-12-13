@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -52,7 +53,7 @@ public class TemplateUtil {
         InputStreamReader isr = null;
         BufferedReader br = null;
         try {
-            fis = new FileInputStream(path);
+            fis = new FileInputStream(URLDecoder.decode(path, "UTF-8"));
             isr = new InputStreamReader(fis, "UTF-8");
             br = new BufferedReader(isr);
             String firstLine = br.readLine();

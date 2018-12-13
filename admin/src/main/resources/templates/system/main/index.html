@@ -1,158 +1,182 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:mo="https://gitee.com/aun/Timo">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
     <style>
-        body {
+        .widget-small{
             background-color: #FFFFFF;
-        }
-
-        .chat-panel {
-            width: 640px;
-            height: 500px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            background-color: #f5f5f5;
-            transform: translate(-50%, -50%);
-            -webkit-transform: translate(-50%, -50%);
-            box-shadow: 0 1px 7px 2px rgba(0, 0, 0, 0.14);
-            -webkit-box-shadow: 0 1px 7px 2px rgba(0, 0, 0, 0.14);
-        }
-
-        .chat-panel .chat-head {
-            height: 40px;
-            color: #FFFFFF;
-            font-size: 18px;
-            line-height: 40px;
-            text-align: center;
-            background-color: #7d7d7d;
-        }
-
-        .chat-panel .chat-head .layui-icon {
-            line-height: 40px;
-            float: right;
-            margin-right: 12px;
-        }
-
-        .chat-panel .chat-record {
-            overflow: auto;
-            padding: 0 16px;
-        }
-
-        .chat-panel .chat-record .item {
             overflow: hidden;
-            margin: 14px 0;
-        }
-
-        .chat-panel .chat-record .item.left div {
-            float: left;
-        }
-
-        .chat-panel .chat-record .item.left .sign {
-            border-color: transparent #ffc664 transparent transparent;
-        }
-
-        .chat-panel .chat-record .item.left .msg {
-            color: #834105;
-            background-color: #ffc664;
-        }
-
-        .chat-panel .chat-record .item.right div {
-            float: right;
-            border-color: transparent transparent transparent #9eea6a;
-        }
-
-        .chat-panel .chat-record .item.right .msg {
-            background-color: #9eea6a;
-        }
-
-        .chat-panel .chat-record .picture {
-            width: 40px;
-            height: 40px;
-            background-size: cover;
-        }
-
-        .chat-panel .chat-record .sign {
-            width: 0;
-            height: 0;
-            margin-top: 6px;
-            border: 5px solid;
-        }
-
-        .chat-panel .chat-record .msg {
-            font-size: 16px;
-            display: inline-block;
-            padding: 7px 12px;
+            text-align: center;
             border-radius: 2px;
-            line-height: 22px;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
         }
-
-        .chat-panel .chat-record .msg a {
-            color: #095eab;
-            text-decoration: underline;
+        .widget-small .fa{
+            float: left;
+            width: 40%;
+            line-height: 80px;
+            color: #FFFFFF;
         }
-
-        .chat-panel .chat-record .img img {
-            width: 80px;
-            margin: 0 10px;
+        .widget-user .fa{
+            background-color: #029789;
         }
-
-        .picture-left {
-            background-image: url([[@{/images/chat-left-picture.jpg}]]);
+        .widget-visit .fa{
+            background-color: #17a2b8;
         }
-
-        .picture-right {
-            background-image: url([[@{/images/chat-right-picture.jpg}]]);
+        .widget-message .fa{
+            background-color: #fbad4c;
+        }
+        .widget-like .fa{
+            background-color: #ff646d;
+        }
+        .widget-small-info{
+            float: left;
+            text-align: left;
+            width: 40%;
+            margin-left: 20px;
+            margin-top: 18px;
+            line-height: 24px;
+        }
+        .widget-small-info h4{
+            font-size: 18px;
+        }
+        .widget-small-info span{
+            font-size: 16px;
+        }
+        .project-introduce{
+            min-height: 466px;
+        }
+        .project-introduce a{
+            color: #005980;
+        }
+        .project-introduce h4{
+            font-weight: bold;
+            margin-top: 12px;
+            margin-bottom: 8px;
+        }
+        .project-introduce li{
+            list-style: decimal;
+            margin-left: 28px;
         }
     </style>
 </head>
-<body>
-    <div class="chat-panel">
-        <div class="chat-head">小懒虫<i class="layui-icon layui-icon-close"></i></div>
-        <div class="chat-record"></div>
+<body class="timo-layout-page">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+            <div class="widget-small widget-user">
+                <i class="icon fa fa-users fa-3x"></i>
+                <div class="widget-small-info">
+                    <h4>用户</h4>
+                    <span>12</span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+            <div class="widget-small widget-visit">
+                <i class="icon fa fa-line-chart fa-3x"></i>
+                <div class="widget-small-info">
+                    <h4>访问</h4>
+                    <span>1,200</span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+            <div class="widget-small widget-message">
+                <i class="icon fa fa-comments-o fa-3x"></i>
+                <div class="widget-small-info">
+                    <h4>信息</h4>
+                    <span>41</span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3 layui-col-sm6 layui-col-xs12">
+            <div class="widget-small widget-like">
+                <i class="icon fa fa-star fa-3x"></i>
+                <div class="widget-small-info">
+                    <h4>收藏</h4>
+                    <span>306</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header">项目介绍</div>
+                <div class="layui-card-body project-introduce">
+                    <blockquote class="layui-elem-quote layui-quote-nm">
+                        TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shiro 开发的后台管理系统，采用分模块的方式便于开发和维护，目前支持的功能有：权限管理、部门管理、字典管理、日志记录、文件上传、代码生成等，为快速开发后台系统而生的脚手架！
+                        <div>开源协议：Apache License 2.0</div>
+                        <div>开源地址：<a href="https://gitee.com/aun/Timo">https://gitee.com/aun/Timo</a></div>
+                    </blockquote>
+                    <div>
+                        <h4>功能列表</h4>
+                        <ol>
+                            <li>用户管理：用于管理后台系统的用户，可进行增删改查等操作。</li>
+                            <li>角色管理：分配权限的最小单元，通过角色给用户分配权限。</li>
+                            <li>菜单管理：用于配置系统菜单，同时也作为权限资源。</li>
+                            <li>部门管理：通过不同的部门来管理和区分用户。</li>
+                            <li>字典管理：对一些需要转换的数据进行统一管理，如：男、女等。</li>
+                            <li>行为日志：用于记录用户对系统的操作，同时监视系统运行时发生的错误。</li>
+                            <li>文件上传：内置了文件上传接口，方便开发者使用文件上传功能。</li>
+                            <li>代码生成：可以帮助开发者快速开发项目，减少不必要的重复操作，花更多精力注重业务实现。</li>
+                            <li>表单构建：通过拖拽的方式快速构建一个表单模块。</li>
+                            <li>数据接口：根据业务代码自动生成相关的api接口文档</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">更新日志</div>
+                <div class="layui-card-body">
+                    <ul class="layui-timeline">
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title">v1.0.5</h3>
+                                <p>
+                                    1.加入QuerySpec动态查询实例<br>
+                                    2.加入选择排序功能<br>
+                                    3.加入xss防护功能<br>
+                                    4.加入swagger数据接口文档
+                                </p>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title">v1.0.1</h3>
+                                <p>
+                                    1.加入部门管理<br>
+                                    2.更新项目开源协议<br>
+                                    3.支持第三级子菜单
+                                </p>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title">v1.0</h3>
+                                <p>
+                                    正式发布v1.0系统<br>
+                                    1.权限管理<br>
+                                    2.字典管理<br>
+                                    3.日志管理<br>
+                                    4.代码生成
+                                </p>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <div class="layui-timeline-title">小懒虫</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 <script th:replace="/common/template :: script"></script>
-<script type="text/javascript">
-    var record = [{
-        type: 1,
-        img: true,
-        msg: "<img src='[[@{/images/chat-single-dog.png}]]'>"
-    }, {
-        type: 2,
-        msg: "欢迎来到单身狗俱乐部！哦不，是<span style='color:red'>TIMO</span>后台管理系统！"
-    }, {
-        type: 1,
-        msg: "(◕ᴗ◕)是免费的吗？"
-    }, {
-        type: 2,
-        msg: "本项目是采用了Apache Licence 2.0开源协议，\n是开源免费的哦！\n" +
-        "开源地址：<a href='https://gitee.com/aun/Timo'>https://gitee.com/aun/Timo</a>"
-    }, {
-        type: 1,
-        img: true,
-        msg: "<img src='[[@{/images/char-ccmiao.png}]]'>"
-    }];
-
-    layui.use(['jquery'], function () {
-        var $ = layui.jquery;
-        var chatRecord = $(".chat-record");
-        record.forEach(function (item) {
-            chatRecord.append(addMsg(item));
-        });
-
-        function addMsg(item) {
-            var type = item.type === 1 ? "left" : "right";
-            var picture = item.type === 1 ? "picture-left" : "picture-right";
-            if (item.img !== true) {
-                return "<div class='item " + type + "'><div class='picture " + picture + "'></div>"
-                    + "<div class='sign'></div><div class='msg'><pre>" + item.msg + "</pre></div></div>";
-            } else {
-                return "<div class='item " + type + "'><div class='picture " + picture + "'></div>"
-                    + "<div class='img'>" + item.msg + "</div></div>";
-            }
-        }
-    });
-</script>
 </body>
 </html>
