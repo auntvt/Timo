@@ -4,6 +4,7 @@ import com.linln.admin.core.constant.AdminConst;
 import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
 import com.linln.admin.core.enums.UserIsRoleEnum;
+import com.linln.admin.core.excel.ExcelUtil;
 import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.core.log.action.StatusAction;
 import com.linln.admin.core.log.action.UserAction;
@@ -12,6 +13,7 @@ import com.linln.admin.core.shiro.ShiroUtil;
 import com.linln.admin.system.domain.Dept;
 import com.linln.admin.system.domain.Role;
 import com.linln.admin.system.domain.User;
+import com.linln.admin.system.repository.UserRepository;
 import com.linln.admin.system.service.DeptService;
 import com.linln.admin.system.service.RoleService;
 import com.linln.admin.system.service.UserService;
@@ -312,6 +314,16 @@ public class UserController {
         }
         Resource resource = new ClassPathResource("static" + defaultPath);
         FileCopyUtils.copy(resource.getInputStream(), response.getOutputStream());
+    }
+
+    /**
+     * 导出用户数据
+     */
+    @GetMapping("/export")
+    @ResponseBody
+    public void exportExcel(){
+        UserRepository userRepository = SpringContextUtil.getBean(UserRepository.class);
+        ExcelUtil.exportExcel(User.class, userRepository.findAll());
     }
 
     /**

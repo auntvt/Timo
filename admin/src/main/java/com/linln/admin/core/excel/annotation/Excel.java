@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.FIELD})
 public @interface Excel {
     // 字段标题名称或文件名称
-    public String value() default "";
+    public String value();
     // excel操作类型ExcelType
     public ExcelType type() default ExcelType.ALL;
     // 字段字典标识，用于导入导出时进行字典转换（只支持导出操作）
