@@ -34,6 +34,7 @@
         <ehcache.version>2.10.5</ehcache.version>
         <mysql.connector.version>5.1.46</mysql.connector.version>
         <jsoup.version>1.11.3</jsoup.version>
+        <poi.version>4.0.0</poi.version>
         <swagger.version>2.9.2</swagger.version>
         <skipTests>true</skipTests>
     </properties>
@@ -105,6 +106,13 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>${ehcache.version}</version>
+        </dependency>
+
+        <!-- excel工具 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
         </dependency>
 
         <!--xss过滤组件-->
