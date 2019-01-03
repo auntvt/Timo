@@ -20,6 +20,7 @@
     </div>
     <form class="user-edit" th:action="@{/user_info}">
         <input type="hidden" name="username" th:value="${user.username}"/>
+        <input type="hidden" name="dept" th:value="${user.dept?.id}"/>
         <div class="layui-form-item">
             <label class="layui-form-label">用户昵称</label>
             <div class="layui-input-inline">

@@ -151,7 +151,7 @@ public class MainController{
         }
 
         // 将验证的数据复制给实体类
-        String[] ignore = {"id", "password", "salt", "picture", "roles", "isRole"};
+        String[] ignore = {"id", "password", "salt", "picture", "dept", "roles", "isRole"};
         FormBeanUtil.copyProperties(userForm, user, ignore);
 
         // 保存数据
