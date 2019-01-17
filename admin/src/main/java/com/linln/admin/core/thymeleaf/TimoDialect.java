@@ -1,7 +1,6 @@
 package com.linln.admin.core.thymeleaf;
 
-import com.linln.admin.core.thymeleaf.attribute.SelectDictEnumAttrProcessor;
-import com.linln.admin.core.thymeleaf.attribute.SelectDictKeyAttrProcessor;
+import com.linln.admin.core.thymeleaf.attribute.SelectDictAttrProcessor;
 import com.linln.admin.core.thymeleaf.attribute.SelectListAttrProcessor;
 import com.linln.admin.core.thymeleaf.attribute.UserAttrProcessor;
 import org.thymeleaf.dialect.AbstractProcessorDialect;
@@ -32,8 +31,7 @@ public class TimoDialect extends AbstractProcessorDialect implements IExpression
     public Set<IProcessor> getProcessors(String dialectPrefix) {
         LinkedHashSet processors = new LinkedHashSet();
         processors.add(new UserAttrProcessor(dialectPrefix));
-        processors.add(new SelectDictEnumAttrProcessor(TemplateMode.HTML, dialectPrefix));
-        processors.add(new SelectDictKeyAttrProcessor(TemplateMode.HTML, dialectPrefix));
+        processors.add(new SelectDictAttrProcessor(TemplateMode.HTML, dialectPrefix));
         processors.add(new SelectListAttrProcessor(TemplateMode.HTML, dialectPrefix));
         return processors;
     }

@@ -15,7 +15,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">状态</label>
                         <div class="layui-input-block timo-search-status">
-                            <select class="timo-search-select" name="status" mo:dictKey="SEARCH_STATUS" mo-selected="${param.status}"></select>
+                            <select class="timo-search-select" name="status" mo:dict="SEARCH_STATUS" mo-selected="${param.status}"></select>
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="pull-right screen-btn-group">
-                    <button class="layui-btn open-popup" data-title="添加字典" th:attr="data-url=@{/dict/add}"  data-size="610,525">
+                    <button class="layui-btn open-popup" data-title="添加字典" th:attr="data-url=@{/dict/add}"  data-size="615,558">
                         <i class="fa fa-plus"></i> 添加</button>
                     <div class="btn-group">
                         <button class="layui-btn">操作<span class="caret"></span></button>
@@ -76,7 +76,7 @@
                     <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
                     <td th:text="${#dates.format(item.updateDate, 'yyyy-MM-dd HH:mm:ss')}">更新时间</td>
                     <td>
-                        <a class="open-popup" data-title="编辑字典" th:attr="data-url=@{'/dict/edit/'+${item.id}}"  data-size="610,525" href="#">编辑</a>
+                        <a class="open-popup" data-title="编辑字典" th:attr="data-url=@{'/dict/edit/'+${item.id}}"  data-size="615,558" href="#">编辑</a>
                         <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/dict/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
                         <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/dict/status/delete(ids=${item.id})}">删除</a>
                     </td>

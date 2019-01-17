@@ -8,8 +8,6 @@
 
 TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shiro 开发的后台管理系统，采用分模块的方式便于开发和维护，目前支持的功能有：权限管理、部门管理、字典管理、日志记录、文件上传、代码生成等，为快速开发后台系统而生的脚手架！
 
-> 自我推荐-求工作：有意向的可以到群里联系我！
-
 #### 技术选型
 
 - 后端技术：SpringBoot + Spring Data Jpa + Thymeleaf + Shiro + EhCache
@@ -81,11 +79,12 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 
 #### 使用说明
 
-1. 使用文档：doc/使用文档.docx（编写中~）
-2. 开发手册：[TIMO开发文档.看云](https://www.kancloud.cn/timo/timo-doc)（编写中~）
+1. 使用文档：doc/使用文档.docx
+2. 开发手册：[TIMO开发文档.看云](https://www.kancloud.cn/timo/timo-doc)
 3. SQL文件：doc/timo.sql（经常忘记同步！）
 
 #### 更新记录
+- 2019-01-17更新 重构字典模块，将mo:dictKey改成mo:dict
 - 2018-12-18更新 加入导入导出功能
 - 2018-12-13更新 修复代码生成路径出现空格的问题
 - 2018-12-10更新 1.加入xss防护 2.加入swagger数据接口文档
@@ -103,7 +102,7 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 - 2018-11-13更新 修复session超时问题
 
 #### 演示地址
-演示地址： [http://47.107.244.22](http://47.107.244.22)
+演示地址： [http://www.linln.top](http://www.linln.top)
 
 #### 预览图
 

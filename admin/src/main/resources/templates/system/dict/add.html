@@ -2,6 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:mo="https://gitee.com/aun/Timo">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+    <style>
+        .dict-value {
+            max-width: 358px;
+            height: 130px;
+            border: 1px solid #e6e6e6;
+        }
+        .dict-value:hover,
+        .dict-value:hover .control {
+            border-color: #C9C9C9;
+        }
+        .dict-value .control {
+            padding: 4px 8px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        .dict-value .control button {
+            margin: 0;
+            border-color: #ffffff;
+        }
+        .dict-value .control button:hover {
+            border-color: #888888;
+        }
+        .dict-value .control button .fa {
+            margin-right: 4px;
+            color: #888888;
+        }
+        .dict-value .control .field-order .fa {
+            margin: 0;
+        }
+        .dict-value .control .field-order.active {
+            border-color: #C9C9C9;
+        }
+        .dict-value .content {
+            height: 95px;
+            padding: 2px 0;
+            overflow: auto;
+        }
+        .dict-value .content .dict-option {
+            margin: 0;
+            padding: 2px 0;
+            display: block;
+            width: 100%;
+            border: none;
+            text-indent: 4px;
+            font-size: 14px;
+        }
+        .dict-value .content .dict-option:hover {
+            background-color: rgba(1, 170, 237, 0.17);
+        }
+        .dict-value .content .dict-option.active {
+            background-color: rgba(1, 170, 237, 0.37);
+            font-weight: bold;
+        }
+        .dict-value .content .dict-option.error {
+            background-color: rgba(255, 16, 0, 0.41);
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-form timo-compile">
@@ -10,25 +67,45 @@
         <div class="layui-form-item">
             <label class="layui-form-label">字典标识</label>
             <div class="layui-input-inline">
-                <input class="layui-input" type="text" name="name"  placeholder="请输入字典键名" th:value="${dict?.name}">
+                <input class="layui-input" type="text" name="name" placeholder="请输入字典键名" th:value="${dict?.name}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">字典标题</label>
             <div class="layui-input-inline">
-                <input class="layui-input" type="text" name="title"  placeholder="请输入字典标题" th:value="${dict?.title}">
+                <input class="layui-input" type="text" name="title" placeholder="请输入字典标题" th:value="${dict?.title}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">字典类型</label>
             <div class="layui-input-inline">
-                <select name="type" mo:dictKey="DICT_TYPE" mo-selected="${dict} ? ${dict.type} : 2" lay-verify="type"></select>
+                <select name="type" mo:dict="DICT_TYPE" mo-selected="${dict} ? ${dict.type} : 2"
+                        lay-verify="type"></select>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">字典值</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入字典值" class="layui-textarea" name="value">[[${dict?.value}]]</textarea>
+                <input id="dictValue" name="value" type="hidden" th:value="${dict?.value}">
+                <div class="dict-value">
+                    <div class="control">
+                        <button class="field-add layui-btn layui-btn-primary layui-btn-xs">
+                            <i class="fa fa-plus-circle"></i>添加
+                        </button>
+                        <button class="field-del layui-btn layui-btn-primary layui-btn-xs">
+                            <i class="fa fa-minus-circle"></i>删除
+                        </button>
+                        <button class="field-up layui-btn layui-btn-primary layui-btn-xs">
+                            <i class="fa fa-arrow-up"></i>向上
+                        </button>
+                        <button class="field-down layui-btn layui-btn-primary layui-btn-xs">
+                            <i class="fa fa-arrow-down"></i>向下
+                        </button>
+                        <button class="field-order pull-right layui-btn layui-btn-primary layui-btn-xs"><!--
+                        --><i class="fa fa-list-ol" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="content"></div>
+                </div>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
@@ -44,5 +121,147 @@
     </form>
 </div>
 <script th:replace="/common/template :: script"></script>
+<script>
+    layui.use(['element'], function () {
+        var $ = layui.jquery;
+        // 默认变量
+        var active = null;
+        var option = $("<input class='dict-option'>");
+        var optionSort = false;
+
+        // 初始化数据
+        var dictValue = $("#dictValue");
+        if(dictValue.val() !== ""){
+            var dict = dictValue.val().split(",");
+            var box = $(".dict-value>.content");
+            dict.forEach(function (val) {
+                box.append(option.clone().val(val));
+            });
+        }
+
+        // 获取焦点是选项事件
+        $(document).on("focus", ".dict-option", function () {
+            if (active != null) {
+                active.removeClass("active");
+            }
+            active = $(this).addClass("active");
+        });
+
+        // 失去焦点是选项事件
+        $(document).on("blur", ".dict-option", function () {
+            var kv = $(this).val().split(":");
+            if(kv.length > 1 && kv[1] !== ""){
+                $(this).removeClass("error");
+                updateDict();
+            }else{
+                $(this).addClass("error");
+            }
+        });
+
+        // 向下添加
+        var addOption = function () {
+            var clone = option.clone().val("").addClass("active");
+            active.after(clone).removeClass("active");
+            resetOrder();
+            clone.focus();
+        };
+
+        // 输入框回车事件
+        $(document).on("keypress", ".dict-option", function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                addOption();
+            }
+        });
+
+        // 添加字段
+        $(document).on("click", ".field-add", function (e) {
+            e.preventDefault();
+            if (active != null) {
+                addOption();
+            } else {
+                var clone = option.clone();
+                $(".dict-value>.content").append(clone);
+                clone.focus().addClass("active");
+            }
+        });
+
+        // 删除字段
+        $(document).on("click", ".field-del", function (e) {
+            e.preventDefault();
+            if (active != null) {
+                active.remove();
+                active = null;
+            }
+            updateDict();
+        });
+
+        // 上移字段
+        $(document).on("click", ".field-up", function (e) {
+            e.preventDefault();
+            if (active != null) {
+                var prev = active.prev();
+                active.insertBefore(prev);
+                resetOrder();
+            }
+            updateDict();
+        });
+
+        // 下移字段
+        $(document).on("click", ".field-down", function (e) {
+            e.preventDefault();
+            if (active != null) {
+                active.insertAfter(active.next());
+                resetOrder();
+            }
+            updateDict();
+        });
+
+        // 数字顺序开关
+        $(document).on("click", ".field-order", function (e) {
+            e.preventDefault();
+            if ((optionSort = !optionSort)) {
+                $(this).addClass("active");
+                resetOrder();
+                updateDict();
+            } else {
+                $(this).removeClass("active");
+            }
+        });
+
+        // 重置数字顺序
+        var resetOrder = function () {
+            if(!optionSort) return;
+            var index = 1;
+            $(".dict-value>.content input").each(function (key, val) {
+                var kv = $(val).val().split(":");
+                if (key === 0 && kv.length > 0 && kv[0] !== "") {
+                    index = kv[0];
+                }
+                var oVal = (index++) + ":";
+                if (kv.length > 1 && kv[1] !== "") {
+                    oVal += kv[1];
+                }
+                $(val).val(oVal);
+            });
+        }
+
+        // 更新字典值
+        var updateDict = function () {
+            var value = "";
+            $(".dict-value>.content input").each(function (key, val) {
+                var kv = $(val).val().split(":");
+                if(kv.length > 1 && kv[1] !== ""){
+                    value += kv[0] + ":" + kv[1] + ",";
+                }
+            });
+            if (value !== "") {
+                value = value.substr(0, value.length - 1);
+            }
+            dictValue.val(value);
+        }
+
+    });
+</script>
 </body>
 </html>

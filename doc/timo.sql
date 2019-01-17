@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- 主机:                           127.0.0.1
--- 服务器版本:                        5.7.23 - MySQL Community Server (GPL)
+-- 服务器版本:                        5.7.24 - MySQL Community Server (GPL)
 -- 服务器操作系统:                      Win64
 -- HeidiSQL 版本:                  9.5.0.5196
 -- --------------------------------------------------------
@@ -27,10 +27,16 @@ CREATE TABLE IF NOT EXISTS `sys_action_log` (
   PRIMARY KEY (`id`),
   KEY `FKg3p1utwpm133f87x17h4o21wd` (`create_by`),
   CONSTRAINT `FKg3p1utwpm133f87x17h4o21wd` FOREIGN KEY (`create_by`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8;
 
--- 正在导出表  timo.sys_action_log 的数据：~0 rows (大约)
+-- 正在导出表  timo.sys_action_log 的数据：~4 rows (大约)
 /*!40000 ALTER TABLE `sys_action_log` DISABLE KEYS */;
+INSERT INTO `sys_action_log` (`id`, `name`, `type`, `ipaddr`, `clazz`, `method`, `model`, `record_id`, `message`, `create_date`, `create_by`) VALUES
+	(214, '用户登录', 2, '127.0.0.1', 'com.linln.admin.system.controller.LoginController', 'login', NULL, NULL, '后台登录成功', '2019-01-03 18:28:09', 1),
+	(215, '用户登录', 2, '127.0.0.1', 'com.linln.admin.system.controller.LoginController', 'login', NULL, NULL, '后台登录成功', '2019-01-11 15:02:39', 1),
+	(216, '字典管理', 1, '127.0.0.1', 'com.linln.admin.system.controller.DictController', 'save', 'sys_dict', 5, '更新字典：字典类型', '2019-01-17 23:32:14', 1),
+	(217, '角色授权', 1, '127.0.0.1', 'com.linln.admin.system.controller.RoleController', 'auth', 'sys_role', 1, '角色授权成功：管理员', '2019-01-17 23:33:27', 1),
+	(218, '字典管理', 1, '127.0.0.1', 'com.linln.admin.system.controller.DictController', 'save', 'sys_dict', 5, '更新字典：字典类型', '2019-01-17 23:39:23', 1);
 /*!40000 ALTER TABLE `sys_action_log` ENABLE KEYS */;
 
 -- 导出  表 timo.sys_dept 结构
@@ -86,12 +92,12 @@ CREATE TABLE IF NOT EXISTS `sys_dict` (
 -- 正在导出表  timo.sys_dict 的数据：~6 rows (大约)
 /*!40000 ALTER TABLE `sys_dict` DISABLE KEYS */;
 INSERT INTO `sys_dict` (`id`, `title`, `name`, `type`, `value`, `remark`, `create_date`, `update_date`, `create_by`, `update_by`, `status`) VALUES
-	(3, '数据状态', 'DATA_STATUS', 2, '1:正常\r\n2:冻结\r\n3:删除', '', '2018-10-05 16:03:11', '2018-10-05 16:11:41', 1, 1, 1),
-	(5, '字典类型', 'DICT_TYPE', 2, '1:字符值\r\n2:键值对\r\n3:枚举类', '', '2018-10-05 20:08:55', '2018-10-13 12:52:24', 1, 1, 1),
-	(6, '用户性别', 'USER_SEX', 2, '1:男\r\n2:女', '', '2018-10-05 20:12:32', '2018-10-05 20:12:32', 1, 1, 1),
-	(7, '菜单类型', 'MENU_TYPE', 2, '1:一级菜单\r\n2:子级菜单\r\n3:不是菜单', '', '2018-10-05 20:24:57', '2018-10-13 13:56:05', 1, 1, 1),
-	(8, '搜索栏状态', 'SEARCH_STATUS', 2, '1:正常\r\n2:冻结', '', '2018-10-06 19:41:32', '2018-10-18 19:22:03', 1, 1, 1),
-	(9, '日志类型', 'LOG_TYPE', 2, '1:业务\r\n2:登录\r\n3:系统', '', '2018-10-14 20:36:19', '2018-10-15 10:34:56', 1, 1, 1);
+	(3, '数据状态', 'DATA_STATUS', 2, '1:正常,2:冻结,3:删除', '', '2018-10-05 16:03:11', '2018-10-05 16:11:41', 1, 1, 1),
+	(5, '字典类型', 'DICT_TYPE', 2, '2:键值对', '', '2018-10-05 20:08:55', '2019-01-17 23:39:23', 1, 1, 1),
+	(6, '用户性别', 'USER_SEX', 2, '1:男,2:女', '', '2018-10-05 20:12:32', '2018-10-05 20:12:32', 1, 1, 1),
+	(7, '菜单类型', 'MENU_TYPE', 2, '1:一级菜单,2:子级菜单,3:不是菜单', '', '2018-10-05 20:24:57', '2018-10-13 13:56:05', 1, 1, 1),
+	(8, '搜索栏状态', 'SEARCH_STATUS', 2, '1:正常,2:冻结', '', '2018-10-06 19:41:32', '2018-10-18 19:22:03', 1, 1, 1),
+	(9, '日志类型', 'LOG_TYPE', 2, '1:业务,2:登录,3:系统', '', '2018-10-14 20:36:19', '2018-10-15 10:34:56', 1, 1, 1);
 /*!40000 ALTER TABLE `sys_dict` ENABLE KEYS */;
 
 -- 导出  表 timo.sys_file 结构
@@ -110,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `sys_file` (
   CONSTRAINT `FKkkles8yp0a156p4247cc22ovn` FOREIGN KEY (`create_by`) REFERENCES `sys_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
--- 正在导出表  timo.sys_file 的数据：~11 rows (大约)
+-- 正在导出表  timo.sys_file 的数据：~12 rows (大约)
 /*!40000 ALTER TABLE `sys_file` DISABLE KEYS */;
 INSERT INTO `sys_file` (`id`, `name`, `path`, `mime`, `size`, `md5`, `sha1`, `create_by`, `create_date`) VALUES
 	(41, '44d8d8faf65b4b7a9d2addbceca04719.jpg', '/upload/picture/20181207/44d8d8faf65b4b7a9d2addbceca04719.jpg', 'image/jpeg', 20028, '89345293b4217b7abd4cb239cd6d9448', 'c7a1006fda886c6da001b2f4ddd4342cd3a791d9', 1, '2018-12-07 01:45:41'),
@@ -150,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   CONSTRAINT `FKsiko0qcr8ddamvrxf1tk4opgc` FOREIGN KEY (`update_by`) REFERENCES `sys_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8;
 
--- 正在导出表  timo.sys_menu 的数据：~37 rows (大约)
+-- 正在导出表  timo.sys_menu 的数据：~42 rows (大约)
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
 INSERT INTO `sys_menu` (`id`, `title`, `pid`, `pids`, `url`, `icon`, `type`, `sort`, `remark`, `create_date`, `update_date`, `create_by`, `update_by`, `status`) VALUES
 	(1, '菜单管理', 2, '[0],[2]', '/menu/index', '', 2, 3, '', '2018-09-29 00:02:10', '2018-11-13 21:48:58', 1, 1, 1),
@@ -218,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `sys_role` (
 -- 正在导出表  timo.sys_role 的数据：~3 rows (大约)
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
 INSERT INTO `sys_role` (`id`, `title`, `name`, `remark`, `create_date`, `update_date`, `create_by`, `update_by`, `status`) VALUES
-	(1, '管理员', 'admin', '', '2018-09-29 00:12:40', '2018-12-05 19:50:16', 1, 1, 1),
+	(1, '管理员', 'admin', '', '2018-09-29 00:12:40', '2019-01-17 23:33:27', 1, 1, 1),
 	(2, '用户组', 'user', '', '2018-09-30 16:04:32', '2018-11-30 23:46:05', 1, 1, 1),
 	(3, '用户组2', 'user2', '', '2018-09-30 16:24:20', '2018-10-18 21:28:39', 1, 1, 1);
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
@@ -233,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   CONSTRAINT `FKkeitxsgxwayackgqllio4ohn5` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  timo.sys_role_menu 的数据：~66 rows (大约)
+-- 正在导出表  timo.sys_role_menu 的数据：~67 rows (大约)
 /*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES
 	(1, 1),
@@ -301,7 +307,8 @@ INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES
 	(1, 137),
 	(1, 138),
 	(1, 139),
-	(1, 140);
+	(1, 140),
+	(1, 146);
 /*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
 
 -- 导出  表 timo.sys_user 结构

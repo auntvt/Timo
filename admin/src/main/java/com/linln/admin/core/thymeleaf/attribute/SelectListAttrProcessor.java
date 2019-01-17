@@ -10,7 +10,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -18,7 +18,7 @@ import java.util.Map;
  * @author 小懒虫
  * @date 2018/8/14
  */
-public class SelectListAttrProcessor extends SelectDictEnumAttrProcessor {
+public class SelectListAttrProcessor extends SelectDictAttrProcessor {
 
     public static final int PRECEDENCE = 1400;
     public static final String ATTR_NAME = "list";
@@ -57,25 +57,25 @@ public class SelectListAttrProcessor extends SelectDictEnumAttrProcessor {
         }
 
         // 转换列表对象
-        Map<Long, String> valueList = new HashMap<>();
+        Map<String, String> valueList = new LinkedHashMap<>();
         if(expressionResult.getClass().isArray()){
             // 转换数组
             int length = Array.getLength(expressionResult);
             for (int i = 0; i < length; i++) {
                 String value = String.valueOf(Array.get(expressionResult, i));
-                valueList.put(Long.valueOf(value), value);
+                valueList.put(value, value);
             }
         }else if(expressionResult instanceof Collection){
             // 装换Collection集合
             Collection list = (Collection) expressionResult;
             list.forEach(item -> {
-                valueList.put(Long.valueOf(String.valueOf(item)), String.valueOf(item));
+                valueList.put(String.valueOf(item), String.valueOf(item));
             });
         }else if(expressionResult instanceof Map){
             // 装换Map集合
             Map list = (Map) expressionResult;
             list.forEach((key, item) -> {
-                valueList.put(Long.valueOf(String.valueOf(key)), String.valueOf(item));
+                valueList.put(String.valueOf(key), String.valueOf(item));
             });
         }
 

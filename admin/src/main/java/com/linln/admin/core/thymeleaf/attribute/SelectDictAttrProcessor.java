@@ -17,23 +17,22 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 根据字典枚举生成下拉列表
+ * 根据字典标识生成下拉列表
  * @author 小懒虫
  * @date 2018/8/14
  */
-public class SelectDictEnumAttrProcessor extends AbstractAttributeTagProcessor {
+public class SelectDictAttrProcessor extends AbstractAttributeTagProcessor {
 
     public static final int PRECEDENCE = 1400;
-    public static final String ATTR_NAME = "dictEnum";
+    public static final String ATTR_NAME = "dict";
     public static final String SELECTED_ATTR_NAME= "mo-selected";
     public static final String EMPTY_ATTR_NAME= "mo-empty";
 
-
-    public SelectDictEnumAttrProcessor(final TemplateMode templateMode, final String dialectPrefix) {
+    public SelectDictAttrProcessor(final TemplateMode templateMode, final String dialectPrefix) {
         super(templateMode, dialectPrefix, null, false, ATTR_NAME, true, PRECEDENCE, true);
     }
 
-    public SelectDictEnumAttrProcessor(final TemplateMode templateMode, final String dialectPrefix, String attr_name, int precedence) {
+    public SelectDictAttrProcessor(final TemplateMode templateMode, final String dialectPrefix, String attr_name, int precedence) {
         super(templateMode, dialectPrefix, null, false, attr_name, true, precedence, true);
     }
 
@@ -46,12 +45,12 @@ public class SelectDictEnumAttrProcessor extends AbstractAttributeTagProcessor {
             final String attributeValue,
             final IElementTagStructureHandler structureHandler) {
 
-        // 如果属性值为空或者标签不为select。则不处理
+        // 如果属性值为空或者标签不为select，则不处理
         String elementName = tag.getElementCompleteName();
         if(attributeValue.isEmpty() || !elementName.equals("select")) return;
 
         // 获取列表对象，空则不处理
-        Map<Long, String> valueList = DictUtil.enumValueList(attributeValue);
+        Map<String, String> valueList = DictUtil.value(attributeValue);
         if(valueList != null && valueList.size() > 0) {
             doProcess(context, tag, attributeName, attributeValue, structureHandler, valueList);
         };
@@ -63,7 +62,7 @@ public class SelectDictEnumAttrProcessor extends AbstractAttributeTagProcessor {
             final AttributeName attributeName,
             final String attributeValue,
             final IElementTagStructureHandler structureHandler,
-            Map<Long, String> valueList) {
+            Map<String, String> valueList) {
 
         // 获取默认选中值
         String attributeSelectedValue = tag.getAttributeValue(SELECTED_ATTR_NAME);
