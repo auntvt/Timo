@@ -80,10 +80,11 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 #### 使用说明
 
 1. 使用文档：doc/使用文档.docx
-2. 开发手册：[TIMO开发文档.看云](https://www.kancloud.cn/timo/timo-doc)
+2. 开发手册：doc/技术文档1.0.pdf
 3. SQL文件：doc/timo.sql（经常忘记同步！）
 
 #### 更新记录
+- 2019-02-11更新 修复字典值过长格式显示问题，加入离线技术文档1.0
 - 2019-01-17更新 重构字典模块，将mo:dictKey改成mo:dict
 - 2018-12-18更新 加入导入导出功能
 - 2018-12-13更新 修复代码生成路径出现空格的问题
