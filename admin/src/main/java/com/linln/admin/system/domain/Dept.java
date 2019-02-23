@@ -3,6 +3,8 @@ package com.linln.admin.system.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linln.admin.core.enums.StatusEnum;
 import lombok.Data;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -44,12 +46,14 @@ public class Dept implements Serializable {
 	// 创建者
 	@CreatedBy
 	@ManyToOne(fetch=FetchType.LAZY)
+	@NotFound(action= NotFoundAction.IGNORE)
 	@JoinColumn(name="create_by")
 	@JsonIgnore
 	private User createBy;
 	// 更新者
 	@LastModifiedBy
 	@ManyToOne(fetch=FetchType.LAZY)
+	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name="update_by")
 	@JsonIgnore
 	private User updateBy;

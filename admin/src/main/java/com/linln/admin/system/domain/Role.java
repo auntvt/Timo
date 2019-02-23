@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linln.admin.core.enums.StatusEnum;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -38,11 +40,13 @@ public class Role implements Serializable {
     private Date updateDate;
     @CreatedBy
     @ManyToOne(fetch=FetchType.LAZY)
+    @NotFound(action= NotFoundAction.IGNORE)
     @JoinColumn(name="create_by")
     @JsonIgnore
     private User createBy;
     @LastModifiedBy
     @ManyToOne(fetch=FetchType.LAZY)
+    @NotFound(action=NotFoundAction.IGNORE)
     @JoinColumn(name="update_by")
     @JsonIgnore
     private User updateBy;

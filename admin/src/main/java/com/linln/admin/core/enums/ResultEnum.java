@@ -21,6 +21,11 @@ public enum ResultEnum{
     USER_CAPTCHA_ERROR(406, "验证码错误"),
 
     /**
+     * 部门问题
+     */
+    DEPT_EXIST_USER(401, "部门存在用户，无法删除"),
+
+    /**
      * 非法操作
      */
     STATUS_ERROR(401, "非法操作：状态有误"),

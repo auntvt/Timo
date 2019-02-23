@@ -2,6 +2,8 @@ package com.linln.admin.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -31,6 +33,7 @@ public class ActionLog implements Serializable {
     private Date createDate;
     @CreatedBy
     @ManyToOne(fetch=FetchType.LAZY)
+    @NotFound(action= NotFoundAction.IGNORE)
     @JoinColumn(name="create_by")
     @JsonIgnore
     private User createBy;

@@ -1,8 +1,12 @@
 package com.linln.admin.system.service.impl;
 
+import com.linln.admin.core.enums.ResultEnum;
 import com.linln.admin.core.enums.StatusEnum;
+import com.linln.admin.core.exception.ResultException;
 import com.linln.admin.system.domain.Dept;
+import com.linln.admin.system.domain.User;
 import com.linln.admin.system.repository.DeptRepository;
+import com.linln.admin.system.repository.UserRepository;
 import com.linln.admin.system.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -24,6 +28,9 @@ public class DeptServiceImpl implements DeptService {
 
     @Autowired
     private DeptRepository deptRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * 根据部门管理ID查询部门管理数据
@@ -110,6 +117,12 @@ public class DeptServiceImpl implements DeptService {
         });
 
         treeDeptList.forEach(dept -> {
+            if(statusEnum == StatusEnum.DELETE){
+                List<User> Depts = userRepository.findByDept(dept);
+                if(Depts.size() > 0){
+                    throw new ResultException(ResultEnum.DEPT_EXIST_USER);
+                }
+            }
             // 更新关联的所有部门状态
             dept.setStatus(statusEnum.getCode());
         });

@@ -40,6 +40,6 @@ public interface BaseRepository<T, ID> extends JpaRepository<T,ID> {
      */
     @Modifying
     @Transactional
-    @Query("update #{#entityName} set status = ?1  where id in ?2")
+    @Query("update #{#entityName} set status = ?1  where id in ?2  and status <> 3")
     public Integer updateStatus(Byte status,List<Long> id);
 }

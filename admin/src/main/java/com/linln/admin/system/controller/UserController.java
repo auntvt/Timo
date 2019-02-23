@@ -155,11 +155,12 @@ public class UserController {
                     !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)) {
                 throw new ResultException(ResultEnum.NO_ADMIN_AUTH);
             }
+
             // 判断账号是否重复
-            user = userService.getByName(userForm.getUsername(), StatusEnum.FREEZED.getCode());
-            if (user != null && !user.getId().equals(userForm.getId())) {
+            if (userService.getByNameAndIdNot(userForm.getUsername(), userForm.getId()) != null) {
                 throw new ResultException(ResultEnum.USER_EXIST);
             }
+
             String[] ignore = {"password", "salt", "picture", "roles", "isRole"};
             FormBeanUtil.copyProperties(userForm, user, ignore);
         } else {
