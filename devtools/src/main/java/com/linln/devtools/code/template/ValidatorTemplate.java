@@ -86,8 +86,11 @@ public class ValidatorTemplate {
                     }
 
                 });
-                CodeUtil.tabLine(1, "private "+ typeEnum.getMessage() +" "+ field.getName());
-
+                if(typeEnum.getMessage().equals(FieldType.Text.getMessage())) {
+                    CodeUtil.tabLine(1, "private String " + field.getName());
+                }else {
+                    CodeUtil.tabLine(1, "private " + typeEnum.getMessage() + " " + field.getName());
+                }
                 // 追加部分包
                 if(typeEnum.equals(FieldType.Date)){
                     CodeUtil.importLine(Date.class);

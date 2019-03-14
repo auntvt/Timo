@@ -98,6 +98,7 @@ public class EntityTemplate {
             default:
                 if(type.equals(FieldType.Text.getMessage())){
                     CodeUtil.tabLineNo(1, CodeUtil.anno(Lob.class) + " " + CodeUtil.anno(Column.class) + "(columnDefinition=\"TEXT\")");
+                    type = "String";
                 }
                 CodeUtil.tabLineNo(1, "// " + field.getTitle());
                 CodeUtil.tabLine(1, "private " + type + " " + field.getName());
