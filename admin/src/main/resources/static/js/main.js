@@ -199,10 +199,14 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
             param = param.substr(0, param.length - 1);
             url += "?" + param;
         }
-        var size = ['500px', '450px'];
-        if ($(this).attr("data-size") !== undefined) {
-            size = $(this).attr("data-size").split(",");
-            size = [size[0] + 'px', size[1] + 'px'];
+        var size = $(this).attr("data-size");
+        if (size === undefined || size === "auto") {
+            size = ['50%', '80%'];
+        }else if (size === "max") {
+            size = ['100%', '100%'];
+        }else if (size.indexOf(',') !== -1) {
+            var split = size.split(",");
+            size = [split[0] + 'px', split[1] + 'px'];
         }
         window.layerIndex = layer.open({
             type: 2,

@@ -31,43 +31,45 @@
                     </div>
                 </div>
                 <div class="pull-right screen-btn-group">
-                    <a class="layui-btn ajax-get" data-msg="您是否确认清空日志" th:href="@{/actionLog/status/delete}">
+                    <a class="layui-btn ajax-get" data-msg="您是否确认清空日志" th:href="@{/system/actionLog/status/delete}">
                         <i class="fa fa-trash"></i> 清空日志</a>
                 </div>
             </div>
-            <table class="layui-table timo-table timo-table-fixed">
-                <thead>
-                <tr>
-                    <th class="timo-table-checkbox">
-                        <label class="timo-checkbox"><input type="checkbox">
-                            <i class="layui-icon layui-icon-ok"></i></label>
-                    </th>
-                    <th class="sortable" data-field="name">日志名称</th>
-                    <th class="sortable" data-field="createBy">操作人</th>
-                    <th class="sortable" data-field="type">日志类型</th>
-                    <th class="sortable" data-field="ipaddr">IP地址</th>
-                    <th class="sortable" data-field="message">日志消息</th>
-                    <th class="sortable" data-field="createDate">记录时间</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="item:${list}">
-                    <td><label class="timo-checkbox"><input type="checkbox" th:value="${item.id}">
-                        <i class="layui-icon layui-icon-ok"></i></label></td>
-                    <td th:text="${item.name}">日志名称</td>
-                    <td th:text="${item.createBy?.nickname}">操作人</td>
-                    <td th:text="${#dicts.keyValue('LOG_TYPE', item.type)}">日志类型</td>
-                    <td th:text="${item.ipaddr}">IP地址</td>
-                    <td th:text="${item.message}">日志消息</td>
-                    <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
-                    <td>
-                        <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/actionLog/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
-                        <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/actionLog/status/delete(ids=${item.id})}">删除</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="timo-table-wrap">
+                <table class="layui-table timo-table timo-table-fixed">
+                    <thead>
+                    <tr>
+                        <th class="timo-table-checkbox">
+                            <label class="timo-checkbox"><input type="checkbox">
+                                <i class="layui-icon layui-icon-ok"></i></label>
+                        </th>
+                        <th class="sortable" data-field="name">日志名称</th>
+                        <th class="sortable" data-field="createBy">操作人</th>
+                        <th class="sortable" data-field="type">日志类型</th>
+                        <th class="sortable" data-field="ipaddr">IP地址</th>
+                        <th class="sortable" data-field="message">日志消息</th>
+                        <th class="sortable" data-field="createDate">记录时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item:${list}">
+                        <td><label class="timo-checkbox"><input type="checkbox" th:value="${item.id}">
+                            <i class="layui-icon layui-icon-ok"></i></label></td>
+                        <td th:text="${item.name}">日志名称</td>
+                        <td th:text="${item.operName}">操作人</td>
+                        <td th:text="${#dicts.keyValue('LOG_TYPE', item.type)}">日志类型</td>
+                        <td th:text="${item.ipaddr}">IP地址</td>
+                        <td th:text="${item.message}">日志消息</td>
+                        <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
+                        <td>
+                            <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/system/actionLog/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
+                            <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/system/actionLog/status/delete(ids=${item.id})}">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <div th:replace="/common/fragment :: page"></div>
         </div>
     </div>

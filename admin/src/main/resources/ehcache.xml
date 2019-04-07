@@ -9,11 +9,11 @@
     <defaultCache
             maxElementsInMemory="10000"
             eternal="false"
-            timeToIdleSeconds="120"
-            timeToLiveSeconds="120"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="3600"
             maxElementsOnDisk="10000000"
             diskExpiryThreadIntervalSeconds="120"
-            memoryStoreEvictionPolicy="LRU">
+            memoryStoreEvictionPolicy="LFU">
         <persistence strategy="localTempSwap"/>
     </defaultCache>
 
@@ -21,10 +21,9 @@
     <cache name="dictionary"
            maxElementsInMemory="10000"
            eternal="true"
-           timeToIdleSeconds="120"
-           timeToLiveSeconds="120"
+           overflowToDisk="true"
            maxElementsOnDisk="10000000"
            diskExpiryThreadIntervalSeconds="120"
-           memoryStoreEvictionPolicy="LRU">
+           memoryStoreEvictionPolicy="LFU">
     </cache>
 </ehcache>

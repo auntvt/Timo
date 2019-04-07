@@ -4,7 +4,7 @@
 </head>
 <body>
 <div class="layui-form timo-compile">
-    <form th:action="@{/user/pwd}">
+    <form th:action="@{/system/user/pwd}">
         <input th:each="id:${idList}" type="hidden" name="ids" th:value="${id}"/>
         <div class="layui-form-item">
             <label class="layui-form-label">新密码</label>

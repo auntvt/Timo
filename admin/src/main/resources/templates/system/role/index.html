@@ -37,54 +37,56 @@
                     </div>
                 </div>
                 <div class="pull-right screen-btn-group">
-                    <button class="layui-btn open-popup" data-title="添加角色" th:attr="data-url=@{/role/add}"  data-size="460,357">
+                    <button class="layui-btn open-popup" data-title="添加角色" th:attr="data-url=@{/system/role/add}"  data-size="460,357">
                         <i class="fa fa-plus"></i> 添加</button>
-                    <button class="layui-btn open-popup-param" data-type="radio" data-title="授权管理" th:attr="data-url=@{/role/auth}"  data-size="600,500">
+                    <button class="layui-btn open-popup-param" data-type="radio" data-title="授权管理" th:attr="data-url=@{/system/role/auth}"  data-size="600,500">
                         <i class="fa fa-user-secret"></i> 授权</button>
                     <div class="btn-group">
                         <button class="layui-btn">操作<span class="caret"></span></button>
                         <dl class="layui-nav-child layui-anim layui-anim-upbit">
-                            <dd><a class="ajax-status" th:href="@{/role/status/ok}">启用</a></dd>
-                            <dd><a class="ajax-status" th:href="@{/role/status/freezed}">冻结</a></dd>
-                            <dd><a class="ajax-status" th:href="@{/role/status/delete}">删除</a></dd>
+                            <dd><a class="ajax-status" th:href="@{/system/role/status/ok}">启用</a></dd>
+                            <dd><a class="ajax-status" th:href="@{/system/role/status/freezed}">冻结</a></dd>
+                            <dd><a class="ajax-status" th:href="@{/system/role/status/delete}">删除</a></dd>
                         </dl>
                     </div>
                 </div>
             </div>
-            <table class="layui-table timo-table">
-                <thead>
-                <tr>
-                    <th class="timo-table-checkbox">
-                        <label class="timo-checkbox"><input type="checkbox">
-                            <i class="layui-icon layui-icon-ok"></i></label>
-                    </th>
-                    <th class="sortable" data-field="name">角色编号</th>
-                    <th class="sortable" data-field="title">角色名称</th>
-                    <th class="sortable" data-field="createDate">创建时间</th>
-                    <th class="sortable" data-field="updateDate">更新时间</th>
-                    <th>查看</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="item:${list}">
-                    <td><label class="timo-checkbox"><input type="checkbox" th:value="${item.id}">
-                        <i class="layui-icon layui-icon-ok"></i></label></td>
-                    <td th:text="${item.name}">角色编号</td>
-                    <td th:text="${item.title}">角色名称</td>
-                    <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
-                    <td th:text="${#dates.format(item.updateDate, 'yyyy-MM-dd HH:mm:ss')}">更新时间</td>
-                    <td>
-                        <a class="open-popup" data-title="用户列表" th:attr="data-url=@{'/role/userList/'+${item.id}}"  data-size="800,600" href="#">用户列表</a>
-                    </td>
-                    <td>
-                        <a class="open-popup" data-title="编辑角色" th:attr="data-url=@{'/role/edit/'+${item.id}}"  data-size="460,357" href="#">编辑</a>
-                        <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/role/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
-                        <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/role/status/delete(ids=${item.id})}">删除</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="timo-table-wrap">
+                <table class="layui-table timo-table">
+                    <thead>
+                    <tr>
+                        <th class="timo-table-checkbox">
+                            <label class="timo-checkbox"><input type="checkbox">
+                                <i class="layui-icon layui-icon-ok"></i></label>
+                        </th>
+                        <th class="sortable" data-field="name">角色编号</th>
+                        <th class="sortable" data-field="title">角色名称</th>
+                        <th class="sortable" data-field="createDate">创建时间</th>
+                        <th class="sortable" data-field="updateDate">更新时间</th>
+                        <th>查看</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item:${list}">
+                        <td><label class="timo-checkbox"><input type="checkbox" th:value="${item.id}">
+                            <i class="layui-icon layui-icon-ok"></i></label></td>
+                        <td th:text="${item.name}">角色编号</td>
+                        <td th:text="${item.title}">角色名称</td>
+                        <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
+                        <td th:text="${#dates.format(item.updateDate, 'yyyy-MM-dd HH:mm:ss')}">更新时间</td>
+                        <td>
+                            <a class="open-popup" data-title="用户列表" th:attr="data-url=@{'/system/role/userList/'+${item.id}}"  data-size="800,600" href="#">用户列表</a>
+                        </td>
+                        <td>
+                            <a class="open-popup" data-title="编辑角色" th:attr="data-url=@{'/system/role/edit/'+${item.id}}"  data-size="460,357" href="#">编辑</a>
+                            <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/system/role/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
+                            <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/system/role/status/delete(ids=${item.id})}">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <div th:replace="/common/fragment :: page"></div>
         </div>
     </div>

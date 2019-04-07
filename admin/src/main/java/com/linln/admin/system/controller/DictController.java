@@ -1,19 +1,18 @@
 package com.linln.admin.system.controller;
 
-import com.linln.admin.core.enums.ResultEnum;
-import com.linln.admin.core.enums.StatusEnum;
-import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.core.log.action.SaveAction;
-import com.linln.admin.core.log.action.StatusAction;
-import com.linln.admin.core.log.annotation.ActionLog;
-import com.linln.admin.core.thymeleaf.utility.DictUtil;
-import com.linln.admin.core.web.TimoExample;
-import com.linln.admin.system.domain.Dict;
-import com.linln.admin.system.service.DictService;
-import com.linln.admin.system.validator.DictForm;
-import com.linln.core.utils.FormBeanUtil;
-import com.linln.core.utils.ResultVoUtil;
-import com.linln.core.vo.ResultVo;
+import com.linln.admin.system.validator.DictValid;
+import com.linln.common.enums.StatusEnum;
+import com.linln.common.utils.EntityBeanUtil;
+import com.linln.common.utils.ResultVoUtil;
+import com.linln.common.utils.StatusUtil;
+import com.linln.common.vo.ResultVo;
+import com.linln.component.actionLog.action.SaveAction;
+import com.linln.component.actionLog.action.StatusAction;
+import com.linln.component.actionLog.annotation.ActionLog;
+import com.linln.component.actionLog.annotation.EntityParam;
+import com.linln.component.thymeleaf.utility.DictUtil;
+import com.linln.modules.system.domain.Dict;
+import com.linln.modules.system.service.DictService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -31,7 +30,7 @@ import java.util.List;
  * @date 2018/8/14
  */
 @Controller
-@RequestMapping("/dict")
+@RequestMapping("/system/dict")
 public class DictController {
 
     @Autowired
@@ -41,7 +40,7 @@ public class DictController {
      * 列表页面
      */
     @GetMapping("/index")
-    @RequiresPermissions("/dict/index")
+    @RequiresPermissions("system:dict:index")
     public String index(Model model, Dict dict){
 
         // 创建匹配器，进行动态查询匹配
@@ -49,12 +48,12 @@ public class DictController {
                 withMatcher("title", match -> match.contains());
 
         // 获取字典列表
-        Example<Dict> example = TimoExample.of(dict, matcher);
+        Example<Dict> example = Example.of(dict, matcher);
         Page<Dict> list = dictService.getPageList(example);
 
         // 封装数据
-        model.addAttribute("list",list.getContent());
-        model.addAttribute("page",list);
+        model.addAttribute("list", list.getContent());
+        model.addAttribute("page", list);
         return "/system/dict/index";
     }
 
@@ -62,7 +61,7 @@ public class DictController {
      * 跳转到添加页面
      */
     @GetMapping("/add")
-    @RequiresPermissions("/dict/add")
+    @RequiresPermissions("system:dict:add")
     public String toAdd(){
         return "/system/dict/add";
     }
@@ -71,36 +70,34 @@ public class DictController {
      * 跳转到编辑页面
      */
     @GetMapping("/edit/{id}")
-    @RequiresPermissions("/dict/edit")
-    public String toEdit(@PathVariable("id") Long id, Model model){
-        Dict dict = dictService.getId(id);
-        model.addAttribute("dict",dict);
+    @RequiresPermissions("system:dict:edit")
+    public String toEdit(@PathVariable("id") Dict dict, Model model){
+        model.addAttribute("dict", dict);
         return "/system/dict/add";
     }
 
     /**
      * 保存添加/修改的数据
-     * @param dictForm 表单验证对象
+     * @param valid 验证对象
      */
     @PostMapping({"/add","/edit"})
-    @RequiresPermissions({"/dict/add","/dict/edit"})
+    @RequiresPermissions({"system:dict:add","system:dict:edit"})
     @ResponseBody
     @ActionLog(name = "字典管理", message = "字典：${title}", action = SaveAction.class)
-    public ResultVo save(@Validated DictForm dictForm){
+    public ResultVo save(@Validated DictValid valid, @EntityParam Dict dict){
         // 清除字典值两边空格
-        dictForm.setValue(dictForm.getValue().trim());
+        dict.setValue(dict.getValue().trim());
 
-        // 将验证的数据复制给实体类
-        Dict dict = new Dict();
-        if(dictForm.getId() != null){
-            dict = dictService.getId(dictForm.getId());
+        // 复制保留无需修改的数据
+        if(dict.getId() != null){
+            Dict beDict = dictService.getById(dict.getId());
+            EntityBeanUtil.copyProperties(beDict, dict);
         }
-        FormBeanUtil.copyProperties(dictForm, dict);
 
         // 保存数据
         dictService.save(dict);
-        if(dictForm.getId() != null){
-            DictUtil.clearCache(dictForm.getName());
+        if(dict.getId() != null){
+            DictUtil.clearCache(dict.getName());
         }
         return ResultVoUtil.SAVE_SUCCESS;
     }
@@ -109,9 +106,8 @@ public class DictController {
      * 跳转到详细页面
      */
     @GetMapping("/detail/{id}")
-    @RequiresPermissions("/dict/detail")
-    public String toDetail(@PathVariable("id") Long id, Model model){
-        Dict dict = dictService.getId(id);
+    @RequiresPermissions("system:dict:detail")
+    public String toDetail(@PathVariable("id") Dict dict, Model model){
         model.addAttribute("dict",dict);
         return "/system/dict/detail";
     }
@@ -120,24 +116,18 @@ public class DictController {
      * 设置一条或者多条数据的状态
      */
     @RequestMapping("/status/{param}")
-    @RequiresPermissions("/dict/status")
+    @RequiresPermissions("system:dict:status")
     @ResponseBody
     @ActionLog(name = "字典状态", action = StatusAction.class)
     public ResultVo status(
             @PathVariable("param") String param,
-            @RequestParam(value = "ids", required = false) List<Long> idList){
-        try {
-            // 获取状态StatusEnum对象
-            StatusEnum statusEnum = StatusEnum.valueOf(param.toUpperCase());
-            // 更新状态
-            Integer count = dictService.updateStatus(statusEnum,idList);
-            if (count > 0){
-                return ResultVoUtil.success(statusEnum.getMessage()+"成功");
-            }else{
-                return ResultVoUtil.error(statusEnum.getMessage()+"失败，请重新操作");
-            }
-        } catch (IllegalArgumentException e){
-            throw new ResultException(ResultEnum.STATUS_ERROR);
+            @RequestParam(value = "ids", required = false) List<Long> ids){
+        // 更新状态
+        StatusEnum statusEnum = StatusUtil.getStatusEnum(param);
+        if (dictService.updateStatus(statusEnum, ids)) {
+            return ResultVoUtil.success(statusEnum.getMessage() + "成功");
+        } else {
+            return ResultVoUtil.error(statusEnum.getMessage() + "失败，请重新操作");
         }
     }
 }

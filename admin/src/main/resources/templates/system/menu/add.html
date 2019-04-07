@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="layui-form timo-compile">
-    <form th:action="@{/menu/save}">
+    <form th:action="@{/system/menu/save}">
         <input type="hidden" name="id" th:if="${menu}" th:value="${menu.id}"/>
         <div class="layui-form-item">
             <label class="layui-form-label">标题</label>
@@ -17,8 +17,17 @@
         <div class="layui-form-item">
             <label class="layui-form-label">URL地址</label>
             <div class="layui-input-inline">
-                <input class="layui-input" type="text" name="url"  placeholder="请输入URL地址" th:value="${menu?.url}">
+                <input class="layui-input url-input" type="text" name="url"  placeholder="请输入URL地址" th:value="${menu?.url}">
             </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限标识</label>
+            <div class="layui-input-inline">
+                <input class="layui-input perms-input" type="text" name="perms"  placeholder="请输入权限标识" th:value="${menu?.perms}">
+            </div>
+            <button class="layui-btn layui-btn-primary layui-btn-xs perms-refresh" style="margin-top: 8px">
+                <i class="layui-icon layui-icon-refresh" style="margin-right: 0"></i>
+            </button>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">菜单图标</label>
@@ -30,7 +39,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">父级菜单</label>
             <div class="layui-input-inline">
-                <input class="layui-input select-tree" th:attr="data-url=@{/menu/list}, data-value=${pMenu?.id}" type="text" name="pid"  placeholder="请输入父级菜单" th:value="${pMenu?.title}">
+                <input class="layui-input select-tree" th:attr="data-url=@{/system/menu/list}, data-value=${pMenu?.id}" type="text" name="pid"  placeholder="请输入父级菜单" th:value="${pMenu?.title}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -43,7 +52,7 @@
             <label class="layui-form-label">排序</label>
             <div class="layui-input-inline">
                 <select class="select-sort" name="sort"
-                        th:attr="data-url=@{/menu/sortList}, data-id=${menu?.id}, data-sort=${menu?.sort}" lay-verify="sort"></select>
+                        th:attr="data-url=@{/system/menu/sortList}, data-id=${menu?.id}, data-sort=${menu?.sort}" lay-verify="sort"></select>
             </div>
             <div class="layui-input-info">（之后）</div>
         </div>
@@ -68,7 +77,7 @@
         window.form = layui.form;
         // 初始化排序下拉选项
         var pid = $(".select-tree").data('value');
-        if (pid != undefined){
+        if (pid !== undefined){
             sortRender({id: pid});
         }
     });
@@ -106,6 +115,24 @@
     $(".icon-input").on("input propertychange", function(){
         $(".icon-show").attr("class", "icon-show "+$(this).val());
     });
+
+    // 同步操作权限输入框
+    var $perms = $(".perms-input").val();
+    $(".url-input").on("input propertychange", function(){
+        if($perms === ''){
+            $(".perms-refresh").click();
+        }
+    });
+
+    // 更新权限标识
+    $(".perms-refresh").on("click", function (e) {
+        e.preventDefault();
+        var $perms = $(".perms-input");
+        var url = $(".url-input").val().substr(1);
+        var perms = url.replace(new RegExp( '/' , "g" ), ':');
+        $perms.val(perms);
+    })
+
 </script>
 </body>
 </html>

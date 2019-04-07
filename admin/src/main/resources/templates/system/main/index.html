@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
     <style>
+        a{
+            color: #005980;
+        }
         .widget-small{
             background-color: #FFFFFF;
             overflow: hidden;
@@ -43,9 +46,6 @@
         }
         .project-introduce{
             min-height: 466px;
-        }
-        .project-introduce a{
-            color: #005980;
         }
         .project-introduce h4{
             font-weight: bold;
@@ -124,6 +124,29 @@
                     </div>
                 </div>
             </div>
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">项目信息</div>
+                        <div class="layui-card-body">
+                            <ul>
+                                <li><i class="fa fa-coffee"></i> 作者：<a href="https://gitee.com/aun">小懒虫</a></li>
+                                <li><i class="fa fa-flag"></i> 官网：<a href="http://www.linln.top">http://www.linln.top</a></li>
+                                <li><i class="fa fa-qq"></i> QQ群：<a href="https://jq.qq.com/?_wv=1027&k=5RCnDCO">941209502</a></li>
+                                <li><i class="fa fa-book"></i> 开发文档：<a href="https://www.kancloud.cn/timo/timo-doc">TIMO开发文档.看云</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">支持一下吧！</div>
+                        <div class="layui-card-body">
+                            <img style="width: 100%" th:src="@{/images/alipay.png}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="layui-col-md4">
             <div class="layui-card">
@@ -133,10 +156,27 @@
                         <li class="layui-timeline-item">
                             <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                             <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title">v2.0</h3>
+                                <p>
+                                    1.重构项目结构，引入组件及业务组概念<br>
+                                    2.前后台分离部署，可以针对前台进行性能优化<br>
+                                    3.优化逻辑删除功能，限制查询已删除的数据<br>
+                                    4.重构代码生成功能解析方式<br>
+                                    5.优化弹出式窗口，加入最大化及自动适应大小<br>
+                                    6.优化数据列表在小窗口下显示混乱问题
+                                </p>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
                                 <h3 class="layui-timeline-title">v1.0.8</h3>
                                 <p>
-                                    1.重构字典模块，简化字典操作
-                                    2.添加离线技术文档1.0
+                                    1.重构字典模块，简化字典操作<br>
+                                    2.修复个人信息修改时不通过问题<br>
+                                    3.修复用户名修改报错问题，防止脏数据报错<br>
+                                    4.修复上传文件无法访问的bug<br>
+                                    5.修复生成实体类Text类型的bug
                                 </p>
                             </div>
                         </li>

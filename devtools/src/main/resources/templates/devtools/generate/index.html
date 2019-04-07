@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:mo="https://gitee.com/aun/Timo">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+    <link rel="stylesheet" th:href="@{/css/generate.code.css}">
+    <link rel="stylesheet" th:href="@{/lib/formSelects-v4/formSelects-v4.css}">
+    <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+</head>
+<body class="timo-layout-page">
+<div class="layui-card">
+    <div class="layui-card-header timo-card-header">
+        <span><i class="fa fa-bars"></i> 代码生成</span>
+        <i class="layui-icon layui-icon-refresh refresh-btn" style="left:92px"></i>
+        <button class="layui-btn layui-btn-sm entity-save" th:attr="data-url=@{/dev/code/save}">
+            <i class="fa fa-floppy-o"></i>保存</button>
+    </div>
+    <div class="layui-card-body">
+        <fieldset id="basic" class="layui-elem-field layui-form">
+            <legend class="code-legend">基本信息</legend>
+            <div class="layui-field-box">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">项目路径</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="projectPath" th:value="${basic.projectPath}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">项目包名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="packagePath" th:value="${basic.packagePath}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">作者名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="author" th:value="${basic.author}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">父级菜单</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input select-tree" th:attr="data-url=@{/system/menu/list}" type="text" name="genPMenu" value="顶级菜单" data-value="0" placeholder="请选择父级菜单">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">模块名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="genModule" th:value="${basic.genModule}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">业务名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="genTitle" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">表前缀</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="tablePrefix" th:value="${basic.tablePrefix}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">表名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="tableName" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">实体类</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="tableEntity" autocomplete="off" class="layui-input tableEntity">
+                        </div>
+                    </div>
+                </div>
+                <div class="more-field">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">访问地址</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="requestMapping" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">模块结构</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="moduleType" value="1" title="独立模块" checked="">
+                                <input type="radio" name="moduleType" value="2" title="后台模块">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="layui-btn more-btn" title="更多按钮"><i class="fa fa-angle-down"></i></button>
+            </div>
+        </fieldset>
+        <div class="panel">
+            <div class="panel-header">
+                <div class="title">实体类</div>
+                <div class="control">
+                    <button class="field-add layui-btn layui-btn-primary layui-btn-xs">
+                        <i class="fa fa-plus-circle"></i>添加
+                    </button>
+                    <button class="field-del layui-btn layui-btn-primary layui-btn-xs">
+                        <i class="fa fa-minus-circle"></i>删除
+                    </button>
+                    <button class="field-up layui-btn layui-btn-primary layui-btn-xs">
+                        <i class="fa fa-arrow-up"></i>向上
+                    </button>
+                    <button class="field-down layui-btn layui-btn-primary layui-btn-xs">
+                        <i class="fa fa-arrow-down"></i>向下
+                    </button>
+                </div>
+                <div class="entity"><span class="bindTableEntity"></span>(<span class="bindTablePrefix"></span><span class="bindTableName"></span>)</div>
+            </div>
+            <div class="panel-body panel-body-entity">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th width="20">#</th>
+                        <th width="100">字段名称</th>
+                        <th width="100">字段标题</th>
+                        <th width="100">数据类型</th>
+                        <th width="100">查询（可选）</th>
+                        <th width="100">列表显示</th>
+                        <th>字段验证（可选）</th>
+                    </tr>
+                    </thead>
+                    <tbody id="entity">
+                    <tr th:each="item,key:${fieldList}">
+                        <td class="entity-number" th:text="${key.index}+1"></td>
+                        <td class="entity-name"><input type="text" name="name" th:value="${item.name}"/></td>
+                        <td class="entity-title"><input type="text" name="title" th:value="${item.title}"/></td>
+                        <td class="layui-form entity-type">
+                            <select name="type" mo:list="${fieldType}" mo-selected="${item.type}" lay-verify="entity-type"></select>
+                        </td>
+                        <td class="layui-form entity-query">
+                            <select name="query" mo:list="${fieldQuery}" mo-selected="${item.query}" mo-empty="" lay-verify="entity-type"></select>
+                        </td>
+                        <td class="layui-form entity-show">
+                            <input name="show" type="checkbox" th:checked="${item.show}" lay-text="是|否" value="1" lay-skin="switch">
+                        </td>
+                        <td class="entity-verify">
+                            <select name="verify" mo:list="${fieldVerify}" mo-selected="${item.verify}" th:attr="xm-select='entity-verify'+${item.name}"></select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-header">
+                <div class="title">模板信息</div>
+                <div class="info"><i></i>创建<i class="lose"></i>忽略</div>
+                <div class="path">模块路径：<span class="bindPackagePath"></span>.xxx.<span class="bindGenModule"></span></div>
+            </div>
+            <div id="float" class="panel-body panel-body-float">
+                <div class="float-label active" data-name="entity">实体类：<span class="bindTableEntity"></span></div>
+                <div class="float-label active" data-name="controller">控制器：<span class="bindTableEntity"></span>Controller</div>
+                <div class="float-label active" data-name="service">服务层：<span class="bindTableEntity"></span>Service</div>
+                <div class="float-label active" data-name="repository">dao层：<span class="bindTableEntity"></span>Repository</div>
+                <div class="float-label active" data-name="validator">认证类：<span class="bindTableEntity"></span>Valid</div>
+                <div class="float-label active" data-name="index">列表页面：<span class="bindTableEntity"></span>/index.html</div>
+                <div class="float-label active" data-name="add">添加页面：<span class="bindTableEntity"></span>/add.html</div>
+                <div class="float-label active" data-name="detail">详细页面：<span class="bindTableEntity"></span>/detail.html</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:replace="/common/template :: script"></script>
+<script type="text/javascript" th:src="@{/js/plugins/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/zTree_v3/js/jquery.ztree.core.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/timoTree.js}"></script>
+<script type="text/javascript">
+    // 树形菜单
+    $.fn.selectTree({
+        rootTree: '顶级菜单'
+    });
+
+    // 验证下拉选择器
+    layui.config({
+        base: '[[@{/lib/formSelects-v4/}]]'
+    }).extend({
+        formSelects: 'formSelects-v4.min'
+    });
+</script>
+<script type="text/javascript" th:src="@{/js/generate.code.js}"></script>
+</body>
+</html>

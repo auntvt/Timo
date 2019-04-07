@@ -27,7 +27,10 @@
             </tr>
             <tr>
                 <th>操作人</th>
-                <td th:text="${actionLog.createBy?.nickname}"></td>
+                <td th:if="${actionLog.operBy eq null}">[[${actionLog.operName}]]</td>
+                <td th:if="${actionLog.operBy ne null}">
+                    <a th:href="@{/system/user/index(id=${actionLog.operBy?.id})}">[[${actionLog.operName}]]（[[${actionLog.operBy?.id}]]）</a>
+                </td>
                 <th>记录时间</th>
                 <td th:text="${#dates.format(actionLog.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
             </tr>

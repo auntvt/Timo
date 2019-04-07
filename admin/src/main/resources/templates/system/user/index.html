@@ -9,7 +9,7 @@
         <div class="layui-card-header timo-card-header">
             <span><i class="fa fa-bars"></i> 用户管理</span>
             <i class="layui-icon layui-icon-refresh refresh-btn"></i>
-            <a th:href="@{/user/export}"><i class="fa fa-download"></i></a>
+            <a th:href="@{/system/user/export}"><i class="fa fa-download"></i></a>
         </div>
         <div class="layui-card-body">
             <div class="layui-row timo-card-screen put-row">
@@ -23,7 +23,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">所在部门</label>
                         <div class="layui-input-block">
-                            <input class="layui-input select-tree" th:attr="data-url=@{/dept/list}, data-value=${dept?.id}" th:value="${dept?.title}" type="text" name="dept" placeholder="请选择部门">
+                            <input class="layui-input select-tree" th:attr="data-url=@{/system/dept/list}, data-value=${dept?.id}" th:value="${dept?.title}" type="text" name="dept" placeholder="请选择部门">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -46,63 +46,65 @@
                 </div>
                 <div class="pull-right screen-btn-group">
                     <div class="btn-group-left">
-                        <button class="layui-btn open-popup-param" data-title="修改密码" th:attr="data-url=@{/user/pwd}"  data-size="456,242">
+                        <button class="layui-btn open-popup-param" data-title="修改密码" th:attr="data-url=@{/system/user/pwd}"  data-size="456,242">
                             <i class="fa fa-refresh"></i> 修改密码</button>
-                        <button class="layui-btn open-popup-param" data-type="radio" data-title="角色分配" th:attr="data-url=@{/user/role}" data-size="480,400">
+                        <button class="layui-btn open-popup-param" data-type="radio" data-title="角色分配" th:attr="data-url=@{/system/user/role}" data-size="480,400">
                             <i class="fa fa-user-secret"></i> 角色分配</button>
                     </div>
                     <div class="btn-group-right">
-                        <button class="layui-btn open-popup" data-title="添加用户" th:attr="data-url=@{/user/add}"  data-size="600,520">
+                        <button class="layui-btn open-popup" data-title="添加用户" th:attr="data-url=@{/system/user/add}"  data-size="auto">
                             <i class="fa fa-plus"></i> 添加</button>
                         <div class="btn-group">
                             <button class="layui-btn">操作<span class="caret"></span></button>
                             <dl class="layui-nav-child layui-anim layui-anim-upbit">
-                                <dd><a class="ajax-status" th:href="@{/user/status/ok}">启用</a></dd>
-                                <dd><a class="ajax-status" th:href="@{/user/status/freezed}">冻结</a></dd>
-                                <dd><a class="ajax-status" th:href="@{/user/status/delete}">删除</a></dd>
+                                <dd><a class="ajax-status" th:href="@{/system/user/status/ok}">启用</a></dd>
+                                <dd><a class="ajax-status" th:href="@{/system/user/status/freezed}">冻结</a></dd>
+                                <dd><a class="ajax-status" th:href="@{/system/user/status/delete}">删除</a></dd>
                             </dl>
                         </div>
                     </div>
                 </div>
             </div>
-            <table class="layui-table timo-table">
-                <thead>
-                <tr>
-                    <th class="timo-table-checkbox">
-                        <label class="timo-checkbox"><input type="checkbox">
-                            <i class="layui-icon layui-icon-ok"></i></label>
-                    </th>
-                    <th class="sortable" data-field="username">用户名</th>
-                    <th class="sortable" data-field="nickname">用户昵称</th>
-                    <th class="sortable" data-field="dept">所在部门</th>
-                    <th class="sortable" data-field="sex">性别</th>
-                    <th class="sortable" data-field="phone">电话</th>
-                    <th class="sortable" data-field="email">邮箱</th>
-                    <th class="sortable" data-field="createDate">创建时间</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="item:${list}">
-                    <td><label class="timo-checkbox"><input type="checkbox" th:value="${item.id}">
-                        <i class="layui-icon layui-icon-ok"></i></label></td>
-                    <td th:text="${item.username}">用户名</td>
-                    <td th:text="${item.nickname}">用户昵称</td>
-                    <td th:text="${item.dept?.title}">用户昵称</td>
-                    <td th:text="${#dicts.keyValue('USER_SEX', item.sex)}">性别</td>
-                    <td th:text="${item.phone}">电话</td>
-                    <td th:text="${item.email}">邮箱</td>
-                    <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
-                    <td th:text="${#dicts.dataStatus(item.status)}">状态</td>
-                    <td>
-                        <a class="open-popup" data-title="编辑用户" th:attr="data-url=@{'/user/edit/'+${item.id}}"  data-size="600,570" href="#">编辑</a>
-                        <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/user/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
-                        <a class="ajax-get" th:attr="data-msg='您是否删除'+${item.nickname}" th:href="@{/user/status/delete(ids=${item.id})}">删除</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="timo-table-wrap">
+                <table class="layui-table timo-table">
+                    <thead>
+                    <tr>
+                        <th class="timo-table-checkbox">
+                            <label class="timo-checkbox"><input type="checkbox">
+                                <i class="layui-icon layui-icon-ok"></i></label>
+                        </th>
+                        <th class="sortable" data-field="username">用户名</th>
+                        <th class="sortable" data-field="nickname">用户昵称</th>
+                        <th class="sortable" data-field="dept">所在部门</th>
+                        <th class="sortable" data-field="sex">性别</th>
+                        <th class="sortable" data-field="phone">电话</th>
+                        <th class="sortable" data-field="email">邮箱</th>
+                        <th class="sortable" data-field="createDate">创建时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item:${list}">
+                        <td><label class="timo-checkbox"><input type="checkbox" th:value="${item.id}">
+                            <i class="layui-icon layui-icon-ok"></i></label></td>
+                        <td th:text="${item.username}">用户名</td>
+                        <td th:text="${item.nickname}">用户昵称</td>
+                        <td th:text="${item.dept?.title}">用户昵称</td>
+                        <td th:text="${#dicts.keyValue('USER_SEX', item.sex)}">性别</td>
+                        <td th:text="${item.phone}">电话</td>
+                        <td th:text="${item.email}">邮箱</td>
+                        <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
+                        <td th:text="${#dicts.dataStatus(item.status)}">状态</td>
+                        <td>
+                            <a class="open-popup" data-title="编辑用户" th:attr="data-url=@{'/system/user/edit/'+${item.id}}"  data-size="600,570" href="#">编辑</a>
+                            <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/system/user/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
+                            <a class="ajax-get" th:attr="data-msg='您是否删除'+${item.nickname}" th:href="@{/system/user/status/delete(ids=${item.id})}">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <div th:replace="/common/fragment :: page"></div>
         </div>
     </div>

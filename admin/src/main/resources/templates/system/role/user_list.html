@@ -25,7 +25,7 @@
             <tr th:each="item:${list}">
                 <td>[[${item.username}]]</td>
                 <td>[[${item.nickname}]]</td>
-                <td><a th:href="@{/user/index(id=${item.id})}">查看</a></td>
+                <td><a th:href="@{/system/user/index(id=${item.id})}">查看</a></td>
             </tr>
             <tr th:if="${list.isEmpty()}">
                 <td style="text-align: center" colspan="3">未有分配该角色的用户</td>

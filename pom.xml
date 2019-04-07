@@ -8,20 +8,21 @@
 
     <groupId>com.linln</groupId>
     <artifactId>timo</artifactId>
-    <version>1.0.8</version>
+    <version>2.0</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>boot</module>
         <module>admin</module>
-        <module>core</module>
+        <module>common</module>
+        <module>component</module>
         <module>devtools</module>
+        <module>modules</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.6.RELEASE</version>
+        <version>2.1.4.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -29,28 +30,26 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <!--shiro权限管理框架版本：component.shiro-->
         <shiro.version>1.4.0</shiro.version>
         <lombok.version>1.18.2</lombok.version>
         <ehcache.version>2.10.5</ehcache.version>
         <mysql.connector.version>5.1.46</mysql.connector.version>
         <jsoup.version>1.11.3</jsoup.version>
+        <!--excel工具框架版本：component.excel-->
         <poi.version>4.0.0</poi.version>
-        <swagger.version>2.9.2</swagger.version>
         <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--spring data jpa持久层框架-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -71,18 +70,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!--shiro权限管理框架-->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
 
         <!--mysql连接驱动-->
@@ -108,14 +95,7 @@
             <version>${ehcache.version}</version>
         </dependency>
 
-        <!-- excel工具 -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>${poi.version}</version>
-        </dependency>
-
-        <!--xss过滤组件-->
+        <!--html解析工具，处理xss工具-->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>

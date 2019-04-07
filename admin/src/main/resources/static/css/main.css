@@ -10,6 +10,7 @@ a{
 }
 ::-webkit-scrollbar {
 	width: 6px;
+    height: 6px;
 	background-color: #F5F5F5;
 }
 ::-webkit-scrollbar-thumb {
@@ -405,8 +406,8 @@ a{
     background-color: #fff;
 }
 .timo-checkbox input[type="checkbox"]:checked + .layui-icon:before{
-    border-color: #5FB878;
-    background-color: #5FB878;
+    border-color: #009688;
+    background-color: #009688;
 }
 
 /* 收起侧边栏 */
@@ -582,21 +583,27 @@ a{
 	background-color: #cccccc;
 }
 .timo-layout-page .timo-card-screen{
-	margin-top: 6px;
-	margin-bottom: 12px;
+	margin-bottom: 8px;
 }
 .timo-layout-page .timo-card-screen.put-row .screen-btn-group{
 	clear: both;
 	float: left;
 	width: 100%;
-	margin-top: 14px;
+	margin-top: 4px;
+}
+.timo-layout-page .timo-card-screen .screen-btn-group{
+    margin-right: 1px;
+}
+.timo-layout-page .timo-card-screen .screen-btn-group .layui-btn{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .timo-layout-page .timo-card-screen.put-row .screen-btn-group .btn-group-left{
 	float: left;
 	margin-left: -2px;
 }
 .timo-layout-page .timo-card-screen.put-row .screen-btn-group .btn-group-left button{
-	margin-right: 6px;
+    margin-right: 6px;
 }
 .timo-layout-page .timo-card-screen.put-row .screen-btn-group .btn-group-right{
 	float: right;
@@ -610,6 +617,9 @@ a{
 	padding-left: 12px;
 	border-color: #e6e6e6;
 	cursor: pointer;
+}
+.timo-layout-page .layui-form-pane .layui-inline{
+    margin: 5px 0;
 }
 .timo-layout-page .layui-form-pane .layui-form-label{
 	width: auto;
@@ -637,8 +647,13 @@ a{
 .timo-layout-page .screen-btn-group .layui-btn{
 	padding: 0 14px;
 }
+.timo-layout-page .timo-table-wrap{
+	overflow-y: auto;
+    margin: 5px 0;
+}
 .timo-layout-page .timo-table{
 	color: #000000;
+    margin: 0;
 }
 .timo-layout-page .timo-table.timo-table-fixed{
     table-layout: fixed;
@@ -675,6 +690,7 @@ a{
 }
 .timo-layout-page .timo-table .sortable{
     cursor: pointer;
+    padding-right: 18px;
     background:#FFFFFF url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAQAAADYWf5HAAAAkElEQVQoz7X QMQ5AQBCF4dWQSJxC5wwax1Cq1e7BAdxD5SL+Tq/QCM1oNiJidwox0355mXnG/DrEtIQ6azioNZQxI0ykPhTQIwhCR+BmBYtlK7kLJYwWCcJA9M4qdrZrd8pPjZWPtOqdRQy320YSV17OatFC4euts6z39GYMKRPCTKY9UnPQ6P+GtMRfGtPnBCiqhAeJPmkqAAAAAElFTkSuQmCC") no-repeat right;
 }
 .timo-layout-page .timo-table .sortable.asc{
@@ -791,6 +807,12 @@ a{
 }
 .timo-compile .layui-input-inline{
 	width: 240px;
+}
+.timo-compile .layui-input-inline input:hover,
+.timo-compile .layui-input-block input:hover,
+.timo-compile .layui-input-inline textarea:hover,
+.timo-compile .layui-input-block textarea:hover{
+    border-color: #009688!important;
 }
 .timo-compile .layui-input-info{
     float: left;

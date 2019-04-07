@@ -1,12 +1,12 @@
 package com.linln.admin.system.controller;
 
-import com.linln.admin.core.enums.ResultEnum;
-import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.core.web.FileUpload;
-import com.linln.admin.system.domain.Upload;
-import com.linln.admin.system.service.UploadService;
-import com.linln.core.utils.ResultVoUtil;
-import com.linln.core.vo.ResultVo;
+import com.linln.common.enums.ResultEnum;
+import com.linln.common.exception.ResultException;
+import com.linln.common.utils.ResultVoUtil;
+import com.linln.common.vo.ResultVo;
+import com.linln.component.fileUpload.FileUpload;
+import com.linln.modules.system.domain.Upload;
+import com.linln.modules.system.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,9 +75,9 @@ public class UploadController {
         }
 
         // 判断图片是否存在
-        Upload isFile = uploadService.isFile(FileUpload.getFileSHA1(multipartFile));
-        if (isFile != null) {
-            return ResultVoUtil.success(isFile);
+        Upload uploadSha1 = uploadService.getBySha1(FileUpload.getFileSHA1(multipartFile));
+        if (uploadSha1 != null) {
+            return ResultVoUtil.success(uploadSha1);
         }
 
         FileUpload.transferTo(multipartFile, upload);

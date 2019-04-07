@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="layui-form timo-compile">
-    <form th:action="@{/user/save}">
+    <form th:action="@{/system/user/save}">
         <input type="hidden" name="id" th:if="${user}" th:value="${user.id}"/>
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
@@ -35,7 +35,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">所在部门</label>
             <div class="layui-input-inline">
-                <input class="layui-input select-tree" th:attr="data-url=@{/dept/list}, data-value=${user?.dept?.id}"
+                <input class="layui-input select-tree" th:attr="data-url=@{/system/dept/list}, data-value=${user?.dept?.id}"
                        type="text" name="dept"  placeholder="请选择所在部门" th:value="${user?.dept?.title}">
             </div>
         </div>

@@ -34,10 +34,10 @@
                 <a class="timo-header-nickname" th:text="${user.nickname}">TIMO</a>
                 <div class="layui-nav-child">
                     <div class="timo-nav-child-box">
-                        <div><a class="open-popup" data-title="个人信息" th:attr="data-url=@{/user_info}"
+                        <div><a class="open-popup" data-title="个人信息" th:attr="data-url=@{/userInfo}"
                                 data-size="680,464"><!--
               --><i class="fa fa-user-o"></i>个人信息</a></div>
-                        <div><a class="open-popup" data-title="修改密码" th:attr="data-url=@{/edit_pwd}"
+                        <div><a class="open-popup" data-title="修改密码" th:attr="data-url=@{/editPwd}"
                                 data-size="456,296"><!--
               --><i class="fa fa-lock" style="font-size:17px;width:12px;"></i>修改密码</a></div>
                         <div><a th:href="@{/logout}"><i class="fa fa-power-off"></i>退出登录</a></div>
@@ -51,8 +51,8 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <div class="layui-side-user">
-                <img class="layui-side-user-avatar open-popup" th:attr="data-url=@{/user_info}" data-size="680,464"
-                     th:src="@{'/user/picture?p='+${user.picture}}" alt="头像">
+                <img class="layui-side-user-avatar open-popup" th:attr="data-url=@{/userInfo}" data-size="680,464"
+                     th:src="@{'/system/user/picture?p='+${user.picture}}" alt="头像">
                 <div>
                     <p class="layui-side-user-name" th:text="${user.nickname}">TIMO</p>
                     <p class="layui-side-user-designation">在线</p>

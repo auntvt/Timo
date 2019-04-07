@@ -1,19 +1,19 @@
 package com.linln.admin.system.controller;
 
-import com.linln.admin.core.enums.ResultEnum;
-import com.linln.admin.core.enums.StatusEnum;
-import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.core.log.action.SaveAction;
-import com.linln.admin.core.log.action.StatusAction;
-import com.linln.admin.core.log.annotation.ActionLog;
-import com.linln.admin.core.thymeleaf.utility.DictUtil;
-import com.linln.admin.core.web.TimoExample;
-import com.linln.admin.system.domain.Menu;
-import com.linln.admin.system.service.MenuService;
-import com.linln.admin.system.validator.MenuForm;
-import com.linln.core.utils.FormBeanUtil;
-import com.linln.core.utils.ResultVoUtil;
-import com.linln.core.vo.ResultVo;
+import com.linln.admin.system.validator.MenuValid;
+import com.linln.common.enums.StatusEnum;
+import com.linln.common.utils.EntityBeanUtil;
+import com.linln.common.utils.HttpServletUtil;
+import com.linln.common.utils.ResultVoUtil;
+import com.linln.common.utils.StatusUtil;
+import com.linln.common.vo.ResultVo;
+import com.linln.component.actionLog.action.SaveAction;
+import com.linln.component.actionLog.action.StatusAction;
+import com.linln.component.actionLog.annotation.ActionLog;
+import com.linln.component.actionLog.annotation.EntityParam;
+import com.linln.component.thymeleaf.utility.DictUtil;
+import com.linln.modules.system.domain.Menu;
+import com.linln.modules.system.service.MenuService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -33,7 +33,7 @@ import java.util.TreeMap;
  * @date 2018/8/14
  */
 @Controller
-@RequestMapping("/menu")
+@RequestMapping("/system/menu")
 public class MenuController {
 
     @Autowired
@@ -43,18 +43,9 @@ public class MenuController {
      * 跳转到列表页面
      */
     @GetMapping("/index")
-    @RequiresPermissions("/menu/index")
-    public String index(Model model, Menu menu) {
-        String search = "";
-        if (menu.getStatus() != null) {
-            search += "status=" + menu.getStatus();
-        }
-        if (menu.getTitle() != null) {
-            search += "&title=" + menu.getTitle();
-        }
-        if (menu.getUrl() != null) {
-            search += "&url=" + menu.getUrl();
-        }
+    @RequiresPermissions("system:menu:index")
+    public String index(Model model) {
+        String search = HttpServletUtil.getRequest().getQueryString();
         model.addAttribute("search", search);
         return "/system/menu/index";
     }
@@ -63,17 +54,19 @@ public class MenuController {
      * 菜单数据列表
      */
     @GetMapping("/list")
-    @RequiresPermissions("/menu/index")
+    @RequiresPermissions("system:menu:index")
     @ResponseBody
     public ResultVo list(Menu menu) {
         // 创建匹配器，进行动态查询匹配
         ExampleMatcher matcher = ExampleMatcher.matching().
                 withMatcher("title", match -> match.contains());
 
-        // 获取用户列表
-        Example<Menu> example = TimoExample.of(menu, matcher);
+        // 获取菜单列表
+        Example<Menu> example = Example.of(menu, matcher);
         Sort sort = new Sort(Sort.Direction.ASC, "sort");
-        List<Menu> list = menuService.getList(example, sort);
+        List<Menu> list = menuService.getListByExample(example, sort);
+
+        // TODO: 2019/2/25 菜单类型处理方案
         list.forEach(editMenu -> {
             String type = String.valueOf(editMenu.getType());
             editMenu.setRemark(DictUtil.keyValue("MENU_TYPE", type));
@@ -85,14 +78,14 @@ public class MenuController {
      * 获取排序菜单列表
      */
     @GetMapping("/sortList/{pid}/{notId}")
-    @RequiresPermissions({"/menu/add", "/menu/edit"})
+    @RequiresPermissions({"system:menu:add", "system:menu:edit"})
     @ResponseBody
     public Map<Integer, String> sortList(
             @PathVariable(value = "pid", required = false) Long pid,
             @PathVariable(value = "notId", required = false) Long notId){
         // 本级排序菜单列表
         notId = notId != null ? notId : (long) 0;
-        List<Menu> levelMenu = menuService.getPid(pid, notId);
+        List<Menu> levelMenu = menuService.getListByPid(pid, notId);
         Map<Integer, String> sortMap = new TreeMap<>();
         for (int i = 1; i <= levelMenu.size(); i++) {
             sortMap.put(i, levelMenu.get(i - 1).getTitle());
@@ -104,14 +97,9 @@ public class MenuController {
      * 跳转到添加页面
      */
     @GetMapping({"/add", "/add/{pid}"})
-    @RequiresPermissions("/menu/add")
-    public String toAdd(@PathVariable(value = "pid", required = false) Long pid, Model model) {
-        // 父级菜单
-        if (pid != null) {
-            Menu pMenu = menuService.getId(pid);
-            model.addAttribute("pMenu", pMenu);
-        }
-
+    @RequiresPermissions("system:menu:add")
+    public String toAdd(@PathVariable(value = "pid", required = false) Menu pMenu, Model model) {
+        model.addAttribute("pMenu", pMenu);
         return "/system/menu/add";
     }
 
@@ -119,17 +107,9 @@ public class MenuController {
      * 跳转到编辑页面
      */
     @GetMapping("/edit/{id}")
-    @RequiresPermissions("/menu/edit")
-    public String toEdit(@PathVariable("id") Long id, Model model) {
-        Menu menu = menuService.getId(id);
-        Menu pMenu = menuService.getId(menu.getPid());
-        if (pMenu == null) {
-            Menu newMenu = new Menu();
-            newMenu.setId((long) 0);
-            newMenu.setTitle("顶级菜单");
-            pMenu = newMenu;
-        }
-
+    @RequiresPermissions("system:menu:edit")
+    public String toEdit(@PathVariable("id") Menu menu, Model model) {
+        Menu pMenu = menuService.getById(menu.getPid());
         model.addAttribute("menu", menu);
         model.addAttribute("pMenu", pMenu);
         return "/system/menu/add";
@@ -137,42 +117,36 @@ public class MenuController {
 
     /**
      * 保存添加/修改的数据
-     *
-     * @param menuForm 表单验证对象
+     * @param valid 验证对象
+     * @param menu 实体对象
      */
     @PostMapping("/save")
-    @RequiresPermissions({"/menu/add", "/menu/edit"})
+    @RequiresPermissions({"system:menu:add", "system:menu:edit"})
     @ResponseBody
     @ActionLog(name = "菜单管理", message = "菜单：${title}", action = SaveAction.class)
-    public ResultVo save(@Validated MenuForm menuForm) {
-         if (menuForm.getId() == null) {
+    public ResultVo save(@Validated MenuValid valid, @EntityParam Menu menu) {
+         if (menu.getId() == null) {
             // 排序为空时，添加到最后
-            if(menuForm.getSort() == null){
-                Integer sortMax = menuService.getSortMax(menuForm.getPid());
-                menuForm.setSort(sortMax !=null ? sortMax - 1 : 0);
+            if(menu.getSort() == null){
+                Integer sortMax = menuService.getSortMax(menu.getPid());
+                menu.setSort(sortMax !=null ? sortMax - 1 : 0);
             }
 
             // 添加全部上级序号
-            if (menuForm.getPid() != 0) {
-                Menu pMenu = menuService.getId(menuForm.getPid());
-                menuForm.setPids(pMenu.getPids() + ",[" + menuForm.getPid() + "]");
-            } else {
-                menuForm.setPids("[0]");
-            }
+            Menu pMenu = menuService.getById(menu.getPid());
+            menu.setPids(pMenu.getPids() + ",[" + menu.getPid() + "]");
         }
 
-        // 将验证的数据复制给实体类
-        Menu menu = new Menu();
-        if (menuForm.getId() != null) {
-            menu = menuService.getId(menuForm.getId());
-            menuForm.setPids(menu.getPids());
+        // 复制保留无需修改的数据
+        if (menu.getId() != null) {
+            Menu beMenu = menuService.getById(menu.getId());
+            EntityBeanUtil.copyProperties(beMenu, menu, "pids");
         }
-        FormBeanUtil.copyProperties(menuForm, menu);
 
         // 排序功能
-        Integer sort = menuForm.getSort();
+        Integer sort = menu.getSort();
         Long notId = menu.getId() != null ? menu.getId() : 0;
-        List<Menu> levelMenu = menuService.getPid(menuForm.getPid(), notId);
+        List<Menu> levelMenu = menuService.getListByPid(menu.getPid(), notId);
         levelMenu.add(sort, menu);
         for (int i = 1; i <= levelMenu.size(); i++) {
             levelMenu.get(i - 1).setSort(i);
@@ -187,9 +161,8 @@ public class MenuController {
      * 跳转到详细页面
      */
     @GetMapping("/detail/{id}")
-    @RequiresPermissions("/menu/detail")
-    public String toDetail(@PathVariable("id") Long id, Model model) {
-        Menu menu = menuService.getId(id);
+    @RequiresPermissions("system:menu:detail")
+    public String toDetail(@PathVariable("id") Menu menu, Model model) {
         model.addAttribute("menu", menu);
         return "/system/menu/detail";
     }
@@ -198,24 +171,18 @@ public class MenuController {
      * 设置一条或者多条数据的状态
      */
     @RequestMapping("/status/{param}")
-    @RequiresPermissions("/menu/status")
+    @RequiresPermissions("system:menu:status")
     @ResponseBody
     @ActionLog(name = "菜单状态", action = StatusAction.class)
     public ResultVo status(
             @PathVariable("param") String param,
-            @RequestParam(value = "ids", required = false) List<Long> idList) {
-        try {
-            // 获取状态StatusEnum对象
-            StatusEnum statusEnum = StatusEnum.valueOf(param.toUpperCase());
-            // 更新状态
-            Integer count = menuService.updateStatus(statusEnum, idList);
-            if (count > 0) {
-                return ResultVoUtil.success(statusEnum.getMessage() + "成功");
-            } else {
-                return ResultVoUtil.error(statusEnum.getMessage() + "失败，请重新操作");
-            }
-        } catch (IllegalArgumentException e) {
-            throw new ResultException(ResultEnum.STATUS_ERROR);
+            @RequestParam(value = "ids", required = false) List<Long> ids) {
+        // 更新状态
+        StatusEnum statusEnum = StatusUtil.getStatusEnum(param);
+        if (menuService.updateStatus(statusEnum, ids)) {
+            return ResultVoUtil.success(statusEnum.getMessage() + "成功");
+        } else {
+            return ResultVoUtil.error(statusEnum.getMessage() + "失败，请重新操作");
         }
     }
 

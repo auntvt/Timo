@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+-->
+<dialect
+        xmlns="http://www.thymeleaf.org/extras/dialect"
+        prefix="mo"
+        namespace-uri="https://gitee.com/aun/Timo"
+        class="com.linln.component.thymeleaf.TimoDialect">
+
+    <!-- 自定义属性标签 -->
+    <attribute-processor name="list"
+                         class="com.linln.component.thymeleaf.attribute.SelectListAttrProcessor">
+        <documentation><![CDATA[
+		自定义下拉列表生成标签，值可以为数组和集合！
+		mo-selected属性：默认选择的值
+		mo-empty属性：添加无值下拉选项，值为显示内容
+		]]></documentation>
+    </attribute-processor>
+    <attribute-processor name="dict"
+                         class="com.linln.component.thymeleaf.attribute.SelectDictAttrProcessor">
+        <documentation><![CDATA[
+		根据字典标识生成下拉列表，值可以为数组和集合！
+		mo-selected属性：默认选择的值
+		mo-empty属性：添加无值下拉选项，值为显示内容
+		]]></documentation>
+    </attribute-processor>
+
+    <!-- 自定义对象工具 -->
+    <expression-object name="pageUtil" class="com.linln.component.thymeleaf.utility.PageUtil"/>
+    <expression-object name="dicts" class="com.linln.component.thymeleaf.utility.DictUtil"/>
+
+
+</dialect>

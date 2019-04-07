@@ -1,23 +1,25 @@
 package com.linln.admin.system.controller;
 
-import com.linln.admin.core.enums.ResultEnum;
-import com.linln.admin.core.enums.UserIsRoleEnum;
-import com.linln.admin.core.exception.ResultException;
-import com.linln.admin.core.log.action.UserAction;
-import com.linln.admin.core.log.annotation.ActionLog;
-import com.linln.admin.core.shiro.ShiroUtil;
-import com.linln.admin.core.utils.CaptchaUtil;
-import com.linln.admin.system.domain.User;
-import com.linln.core.config.properties.ProjectProperties;
-import com.linln.core.utils.ResultVoUtil;
-import com.linln.core.utils.SpringContextUtil;
-import com.linln.core.vo.ResultVo;
-import com.linln.core.wraps.URL;
+import com.linln.common.config.properties.ProjectProperties;
+import com.linln.common.data.URL;
+import com.linln.common.enums.ResultEnum;
+import com.linln.common.exception.ResultException;
+import com.linln.common.utils.CaptchaUtil;
+import com.linln.common.utils.ResultVoUtil;
+import com.linln.common.utils.SpringContextUtil;
+import com.linln.common.vo.ResultVo;
+import com.linln.component.actionLog.action.UserAction;
+import com.linln.component.actionLog.annotation.ActionLog;
+import com.linln.component.shiro.ShiroUtil;
+import com.linln.modules.system.domain.User;
+import com.linln.modules.system.service.RoleService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +40,9 @@ import java.io.IOException;
  */
 @Controller
 public class LoginController implements ErrorController {
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 跳转到登录页面
@@ -65,9 +70,9 @@ public class LoginController implements ErrorController {
         ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
         if (properties.isCaptchaOpen()) {
             Session session = SecurityUtils.getSubject().getSession();
-            String code = (String) session.getAttribute("captcha");
-            if (StringUtils.isEmpty(captcha) || StringUtils.isEmpty(code)
-                    || !captcha.toUpperCase().equals(code.toUpperCase())) {
+            String sessionCaptcha = (String) session.getAttribute("captcha");
+            if (StringUtils.isEmpty(captcha) || StringUtils.isEmpty(sessionCaptcha)
+                    || !captcha.toUpperCase().equals(sessionCaptcha.toUpperCase())) {
                 throw new ResultException(ResultEnum.USER_CAPTCHA_ERROR);
             }
             session.removeAttribute("captcha");
@@ -91,11 +96,14 @@ public class LoginController implements ErrorController {
 
             // 判断是否拥有后台角色
             User user = ShiroUtil.getSubject();
-            if (user.getIsRole().equals(UserIsRoleEnum.YES.getCode())) {
+            if (roleService.existsUserOk(user.getId())) {
                 return ResultVoUtil.success("登录成功", new URL("/"));
             } else {
+                SecurityUtils.getSubject().logout();
                 return ResultVoUtil.error("您不是后台管理员！");
             }
+        } catch (LockedAccountException e) {
+            return ResultVoUtil.error("该账号已被冻结");
         } catch (AuthenticationException e) {
             return ResultVoUtil.error("用户名或密码错误");
         }
@@ -134,7 +142,7 @@ public class LoginController implements ErrorController {
      */
     @GetMapping("/noAuth")
     public String noAuth() {
-        return "/system/main/no_auth";
+        return "/system/main/noAuth";
     }
 
     /**
