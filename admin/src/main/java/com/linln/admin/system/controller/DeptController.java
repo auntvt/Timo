@@ -143,7 +143,7 @@ public class DeptController {
         // 将验证的数据复制给实体类
         if (dept.getId() != null) {
             Dept beDept = deptService.getById(dept.getId());
-            EntityBeanUtil.copyProperties(beDept, dept, "dept");
+            EntityBeanUtil.copyProperties(beDept, dept, "dept", "pids");
         }
 
         // 排序功能

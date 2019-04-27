@@ -1,8 +1,8 @@
 package com.linln.component.shiro.config;
 
-import com.linln.common.config.properties.ProjectProperties;
 import com.linln.component.shiro.AuthRealm;
 import com.linln.component.shiro.UserAuthFilter;
+import com.linln.component.shiro.config.properties.ShiroProjectProperties;
 import net.sf.ehcache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -103,7 +103,7 @@ public class ShiroConfig {
      * session管理器
      */
     @Bean
-    public DefaultWebSessionManager getDefaultWebSessionManager(EhCacheManager cacheManager, ProjectProperties properties) {
+    public DefaultWebSessionManager getDefaultWebSessionManager(EhCacheManager cacheManager, ShiroProjectProperties properties) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setCacheManager(cacheManager);
         sessionManager.setGlobalSessionTimeout(properties.getGlobalSessionTimeout() * 1000);
@@ -130,7 +130,7 @@ public class ShiroConfig {
      * 创建一个简单的Cookie对象
      */
     @Bean
-    public SimpleCookie rememberMeCookie(ProjectProperties properties) {
+    public SimpleCookie rememberMeCookie(ShiroProjectProperties properties) {
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         simpleCookie.setHttpOnly(true);
         // cookie记住登录信息时间，默认7天

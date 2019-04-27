@@ -1,4 +1,4 @@
-# Timo
+# Timo v2.0.1
 
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![加入QQ群](https://img.shields.io/badge/QQ%E7%BE%A4-941209502-brightgreen.svg)](https://jq.qq.com/?_wv=1027&k=5RCnDCO)
@@ -10,7 +10,7 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 
 #### 技术选型
 
-- 后端技术：SpringBoot + Spring Data Jpa + Thymeleaf + Shiro + EhCache
+- 后端技术：SpringBoot + Spring Data Jpa + Thymeleaf + Shiro + Jwt + EhCache
 
 - 前端技术：Layui + Jquery  + zTree + Font-awesome
 
@@ -60,9 +60,9 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 3. SQL文件：sdoc/timo.sql（经常忘记同步！）
 
 #### 更新记录
-
+- 2019-04-28更新 加入JWT TOKEN鉴权机制，实现多端的权限验证！
 - 2019-04-07更新 发布v2.0版本，带来全新的项目结构！
-
+- 2019-02-11更新 修复字典值过长格式显示问题，加入离线技术文档1.0
 - 2019-01-17更新 重构字典模块，将mo:dictKey改成mo:dict
 - 2018-12-18更新 加入导入导出功能
 - 2018-12-13更新 修复代码生成路径出现空格的问题

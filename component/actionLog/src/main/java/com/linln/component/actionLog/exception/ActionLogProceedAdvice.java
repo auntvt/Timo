@@ -1,7 +1,6 @@
 package com.linln.component.actionLog.exception;
 
 import com.linln.common.exception.advice.ExceptionAdvice;
-import com.linln.common.vo.ResultVo;
 import com.linln.component.actionLog.action.SystemAction;
 import com.linln.component.actionLog.annotation.ActionLog;
 
@@ -14,7 +13,5 @@ public class ActionLogProceedAdvice implements ExceptionAdvice {
 
     @Override
     @ActionLog(key = SystemAction.RUNTIME_EXCEPTION, action = SystemAction.class)
-    public ResultVo run(RuntimeException e) {
-        return null;
-    }
+    public void run(RuntimeException e) {}
 }

@@ -34,6 +34,12 @@ public interface DictService {
     Dict getById(Long id);
 
     /**
+     * 字典标识是否重复
+     * @param dict 字典实体类
+     */
+    boolean repeatByName(Dict dict);
+
+    /**
      * 保存字典
      * @param dict 字典实体类
      */

@@ -1,7 +1,6 @@
 package com.linln.admin.system.controller;
 
 import com.linln.admin.system.validator.UserValid;
-import com.linln.common.config.properties.ProjectProperties;
 import com.linln.common.constant.AdminConst;
 import com.linln.common.enums.ResultEnum;
 import com.linln.common.enums.StatusEnum;
@@ -16,6 +15,7 @@ import com.linln.component.actionLog.action.UserAction;
 import com.linln.component.actionLog.annotation.ActionLog;
 import com.linln.component.actionLog.annotation.EntityParam;
 import com.linln.component.excel.ExcelUtil;
+import com.linln.component.fileUpload.config.properties.UploadProjectProperties;
 import com.linln.component.shiro.ShiroUtil;
 import com.linln.modules.system.domain.Role;
 import com.linln.modules.system.domain.User;
@@ -106,10 +106,6 @@ public class UserController {
 
         // 验证数据是否合格
         if (user.getId() == null) {
-            // 判断账号是否重复
-            if (userService.getByName(user.getUsername()) != null) {
-                throw new ResultException(ResultEnum.USER_EXIST);
-            }
 
             // 判断密码是否为空
             if (user.getPassword().isEmpty() || "".equals(user.getPassword().trim())) {
@@ -128,16 +124,17 @@ public class UserController {
             user.setSalt(salt);
         }
 
+        // 判断用户名是否重复
+        if (userService.repeatByUsername(user)) {
+            throw new ResultException(ResultEnum.USER_EXIST);
+        }
+
         // 复制保留无需修改的数据
         if (user.getId() != null) {
             // 不允许操作超级管理员数据
             if (user.getId().equals(AdminConst.ADMIN_ID) &&
                     !ShiroUtil.getSubject().getId().equals(AdminConst.ADMIN_ID)) {
                 throw new ResultException(ResultEnum.NO_ADMIN_AUTH);
-            }
-            // 判断账号是否重复
-            if (userService.getByNameAndIdNot(user.getUsername(), user.getId()) != null) {
-                throw new ResultException(ResultEnum.USER_EXIST);
             }
 
             User beUser = userService.getById(user.getId());
@@ -260,9 +257,9 @@ public class UserController {
     public void picture(String p, HttpServletResponse response) throws IOException {
         String defaultPath = "/images/user-picture.jpg";
         if (!(StringUtils.isEmpty(p) || p.equals(defaultPath))) {
-            ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
-            String fuPath = properties.getFileUploadPath();
-            String spPath = properties.getStaticPathPattern().replace("*", "");
+            UploadProjectProperties properties = SpringContextUtil.getBean(UploadProjectProperties.class);
+            String fuPath = properties.getFilePath();
+            String spPath = properties.getStaticPath().replace("*", "");
             String s = fuPath + p.replace(spPath, "");
             File file = new File(fuPath + p.replace(spPath, ""));
             if (file.exists()) {

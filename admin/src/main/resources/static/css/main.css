@@ -3,6 +3,17 @@
 a{
     cursor: pointer;
 }
+.required {
+	position: relative;
+}
+.required:after {
+	position: absolute;
+	transform: translateY(8%);
+	right: 4px;
+	font-size: 18px;
+	color: #ea644a;
+	content: '*';
+}
 
 /* 滚动条样式 */
 ::-webkit-scrollbar-track {

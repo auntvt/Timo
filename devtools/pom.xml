@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.linln</groupId>
         <artifactId>timo</artifactId>
-        <version>2.0</version>
+        <version>2.0.1</version>
     </parent>
 
     <dependencies>
@@ -43,7 +43,7 @@
         </dependency>
     </dependencies>
 
-    <!-- 修复部分idea版本无法发布code文件到target目录下的问题 -->
+    <!-- 修复部分idea版本无法发布tpl文件到target目录下的问题 -->
     <build>
         <resources>
             <resource>
@@ -53,7 +53,7 @@
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
-                    <include>**/*.code</include>
+                    <include>**/*.tpl</include>
                 </includes>
             </resource>
         </resources>

@@ -40,12 +40,11 @@ public interface UserService {
     User getByName(String username);
 
     /**
-     * 根据用户名查询用户数据,且排查指定ID的用户
-     * @param username 用户名
-     * @param id 排除的用户ID
+     * 用户名是否重复
+     * @param user 用户对象
      * @return 用户数据
      */
-    User getByNameAndIdNot(String username, Long id);
+    Boolean repeatByUsername(User user);
 
     /**
      * 根据用户ID查询用户数据

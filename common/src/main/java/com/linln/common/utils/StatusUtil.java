@@ -5,9 +5,8 @@ import com.linln.common.enums.ResultEnum;
 import com.linln.common.enums.StatusEnum;
 import com.linln.common.exception.ResultException;
 
-import java.util.List;
-
 /**
+ * 数据状态工具
  * @author 小懒虫
  * @date 2019/2/19
  */

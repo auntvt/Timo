@@ -1,6 +1,5 @@
 package com.linln.modules.system.repository;
 
-import com.linln.common.constant.StatusConst;
 import com.linln.modules.system.domain.Role;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
@@ -36,6 +35,13 @@ public interface RoleRepository extends BaseRepository<Role,Long> {
     public Set<Role> findByUsers_IdAndStatus(Long id, Byte status);
 
     /**
+     * 根据标识查询角色数据,且排查指定ID的角色
+     * @param name 角色标识
+     * @param id 角色ID
+     */
+    public Role findByNameAndIdNot(String name, Long id);
+
+    /**
      * 判断指定的用户是否存在角色
      * @param id 用户ID
      * @param status 角色状态
@@ -59,4 +65,5 @@ public interface RoleRepository extends BaseRepository<Role,Long> {
     @Transactional
     @Query(value = "DELETE FROM sys_role_menu WHERE role_id in ?1", nativeQuery = true)
     public Integer cancelMenuJoin(List<Long> ids);
+
 }

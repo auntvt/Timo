@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:mo="https://gitee.com/aun/Timo">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
 </head>
 <body>
@@ -8,13 +7,13 @@
     <form th:action="@{/system/role/save}">
         <input type="hidden" name="id" th:if="${role}" th:value="${role.id}"/>
         <div class="layui-form-item">
-            <label class="layui-form-label">角色编号</label>
+            <label class="layui-form-label required">角色标识</label>
             <div class="layui-input-inline">
                 <input class="layui-input" type="text" name="name"  placeholder="请输入角色编号" th:value="${role?.name}">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">角色名称</label>
+            <label class="layui-form-label required">角色名称</label>
             <div class="layui-input-inline">
                 <input class="layui-input" type="text" name="title"  placeholder="请输入角色名称" th:value="${role?.title}">
             </div>

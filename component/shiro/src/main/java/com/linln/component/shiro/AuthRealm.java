@@ -6,15 +6,17 @@ import com.linln.modules.system.domain.User;
 import com.linln.modules.system.service.RoleService;
 import com.linln.modules.system.service.UserService;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.codec.CodecSupport;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+
+import javax.annotation.PostConstruct;
 
 
 /**
@@ -77,7 +79,8 @@ public class AuthRealm extends AuthorizingRealm {
         }
         // 对盐进行加密处理
         ByteSource salt = ByteSource.Util.bytes(user.getSalt());
-        /** 传入密码自动判断是否正确
+
+        /* 传入密码自动判断是否正确
          * 参数1：传入对象给Principal
          * 参数2：正确的用户密码
          * 参数3：加盐处理
@@ -87,13 +90,21 @@ public class AuthRealm extends AuthorizingRealm {
     }
 
     /**
-     * 设置认证加密方式
+     * 自定义密码验证匹配器
      */
-    @Override
-    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
-        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
-        matcher.setHashAlgorithmName(ShiroUtil.hashAlgorithmName);
-        matcher.setHashIterations(ShiroUtil.hashIterations);
-        super.setCredentialsMatcher(matcher);
+    @PostConstruct
+    public void initCredentialsMatcher() {
+        setCredentialsMatcher(new SimpleCredentialsMatcher() {
+            @Override
+            public boolean doCredentialsMatch(AuthenticationToken authenticationToken, AuthenticationInfo authenticationInfo) {
+                UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+                SimpleAuthenticationInfo info = (SimpleAuthenticationInfo) authenticationInfo;
+                // 获取明文密码及密码盐
+                String password = String.valueOf(token.getPassword());
+                String salt = CodecSupport.toString(info.getCredentialsSalt().getBytes());
+
+                return equals(ShiroUtil.encrypt(password, salt), info.getCredentials());
+            }
+        });
     }
 }

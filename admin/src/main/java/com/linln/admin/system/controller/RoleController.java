@@ -102,6 +102,11 @@ public class RoleController {
             throw new ResultException(ResultEnum.NO_ADMINROLE_AUTH);
         }
 
+        // 判断角色编号是否重复
+        if (roleService.repeatByName(role)) {
+            throw new ResultException(ResultEnum.ROLE_EXIST);
+        }
+
         // 复制保留无需修改的数据
         if(role.getId() != null){
             Role beRole = roleService.getById(role.getId());

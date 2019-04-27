@@ -4,11 +4,13 @@ server:
 
 ### TIMO配置
 project:
-  captcha-open: false                       #是否开启登录验证码
-  remember-me-timeout: 7                    #cookie记住登录信息时间，默认7天（天）
-  global-session-timeout: 1800              #Session会话超时时间，默认30分钟（秒）
-  #file-upload-path: c:/upload/             #文件上传路径，默认在项目根目录upload下
-  static-path-pattern: /upload/**           #上传文件静态访问路径
+  captcha-open: false                         #是否开启登录验证码
+  shiro:
+    remember-me-timeout: 7                    #cookie记住登录信息时间，默认7天（天）
+    global-session-timeout: 1800              #Session会话超时时间，默认30分钟（秒）
+  upload:
+    #file-path:                               #文件上传路径，默认在项目根目录upload下
+    static-path: /upload/**                   #上传文件静态访问路径
 
 ### spring配置
 spring:

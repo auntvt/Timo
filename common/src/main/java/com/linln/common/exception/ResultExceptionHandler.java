@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Objects;
+
 /**
  * 全局统一异常处理
  * @author 小懒虫
@@ -32,20 +34,16 @@ public class ResultExceptionHandler {
     @ResponseBody
     public ResultVo bindException(BindException e){
         BindingResult bindingResult = e.getBindingResult();
-        return ResultVoUtil.error(bindingResult.getFieldError().getDefaultMessage());
+        return ResultVoUtil.error(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
     }
 
     // 拦截未知的运行时异常
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     public ResultVo runtimeException(RuntimeException e) {
-        ResultExceptionAdvice advice = SpringContextUtil.getBean(ResultExceptionAdvice.class);
-        ResultVo resultVo = advice.runtimeException(e);
-        if (resultVo != null){
-            return resultVo;
-        }else {
-            log.error("【系统异常】", e);
-            return ResultVoUtil.error(500, "未知错误：EX4399");
-        }
+        ResultExceptionAdvice resultExceptionAdvice = SpringContextUtil.getBean(ResultExceptionAdvice.class);
+        resultExceptionAdvice.runtimeException(e);
+        log.error("【系统异常】", e);
+        return ResultVoUtil.error(500, "未知错误：EX4399");
     }
 }

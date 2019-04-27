@@ -9,13 +9,13 @@
     <form th:action="@{/system/dept/save}">
         <input type="hidden" name="id" th:if="${dept}" th:value="${dept.id}"/>
         <div class="layui-form-item">
-            <label class="layui-form-label">部门名称</label>
+            <label class="layui-form-label required">部门名称</label>
             <div class="layui-input-inline">
                 <input class="layui-input" type="text" name="title"  placeholder="请输入标题" th:value="${dept?.title}">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">父级部门</label>
+            <label class="layui-form-label required">父级部门</label>
             <div class="layui-input-inline">
                 <input class="layui-input select-tree" th:attr="data-url=@{/system/dept/list}, data-value=${pDept?.id}" type="text" name="pid"  placeholder="请输入父级部门" th:value="${pDept?.title}">
             </div>

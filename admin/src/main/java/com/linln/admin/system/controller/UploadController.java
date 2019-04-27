@@ -1,10 +1,10 @@
 package com.linln.admin.system.controller;
 
-import com.linln.common.enums.ResultEnum;
 import com.linln.common.exception.ResultException;
 import com.linln.common.utils.ResultVoUtil;
 import com.linln.common.vo.ResultVo;
 import com.linln.component.fileUpload.FileUpload;
+import com.linln.component.fileUpload.enums.UploadResultEnum;
 import com.linln.modules.system.domain.Upload;
 import com.linln.modules.system.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class UploadController {
                 "image/png"
         };
         if(!FileUpload.isContentType(multipartFile, types)){
-            throw new ResultException(ResultEnum.NO_FILE_TYPE);
+            throw new ResultException(UploadResultEnum.NO_FILE_TYPE);
         }
 
         // 判断图片是否存在

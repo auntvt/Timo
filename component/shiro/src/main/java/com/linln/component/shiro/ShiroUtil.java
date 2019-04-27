@@ -1,15 +1,13 @@
 package com.linln.component.shiro;
 
+import com.linln.common.utils.EncryptUtil;
+import com.linln.common.utils.SpringContextUtil;
 import com.linln.modules.system.domain.Role;
 import com.linln.modules.system.domain.User;
-import com.linln.common.utils.SpringContextUtil;
-import com.linln.common.utils.ToolUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.mgt.RememberMeManager;
-import org.apache.shiro.util.ByteSource;
 
 import java.util.Set;
 
@@ -23,28 +21,29 @@ public class ShiroUtil {
     /**
      * 加密算法
      */
-    public final static String hashAlgorithmName = "SHA-256";
+    public final static String hashAlgorithmName = EncryptUtil.hashAlgorithmName;
 
     /**
      * 循环次数
      */
-    public final static int hashIterations = 1024;
+    public final static int hashIterations = EncryptUtil.hashIterations;
 
     /**
      * 加密处理
+     * 备注：采用自定义的密码加密方式，其原理与SimpleHash一致，
+     * 为的是在多个模块间可以使用同一套加密方式，方便共用系统用户。
      * @param password 密码
      * @param salt 密码盐
      */
-    public static String encrypt(String password, String salt){
-        ByteSource byteSalt = ByteSource.Util.bytes(salt);
-        return new SimpleHash(hashAlgorithmName, password, byteSalt, hashIterations).toString();
+    public static String encrypt(String password, String salt) {
+        return EncryptUtil.encrypt(password, salt, hashAlgorithmName, hashIterations);
     }
 
     /**
      * 获取随机盐值
      */
     public static String getRandomSalt(){
-        return ToolUtil.getRandomString(6);
+        return EncryptUtil.getRandomSalt();
     }
 
     /**
@@ -57,8 +56,7 @@ public class ShiroUtil {
     /**
      * 获取用户IP地址
      */
-    public static String getIp()
-    {
+    public static String getIp(){
         return SecurityUtils.getSubject().getSession().getHost();
     }
 

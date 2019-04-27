@@ -1,10 +1,10 @@
 package com.linln.component.fileUpload;
 
-import com.linln.common.config.properties.ProjectProperties;
-import com.linln.common.enums.ResultEnum;
 import com.linln.common.exception.ResultException;
 import com.linln.common.utils.SpringContextUtil;
 import com.linln.common.utils.ToolUtil;
+import com.linln.component.fileUpload.config.properties.UploadProjectProperties;
+import com.linln.component.fileUpload.enums.UploadResultEnum;
 import com.linln.modules.system.domain.Upload;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,7 +36,7 @@ public class FileUpload {
      */
     public static Upload getFile(MultipartFile multipartFile, String modulePath){
         if (multipartFile.getSize() == 0){
-            throw new ResultException(ResultEnum.NO_FILE_NULL);
+            throw new ResultException(UploadResultEnum.NO_FILE_NULL);
         }
         Upload upload = new Upload();
         upload.setMime(multipartFile.getContentType());
@@ -60,16 +60,16 @@ public class FileUpload {
      * 获取文件上传保存路径
      */
     public static String getUploadPath(){
-        ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
-        return properties.getFileUploadPath();
+        UploadProjectProperties properties = SpringContextUtil.getBean(UploadProjectProperties.class);
+        return properties.getFilePath();
     }
 
     /**
      * 获取文件上传目录的静态资源路径
      */
     public static String getPathPattern(){
-        ProjectProperties properties = SpringContextUtil.getBean(ProjectProperties.class);
-        return properties.getStaticPathPattern().replace("/**", "");
+        UploadProjectProperties properties = SpringContextUtil.getBean(UploadProjectProperties.class);
+        return properties.getStaticPath().replace("/**", "");
     }
 
     /**
@@ -136,7 +136,7 @@ public class FileUpload {
      */
     public static String getFileSHA1(MultipartFile multipartFile) {
         if (multipartFile.getSize() == 0){
-            throw new ResultException(ResultEnum.NO_FILE_NULL);
+            throw new ResultException(UploadResultEnum.NO_FILE_NULL);
         }
         byte[] buffer = new byte[4096];
         try (InputStream fis = multipartFile.getInputStream()) {

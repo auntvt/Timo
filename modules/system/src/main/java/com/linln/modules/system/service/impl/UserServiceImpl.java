@@ -43,14 +43,14 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 根据用户名查询用户数据,且排查指定ID的用户
-     * @param username 用户名
-     * @param id 排除的用户ID
+     * 用户名是否存在
+     * @param user 用户对象
      * @return 用户数据
      */
     @Override
-    public User getByNameAndIdNot(String username, Long id) {
-        return userRepository.findByUsernameAndIdNot(username, id);
+    public Boolean repeatByUsername(User user) {
+        Long id = user.getId() != null ? user.getId() : Long.MIN_VALUE;
+        return userRepository.findByUsernameAndIdNot(user.getUsername(), id) != null;
     }
 
     /**

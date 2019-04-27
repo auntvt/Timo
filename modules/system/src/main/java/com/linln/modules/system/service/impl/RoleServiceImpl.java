@@ -78,6 +78,15 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findAllByStatus(sort, StatusEnum.OK.getCode());
     }
 
+    /**
+     * 角色标识是否重复
+     * @param role 角色实体类
+     */
+    @Override
+    public boolean repeatByName(Role role) {
+        Long id = role.getId() != null ? role.getId() : Long.MIN_VALUE;
+        return roleRepository.findByNameAndIdNot(role.getName(), id) != null;
+    }
 
     /**
      * 保存角色

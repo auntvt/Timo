@@ -1,7 +1,9 @@
 package com.linln.admin.system.controller;
 
 import com.linln.admin.system.validator.DictValid;
+import com.linln.common.enums.ResultEnum;
 import com.linln.common.enums.StatusEnum;
+import com.linln.common.exception.ResultException;
 import com.linln.common.utils.EntityBeanUtil;
 import com.linln.common.utils.ResultVoUtil;
 import com.linln.common.utils.StatusUtil;
@@ -87,6 +89,11 @@ public class DictController {
     public ResultVo save(@Validated DictValid valid, @EntityParam Dict dict){
         // 清除字典值两边空格
         dict.setValue(dict.getValue().trim());
+
+        // 判断角色标识是否重复
+        if (dictService.repeatByName(dict)) {
+            throw new ResultException(ResultEnum.DICT_EXIST);
+        }
 
         // 复制保留无需修改的数据
         if(dict.getId() != null){

@@ -50,6 +50,12 @@ public interface RoleService {
     List<Role> getListBySortOk(Sort sort);
 
     /**
+     * 角色标识是否重复
+     * @param role 角色实体类
+     */
+    boolean repeatByName(Role role);
+
+    /**
      * 保存角色
      * @param role 角色实体类
      */

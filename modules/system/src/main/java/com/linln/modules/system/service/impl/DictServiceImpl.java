@@ -56,6 +56,16 @@ public class DictServiceImpl implements DictService {
     }
 
     /**
+     * 字典标识是否重复
+     * @param dict 字典实体类
+     */
+    @Override
+    public boolean repeatByName(Dict dict) {
+        Long id = dict.getId() != null ? dict.getId() : Long.MIN_VALUE;
+        return dictRepository.findByNameAndIdNot(dict.getName(), id) != null;
+    }
+
+    /**
      * 保存字典
      * @param dict 字典实体类
      */
