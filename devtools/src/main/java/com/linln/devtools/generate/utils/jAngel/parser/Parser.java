@@ -81,10 +81,17 @@ public class Parser {
             ClassNode clazz = document.getClazz();
             clazz.setType(words.get(0));
             int ext = words.indexOf("extends");
-            if (ext != -1){
-                clazz.setExtends(words.get(ext + 1));
-            }
             int impl = words.indexOf("implements");
+            if (ext != -1){
+                if (clazz.getType().equals(ClassNode.INTERFACE)) {
+                    int size = impl != -1 ? impl : words.size();
+                    for (int i = ext + 1; i < size; i++) {
+                        clazz.addExtends(words.get(i));
+                    }
+                } else {
+                    clazz.addExtends(words.get(ext + 1));
+                }
+            }
             if (impl != -1){
                 for (int i = impl + 1; i < words.size(); i++) {
                     clazz.addImplements(words.get(i));

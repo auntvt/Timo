@@ -10,7 +10,7 @@ import java.util.List;
  * @author 小懒虫
  * @date 2019/3/28
  */
-public class ClassNode extends Node{
+public class ClassNode extends Node {
 
     public static final String CLASS = "class";
     public static final String INTERFACE = "interface";
@@ -19,7 +19,7 @@ public class ClassNode extends Node{
     // 类的类型
     private String type = "class";
     // 继承的父类
-    private String extClass;
+    private List<String> extClass = new ArrayList<>();
     // 实现接口
     private List<String> implClass = new ArrayList<>();
 
@@ -45,24 +45,31 @@ public class ClassNode extends Node{
      * 获取继承的父类
      */
     public String getExtends() {
+        return extClass.get(0);
+    }
+
+    /**
+     * 获取继承的父类列表
+     */
+    public List<String> getExtendsList() {
         return extClass;
     }
 
     /**
-     * 设置继承的父类
-     * @param extClass 父类名称
+     * 添加继承的父类
+     * @param clazz 父类名称
      */
-    public void setExtends(String extClass) {
-        this.extClass = extClass;
+    public void addExtends(String clazz) {
+        this.extClass.add(clazz);
     }
 
     /**
-     * 设置继承的父类
+     * 添加继承的父类
      * @param clazz 父类
      */
-    public void setExtends(Class<?> clazz) {
+    public void addExtends(Class<?> clazz) {
         importClass(clazz);
-        this.extClass = clazz.getSimpleName();
+        this.extClass.add(clazz.getSimpleName());
     }
 
     /**
@@ -96,7 +103,13 @@ public class ClassNode extends Node{
     public String body(){
         StringBuilder builder = new StringBuilder();
         builder.append("public ").append(type).append(" ").append(name);
-        builder.append(extClass != null ? " extends " + extClass : "");
+        builder.append(extClass.size() > 0 ? " extends" : "");
+        for (int i = 0; i < extClass.size(); i++) {
+            builder.append(" ").append(extClass.get(i));
+            if (i != extClass.size() - 1){
+                builder.append(",");
+            }
+        }
         builder.append(implClass.size() > 0 ? " implements" : "");
         for (int i = 0; i < implClass.size(); i++) {
             builder.append(" ").append(implClass.get(i));
