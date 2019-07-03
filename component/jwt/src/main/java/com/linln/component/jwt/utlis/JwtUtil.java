@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.linln.common.exception.ResultException;
+import com.linln.common.utils.HttpServletUtil;
 import com.linln.common.utils.ToolUtil;
 import com.linln.component.jwt.enums.JwtResultEnums;
 import com.linln.modules.system.domain.User;
@@ -71,14 +72,12 @@ public class JwtUtil {
     }
 
     /**
-     * 解析JwtToken，生成用户对象
-     * @param token JwtToken数据
+     * 获取当前token中的用户名
      */
-    public static User parseToken(String token){
-        String sub = JWT.decode(token).getSubject();
-        User user = new User();
-        user.setUsername(sub);
-        return user;
+    public static String getSubject(){
+        HttpServletRequest request = HttpServletUtil.getRequest();
+        String token = getRequestToken(request);
+        return JWT.decode(token).getSubject();
     }
 
     /**
