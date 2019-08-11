@@ -53,7 +53,7 @@ public class EntityTemplate {
         clazz.addAnnotation(Entity.class);
         clazz.addAnnotation(Table.class, Format.of("name=$S", prefix + tableName));
         clazz.addAnnotation(EntityListeners.class, Format.of("$T.class", AuditingEntityListener.class));
-        clazz.addAnnotation(Where.class, Format.of("clause = $T.notDelete", StatusUtil.class));
+        clazz.addAnnotation(Where.class, Format.of("clause = $T.NOT_DELETE", StatusUtil.class));
 
         // 生成类字段
         generate.getFields().forEach(field -> {
@@ -93,6 +93,8 @@ public class EntityTemplate {
                     break;
                 case "status":
                     node.setValue(Format.of("$T.OK.getCode()", StatusEnum.class));
+                    break;
+                default:
             }
 
             // 获取字段类型
@@ -120,7 +122,7 @@ public class EntityTemplate {
             }
 
             // 排除主键ID注释
-            if (!name.equals("name")){
+            if (!"name".equals(name)){
                 node.setComments("// " + field.getTitle());
             }
 

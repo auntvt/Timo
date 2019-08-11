@@ -23,6 +23,7 @@ public class DictUtil {
      * 获取字典值集合
      * @param label 字典标识
      */
+    @SuppressWarnings("unchecked")
     public static Map<String, String> value(String label){
         Map<String, String> value = null;
         Element dictEle = dictCache.get(label);

@@ -27,7 +27,7 @@ public class HtmlParseUtil {
      * @param path 文件路径
      */
     public static Document document(String path) throws IOException {
-        Document document = Jsoup.parse(new File(path), CodeUtil.encode);
+        Document document = Jsoup.parse(new File(path), CodeUtil.ENCODE);
         Document.OutputSettings outputSettings = document.outputSettings();
         outputSettings.prettyPrint(false);
         return document;
@@ -54,7 +54,7 @@ public class HtmlParseUtil {
             int count = 0;
             boolean hasWhile = true;
             while (hasWhile){
-                if(element.hasParent() || element.tagName().equals("html")){
+                if(element.hasParent() || "html".equals(element.tagName())){
                     element = element.parent();
                     count ++;
                 }else {

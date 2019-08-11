@@ -263,7 +263,7 @@ public class ExcelUtil {
                             if (!dict.isEmpty()){
                                 Element dictEle = dictCache.get(dict);
                                 if(dictEle != null){
-                                    Map<String, String> dictValue = (Map<String, String>) dictEle.getObjectValue();
+                                    @SuppressWarnings("unchecked") Map<String, String> dictValue = (Map<String, String>) dictEle.getObjectValue();
                                     value = dictValue.get(String.valueOf(value));
                                 }
                             }

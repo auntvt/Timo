@@ -1,7 +1,7 @@
 package com.linln.component.actionLog.action;
 
 import com.linln.common.vo.ResultVo;
-import com.linln.component.actionLog.action.base.ActionMap;
+import com.linln.component.actionLog.action.base.BaseActionMap;
 import com.linln.component.actionLog.action.base.ResetLog;
 import com.linln.component.actionLog.action.model.BusinessMethod;
 import com.linln.component.actionLog.action.model.LoginMethod;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author 小懒虫
  * @date 2018/10/14
  */
-public class UserAction extends ActionMap {
+public class UserAction extends BaseActionMap {
 
     public static final String USER_LOGIN = "user_login";
     public static final String USER_SAVE = "user_save";
@@ -38,7 +38,9 @@ public class UserAction extends ActionMap {
         putMethod(EDIT_ROLE, new BusinessMethod("角色分配","editRole"));
     }
 
-    // 用户登录行为方法
+    /**
+     * 用户登录行为方法
+     */
     public void userLogin(ResetLog resetLog){
         ActionLog actionLog = resetLog.getActionLog();
         if (resetLog.isSuccess()){
@@ -51,15 +53,19 @@ public class UserAction extends ActionMap {
         }
     }
 
-    // 保存用户行为方法
+    /**
+     * 保存用户行为方法
+     */
     public void userSave(ResetLog resetLog){
         resetLog.getActionLog().setMessage("用户成功：${username}");
         SaveAction.defaultMethod(resetLog);
     }
 
-    // 修改用户密码行为方法
+    /**
+     * 修改用户密码行为方法
+     */
     public void editPwd(ResetLog resetLog){
-        List<User> users = (List<User>) resetLog.getParam("users");
+        @SuppressWarnings("unchecked") List<User> users = (List<User>) resetLog.getParam("users");
         Table table = User.class.getAnnotation(Table.class);
         String message = "修改用户密码成功";
         if(!resetLog.isSuccess()){
@@ -81,7 +87,9 @@ public class UserAction extends ActionMap {
         resetLog.setRecord(false);
     }
 
-    // 角色分配行为方法
+    /**
+     * 角色分配行为方法
+     */
     public void editRole(ResetLog resetLog){
         User user = (User) resetLog.getParam("user");
         Table table = User.class.getAnnotation(Table.class);

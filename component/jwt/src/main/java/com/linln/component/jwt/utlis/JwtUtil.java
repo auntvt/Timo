@@ -50,10 +50,14 @@ public class JwtUtil {
         // 创建JwtToken对象
         String token="";
         token= JWT.create()
-                .withSubject(user.getUsername())    // 用户名
-                .withIssuedAt(new Date())           // 发布时间
-                .withExpiresAt(ca.getTime())        // 过期时间
-                .withClaim("ran", random)     // 自定义随机Claim
+                // 用户名
+                .withSubject(user.getUsername())
+                // 发布时间
+                .withIssuedAt(new Date())
+                // 过期时间
+                .withExpiresAt(ca.getTime())
+                // 自定义随机Claim
+                .withClaim("ran", random)
                 .sign(getSecret(secret, random));
 
         return token;

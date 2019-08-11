@@ -86,15 +86,23 @@ public class ControllerTemplate {
             Node toAdd = clazz.getChildByName("toAdd");
             Node toEdit = clazz.getChildByName("toEdit");
             Node save = clazz.getChildByName("save");
-            if (toAdd != null) toAdd.remove();
-            if (toEdit != null) toEdit.remove();
-            if (save != null) save.remove();
+            if (toAdd != null) {
+                toAdd.remove();
+            }
+            if (toEdit != null) {
+                toEdit.remove();
+            }
+            if (save != null) {
+                save.remove();
+            }
         }
 
         // 详细页面
         if (!generate.getTemplate().isDetail()) {
             Node toDetail = clazz.getChildByName("toDetail");
-            if (toDetail != null) toDetail.remove();
+            if (toDetail != null) {
+                toDetail.remove();
+            }
         }
 
         return document;

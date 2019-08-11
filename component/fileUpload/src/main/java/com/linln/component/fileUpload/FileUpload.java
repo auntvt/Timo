@@ -125,16 +125,16 @@ public class FileUpload {
             }
             fos.flush();
         }
-        BigInteger MD5Bi = new BigInteger(1, md5.digest());
-        BigInteger SHA1Bi = new BigInteger(1, sha1.digest());
-        upload.setMd5(MD5Bi.toString(16));
-        upload.setSha1(SHA1Bi.toString(16));
+        BigInteger md5Bi = new BigInteger(1, md5.digest());
+        BigInteger sha1Bi = new BigInteger(1, sha1.digest());
+        upload.setMd5(md5Bi.toString(16));
+        upload.setSha1(sha1Bi.toString(16));
     }
 
     /**
      * 获取文件的SHA1值
      */
-    public static String getFileSHA1(MultipartFile multipartFile) {
+    public static String getFileSha1(MultipartFile multipartFile) {
         if (multipartFile.getSize() == 0){
             throw new ResultException(UploadResultEnum.NO_FILE_NULL);
         }
@@ -145,8 +145,8 @@ public class FileUpload {
             while ((len = fis.read(buffer)) != -1) {
                 sha1.update(buffer, 0, len);
             }
-            BigInteger SHA1Bi = new BigInteger(1, sha1.digest());
-            return SHA1Bi.toString(16);
+            BigInteger sha1Bi = new BigInteger(1, sha1.digest());
+            return sha1Bi.toString(16);
         } catch (IOException | NoSuchAlgorithmException e) {
             return null;
         }

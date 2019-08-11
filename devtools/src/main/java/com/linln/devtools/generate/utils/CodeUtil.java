@@ -7,17 +7,22 @@ package com.linln.devtools.generate.utils;
  */
 public class CodeUtil {
 
-    // 字符编码
-    public static final String encode = "UTF-8";
-    // 后台模块名称
-    public static final String admin = "admin";
-    // 业务模块名称
-    public static final String modules = "modules";
-    // maven源码目录
-    public static final String mavenSourcePath = "/src/main";
-    // 系统默认的换行符
+    /** 字符编码 */
+    public static final String ENCODE = "UTF-8";
+
+    /** 后台模块名称 */
+    public static final String ADMIN = "admin";
+
+    /** 业务模块名称 */
+    public static final String MODULES = "modules";
+
+    /** maven源码目录 */
+    public static final String MAVEN_SOURCE_PATH = "/src/main";
+
+    /** 系统默认的换行符 */
     public static String lineBreak = System.getProperty("line.separator");
-    // 制表符
+
+    /** 制表符 */
     public static String tabBreak = blank(4);
 
     /**

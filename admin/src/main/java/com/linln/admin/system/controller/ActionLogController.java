@@ -13,6 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author 小懒虫
+ * @date 2018/10/19
+ */
 @Controller
 @RequestMapping("/system/actionLog")
 public class ActionLogController {

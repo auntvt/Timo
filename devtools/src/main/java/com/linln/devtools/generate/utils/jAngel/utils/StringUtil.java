@@ -1,7 +1,6 @@
 package com.linln.devtools.generate.utils.jAngel.utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -69,7 +68,7 @@ public class StringUtil {
             if (c == '>'){
                 section = true;
             }
-            if (section && (c == 32 || c == 9 || ArrayContains(splits, c))){
+            if (section && (c == 32 || c == 9 || arrayContains(splits, c))){
                 if (word.length() > 0){
                     wordList.add(word.toString());
                 }
@@ -89,10 +88,11 @@ public class StringUtil {
      * @param arr 数组
      * @param c 元素
      */
-    public static boolean ArrayContains(Object[] arr, Object c){
+    public static boolean arrayContains(Object[] arr, Object c){
         for(Object o : arr){
-            if(o.equals(c))
+            if(o.equals(c)) {
                 return true;
+            }
         }
         return false;
     }

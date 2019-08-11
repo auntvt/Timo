@@ -69,8 +69,8 @@ public class JavaParseUtil {
         String packagePath = generate.getBasic().getPackagePath();
         String module = generate.getBasic().getGenModule();
         String entity = generate.getBasic().getTableEntity();
-        String modules = "." + CodeUtil.modules + ".";
-        String admin = "." + CodeUtil.admin + ".";
+        String modules = "." + CodeUtil.MODULES + ".";
+        String admin = "." + CodeUtil.ADMIN + ".";
         if (!generate.getBasic().getModuleType().equals(ModuleType.ALONE.getCode())){
             modules = admin;
         }
@@ -90,6 +90,7 @@ public class JavaParseUtil {
                 return packagePath + admin + module + ".controller." + entity + "Controller";
             case VALID:
                 return packagePath + admin + module + ".validator." + entity + "Valid";
+            default:
         }
         return "";
     }

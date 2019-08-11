@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UserAuthFilter extends AccessControlFilter {
 
+    @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginRequest(request, response)) {
             return true;
@@ -26,12 +27,13 @@ public class UserAuthFilter extends AccessControlFilter {
         }
     }
 
+    @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
         HttpServletResponse httpResponse = WebUtils.toHttp(response);
 
         if (httpRequest.getHeader("X-Requested-With") != null
-                && httpRequest.getHeader("X-Requested-With").equalsIgnoreCase("XMLHttpRequest")) {
+                && "XMLHttpRequest".equalsIgnoreCase(httpRequest.getHeader("X-Requested-With"))) {
             httpResponse.sendError(HttpStatus.UNAUTHORIZED.value());
         } else {
             redirectToLogin(request, response);

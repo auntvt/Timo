@@ -9,11 +9,11 @@ import java.util.HashMap;
  * @author 小懒虫
  * @date 2018/10/14
  */
-public abstract class ActionMap {
+public abstract class BaseActionMap {
 
     protected HashMap<String, Object> dictory = new HashMap<>();
 
-    public ActionMap(){
+    public BaseActionMap(){
         init();
     }
 

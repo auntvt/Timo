@@ -11,15 +11,15 @@ import org.springframework.data.domain.Sort;
  */
 public class PageSort {
 
-    private static final Integer pageSizeDef = 10;
-    private static final String orderByColumnDef = "createDate";
-    private static final Sort.Direction sortDirection = Sort.Direction.DESC;
+    private static final Integer PAGE_SIZE_DEF = 10;
+    private static final String ORDER_BY_COLUMN_DEF = "createDate";
+    private static final Sort.Direction SORT_DIRECTION = Sort.Direction.DESC;
 
     /**
      * 创建分页排序对象
      */
     public static PageRequest pageRequest(){
-        return pageRequest(pageSizeDef, orderByColumnDef, sortDirection);
+        return pageRequest(PAGE_SIZE_DEF, ORDER_BY_COLUMN_DEF, SORT_DIRECTION);
     }
 
     /**
@@ -27,7 +27,7 @@ public class PageSort {
      * @param sortDirection 排序方式默认值
      */
     public static PageRequest pageRequest(Sort.Direction sortDirection){
-        return pageRequest(pageSizeDef, orderByColumnDef, sortDirection);
+        return pageRequest(PAGE_SIZE_DEF, ORDER_BY_COLUMN_DEF, sortDirection);
     }
 
     /**
@@ -36,7 +36,7 @@ public class PageSort {
      * @param sortDirection 排序方式默认值
      */
     public static PageRequest pageRequest(String orderByColumnDef, Sort.Direction sortDirection){
-        return pageRequest(pageSizeDef, orderByColumnDef, sortDirection);
+        return pageRequest(PAGE_SIZE_DEF, orderByColumnDef, sortDirection);
     }
 
     /**

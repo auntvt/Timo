@@ -11,12 +11,12 @@ import java.security.NoSuchAlgorithmException;
  */
 public class EncryptUtil {
 
-    // 加密算法
-    public final static String hashAlgorithmName = "SHA-256";
-    // 加密循环次数
-    public final static int hashIterations = 1024;
-    // 字符编码
-    private final static String charset = "UTF-8";
+    /** 加密算法 */
+    public final static String HASH_ALGORITHM_NAME = "SHA-256";
+    /** 加密循环次数 */
+    public final static int HASH_ITERATIONS = 1024;
+    /** 字符编码 */
+    private final static String CHARSET = "UTF-8";
 
     /**
      * 加密处理
@@ -24,7 +24,7 @@ public class EncryptUtil {
      * @param salt 密码盐
      */
     public static String encrypt(String password, String salt) {
-        return encrypt(password, salt, hashAlgorithmName, hashIterations);
+        return encrypt(password, salt, HASH_ALGORITHM_NAME, HASH_ITERATIONS);
     }
 
     /**
@@ -39,8 +39,8 @@ public class EncryptUtil {
         byte[] byteSalt = new byte[0];
         byte[] bytePassword = new byte[0];
         try {
-            byteSalt = salt.getBytes(charset);
-            bytePassword = password.getBytes(charset);
+            byteSalt = salt.getBytes(CHARSET);
+            bytePassword = password.getBytes(CHARSET);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -85,12 +85,12 @@ public class EncryptUtil {
      * @param data 字符数组
      */
     private static String bytesToHexString(byte[] data){
-        char[] DIGITS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        char[] digits = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         final int l = data.length;
         final char[] out = new char[l << 1];
         for (int i = 0, j = 0; i < l; i++) {
-            out[j++] = DIGITS[(0xF0 & data[i]) >>> 4];
-            out[j++] = DIGITS[0x0F & data[i]];
+            out[j++] = digits[(0xF0 & data[i]) >>> 4];
+            out[j++] = digits[0x0F & data[i]];
         }
         return new String(out);
     }

@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class GenerateUtil {
 
-    private static final String javaSuffix = ".java";
-    private static final String htmlSuffix = ".html";
-    private static final TierType[] moduleTier = {TierType.DOMAIN, TierType.DAO, TierType.SERVICE, TierType.SERVICE_IMPL};
+    private static final String JAVA_SUFFIX = ".java";
+    private static final String HTML_SUFFIX = ".html";
+    private static final TierType[] MODULE_TIER = {TierType.DOMAIN, TierType.DAO, TierType.SERVICE, TierType.SERVICE_IMPL};
 
     /**
      * 生成源码java文件全路径
@@ -37,14 +37,14 @@ public class GenerateUtil {
         Integer moduleType = generate.getBasic().getModuleType();
         // 获取类包路径
         String packageName = JavaParseUtil.getPackage(generate, tierType);
-        String javaPath = packageName.replace(".", "/") + javaSuffix;
-        String mavenModule = CodeUtil.admin;
+        String javaPath = packageName.replace(".", "/") + JAVA_SUFFIX;
+        String mavenModule = CodeUtil.ADMIN;
         // maven模块方式
         if (moduleType.equals(ModuleType.ALONE.getCode())
-                && Arrays.asList(moduleTier).contains(tierType)){
-            mavenModule = CodeUtil.modules + "/" + module;
+                && Arrays.asList(MODULE_TIER).contains(tierType)){
+            mavenModule = CodeUtil.MODULES + "/" + module;
         }
-        return projectPath + mavenModule + CodeUtil.mavenSourcePath + "/java/" + javaPath;
+        return projectPath + mavenModule + CodeUtil.MAVEN_SOURCE_PATH + "/java/" + javaPath;
     }
 
     /**
@@ -55,8 +55,8 @@ public class GenerateUtil {
     public static String getHtmlFilePath(Generate generate, TierType tierType){
         String projectPath = generate.getBasic().getProjectPath();
         String requestMapping = generate.getBasic().getRequestMapping();
-        return projectPath + CodeUtil.admin + CodeUtil.mavenSourcePath + "/resources/templates"
-                + requestMapping + "/" + tierType.name().toLowerCase() + htmlSuffix;
+        return projectPath + CodeUtil.ADMIN + CodeUtil.MAVEN_SOURCE_PATH + "/resources/templates"
+                + requestMapping + "/" + tierType.name().toLowerCase() + HTML_SUFFIX;
     }
 
     /**
@@ -69,18 +69,18 @@ public class GenerateUtil {
             XmlParseUtil.addPomModule(module);
             // 创建业务模块pom文件
             String projectPath = generate.getBasic().getProjectPath();
-            String pomPath = projectPath + CodeUtil.modules + "/" + module + "/pom.xml";
+            String pomPath = projectPath + CodeUtil.MODULES + "/" + module + "/pom.xml";
             PomXmlTemplate.generate(generate, pomPath);
             // 向后台模块添加依赖
             String packagePath = generate.getBasic().getPackagePath();
-            String adminPom = projectPath + CodeUtil.admin + "/pom.xml";
+            String adminPom = projectPath + CodeUtil.ADMIN + "/pom.xml";
             try {
                 Document document = XmlParseUtil.document(adminPom);
-                String groupId = packagePath + "." + CodeUtil.modules;
+                String groupId = packagePath + "." + CodeUtil.MODULES;
                 Elements dependencys = document.getElementsContainingText(groupId);
                 Element lastDependency = dependencys.last();
                 String dependency = XmlParseUtil.getDependency(module);
-                if (lastDependency != null && lastDependency.tagName().equals("groupId")){
+                if (lastDependency != null && "groupId".equals(lastDependency.tagName())){
                     dependency = CodeUtil.lineBreak + CodeUtil.tabBreak + dependency;
                     lastDependency.parent().after(dependency);
                 } else {

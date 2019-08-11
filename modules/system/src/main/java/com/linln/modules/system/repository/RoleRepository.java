@@ -18,12 +18,15 @@ public interface RoleRepository extends BaseRepository<Role,Long> {
     /**
      * 查找多个角色
      * @param ids id列表
+     * @return 角色列表
      */
     public List<Role> findByIdIn(List<Long> ids);
 
     /**
      * 查找相应状态的角色
      * @param sort 排序对象
+     * @param status 数据状态
+     * @return 角色列表
      */
     public List<Role> findAllByStatus(Sort sort, Byte status);
 
@@ -31,6 +34,7 @@ public interface RoleRepository extends BaseRepository<Role,Long> {
      * 查询指定用户的角色列表
      * @param id 用户ID
      * @param status 角色状态
+     * @return 角色列表
      */
     public Set<Role> findByUsers_IdAndStatus(Long id, Byte status);
 
@@ -38,6 +42,7 @@ public interface RoleRepository extends BaseRepository<Role,Long> {
      * 根据标识查询角色数据,且排查指定ID的角色
      * @param name 角色标识
      * @param id 角色ID
+     * @return 角色信息
      */
     public Role findByNameAndIdNot(String name, Long id);
 
@@ -45,12 +50,14 @@ public interface RoleRepository extends BaseRepository<Role,Long> {
      * 判断指定的用户是否存在角色
      * @param id 用户ID
      * @param status 角色状态
+     * @return 是否存在角色
      */
     public Boolean existsByUsers_IdAndStatus(Long id, Byte status);
 
     /**
      * 取消角色与用户之间的关系
      * @param ids 角色ID
+     * @return 影响结果
      */
     @Modifying
     @Transactional
@@ -60,6 +67,7 @@ public interface RoleRepository extends BaseRepository<Role,Long> {
     /**
      * 取消角色与菜单之间的关系
      * @param ids 角色ID
+     * @return 影响结果
      */
     @Modifying
     @Transactional

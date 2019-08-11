@@ -19,7 +19,7 @@ public class ResultVoUtil {
      * @param object 对象
      */
     public static ResultVo success(String msg, Object object){
-        ResultVo resultVo = new ResultVo();
+        ResultVo<Object> resultVo = new ResultVo<>();
         resultVo.setMsg(msg);
         resultVo.setCode(ResultEnum.SUCCESS.getCode());
         resultVo.setData(object);

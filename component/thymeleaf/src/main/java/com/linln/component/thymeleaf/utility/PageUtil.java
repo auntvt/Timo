@@ -25,7 +25,7 @@ public class PageUtil {
             Enumeration em = request.getParameterNames();
             while (em.hasMoreElements()) {
                 String name = (String) em.nextElement();
-                if(!name.equals("page")){
+                if(!"page".equals(name)){
                     String value = request.getParameter(name);
                     param.append(name + "=" + value + "&");
                 }
@@ -66,7 +66,7 @@ public class PageUtil {
 
     public String pageActive(Page page, String pageCode, String className){
         int number = page.getNumber();
-        if(!pageCode.equals("…")){
+        if(!"…".equals(pageCode)){
             if(number == Integer.valueOf(pageCode) - 1){
                 return " "+className;
             }
@@ -83,7 +83,7 @@ public class PageUtil {
     }
 
     public boolean isCode(String pageCode){
-        return pageCode.equals("…");
+        return "…".equals(pageCode);
     }
 
     public String pageHref(String pageCode){

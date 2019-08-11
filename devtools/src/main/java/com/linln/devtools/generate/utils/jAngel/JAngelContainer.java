@@ -10,7 +10,7 @@ import java.util.TreeSet;
  */
 public class JAngelContainer {
 
-    // 导入的包列表
+    /** 导入的包列表 */
     private Set<String> imports = new TreeSet<>();
 
     /**
@@ -20,10 +20,11 @@ public class JAngelContainer {
         StringBuilder builder = new StringBuilder();
         StringBuilder javaBuilder = new StringBuilder();
         imports.forEach(name -> {
-            if (name.startsWith("import java"))
+            if (name.startsWith("import java")) {
                 javaBuilder.append(name);
-            else
+            } else {
                 builder.append(name);
+            }
         });
         if(builder.length() > 0 && javaBuilder.length() > 0){
             builder.append(JAngel.lineBreak);
@@ -34,7 +35,7 @@ public class JAngelContainer {
         return builder.toString();
     }
 
-    // 获取列表集合对象
+    /** 获取列表集合对象 */
     public Set<String> getImports() {
         return imports;
     }

@@ -1,6 +1,7 @@
 package com.linln.component.thymeleaf.attribute;
 
 import com.linln.component.thymeleaf.utility.DictUtil;
+import lombok.EqualsAndHashCode;
 import org.thymeleaf.IEngineConfiguration;
 import org.thymeleaf.context.ITemplateContext;
 import org.thymeleaf.engine.AttributeName;
@@ -32,8 +33,8 @@ public class SelectDictAttrProcessor extends AbstractAttributeTagProcessor {
         super(templateMode, dialectPrefix, null, false, ATTR_NAME, true, PRECEDENCE, true);
     }
 
-    public SelectDictAttrProcessor(final TemplateMode templateMode, final String dialectPrefix, String attr_name, int precedence) {
-        super(templateMode, dialectPrefix, null, false, attr_name, true, precedence, true);
+    public SelectDictAttrProcessor(final TemplateMode templateMode, final String dialectPrefix, String attrName, int precedence) {
+        super(templateMode, dialectPrefix, null, false, attrName, true, precedence, true);
     }
 
 
@@ -47,7 +48,9 @@ public class SelectDictAttrProcessor extends AbstractAttributeTagProcessor {
 
         // 如果属性值为空或者标签不为select，则不处理
         String elementName = tag.getElementCompleteName();
-        if(attributeValue.isEmpty() || !elementName.equals("select")) return;
+        if(attributeValue.isEmpty() || !"select".equals(elementName)) {
+            return;
+        }
 
         // 获取列表对象，空则不处理
         Map<String, String> valueList = DictUtil.value(attributeValue);
@@ -56,6 +59,7 @@ public class SelectDictAttrProcessor extends AbstractAttributeTagProcessor {
         };
     }
 
+    @SuppressWarnings("unchecked")
     protected void doProcess(
             final ITemplateContext context,
             final IProcessableElementTag tag,
@@ -118,4 +122,13 @@ public class SelectDictAttrProcessor extends AbstractAttributeTagProcessor {
         }
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

@@ -16,11 +16,13 @@ public class ClassNode extends Node {
     public static final String INTERFACE = "interface";
     public static final String ENUM = "enum";
 
-    // 类的类型
+    /** 类的类型 */
     private String type = "class";
-    // 继承的父类
+
+    /** 继承的父类 */
     private List<String> extClass = new ArrayList<>();
-    // 实现接口
+
+    /** 实现接口 */
     private List<String> implClass = new ArrayList<>();
 
     public ClassNode(String className) {
@@ -67,6 +69,7 @@ public class ClassNode extends Node {
      * 添加继承的父类
      * @param clazz 父类
      */
+    @SuppressWarnings("unchecked")
     public void addExtends(Class<?> clazz) {
         importClass(clazz);
         this.extClass.add(clazz.getSimpleName());
@@ -91,6 +94,7 @@ public class ClassNode extends Node {
      * 设置实现的接口
      * @param clazz 接口
      */
+    @SuppressWarnings("unchecked")
     public void addImplements(Class<?> clazz) {
         importClass(clazz);
         this.implClass.add(clazz.getSimpleName());

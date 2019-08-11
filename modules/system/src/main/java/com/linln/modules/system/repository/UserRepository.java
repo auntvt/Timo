@@ -29,12 +29,15 @@ public interface UserRepository extends BaseRepository<User, Long>, JpaSpecifica
 
     /**
      * 查找多个相应部门的用户列表
+     * @param dept 部门对象
+     * @return 用户列表
      */
     public List<User> findByDept(Dept dept);
 
     /**
      * 删除多条数据
-     * @param ids     ID列表
+     * @param ids ID列表
+     * @return 影响行数
      */
     public Integer deleteByIdIn(List<Long> ids);
 }

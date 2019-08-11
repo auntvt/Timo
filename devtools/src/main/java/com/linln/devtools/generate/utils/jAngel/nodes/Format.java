@@ -14,17 +14,22 @@ import java.util.regex.Pattern;
  */
 public class Format {
 
-    // 类标志
-    private static final String $T = "$T";
-    // 字符串标志
-    private static final String $S = "$S";
-    // 正则字符串标志
-    private static final String $R = "$R";
-    // 普通的占位标志
-    private static final String $O = "$O";
-    // 处理后的数据
+    /** 类标志 */
+    private static final String SIGN_T = "$T";
+
+    /** 字符串标志 */
+    private static final String SIGN_S = "$S";
+
+    /** 正则字符串标志 */
+    private static final String SIGN_R = "$R";
+
+    /** 普通的占位标志 */
+    private static final String SIGN_O = "$O";
+
+    /** 处理后的数据 */
     private String content;
-    // 导入的包列表
+
+    /** 导入的包列表 */
     private Set<String> imports = new TreeSet<>();
 
     /**
@@ -39,23 +44,23 @@ public class Format {
         int index = 0;
         while(matcher.find()){
             switch (matcher.group()){
-                case $T:
+                case SIGN_T:
                     Class<?> clazz = (Class<?>) args[index++];
                     if(!clazz.getName().startsWith("java.lang")){
                         imports.add("import " + clazz.getName() + ";" + JAngel.lineBreak);
                     }
                     matcher.appendReplacement(buffer, clazz.getSimpleName());
                     break;
-                case $S:
+                case SIGN_S:
                     matcher.appendReplacement(buffer, "\"" + String.valueOf(args[index++]) + "\"");
                     break;
-                case $R:
+                case SIGN_R:
                     String value = String.valueOf(args[index++]);
                     value = value.replace("\\", "\\\\\\\\");
                     value = value.replace("$", "\\$");
                     matcher.appendReplacement(buffer, "\"" + value + "\"");
                     break;
-                case $O:
+                case SIGN_O:
                 default:
                     matcher.appendReplacement(buffer, String.valueOf(args[index++]));
             }

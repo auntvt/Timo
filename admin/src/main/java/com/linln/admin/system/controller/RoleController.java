@@ -92,7 +92,7 @@ public class RoleController {
      * @param role 实体对象
      */
     @PostMapping("/save")
-    @RequiresPermissions({"system:role:add","system:role:edit"})
+    @RequiresPermissions({"system:role:add", "system:role:edit"})
     @ResponseBody
     @ActionLog(key = RoleAction.ROLE_SAVE, action = RoleAction.class)
     public ResultVo save(@Validated RoleValid valid, @EntityParam Role role){

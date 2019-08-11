@@ -20,6 +20,7 @@ public interface BaseRepository<T, ID> extends JpaRepository<T,ID> {
      * 查找ID且状态正常
      * @param id 主键ID
      * @param status 状态
+     * @return 实体对象
      */
     public T findByIdAndStatus(Long id, Byte status);
 

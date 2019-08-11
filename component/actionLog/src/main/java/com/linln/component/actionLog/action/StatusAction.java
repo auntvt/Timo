@@ -1,7 +1,7 @@
 package com.linln.component.actionLog.action;
 
 import com.linln.common.utils.StatusUtil;
-import com.linln.component.actionLog.action.base.ActionMap;
+import com.linln.component.actionLog.action.base.BaseActionMap;
 import com.linln.component.actionLog.action.base.ResetLog;
 import com.linln.common.enums.StatusEnum;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author 小懒虫
  * @date 2018/10/14
  */
-public class StatusAction extends ActionMap {
+public class StatusAction extends BaseActionMap {
 
     @Override
     public void init() {

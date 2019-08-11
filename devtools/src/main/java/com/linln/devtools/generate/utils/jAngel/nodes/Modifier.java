@@ -11,15 +11,19 @@ public class Modifier extends Node{
     public static String PROTECTED = "protected";
     public static String PRIVATE = "private";
 
-    // 变量类型
+    /** 变量类型 */
     protected String type;
-    // 访问控制符
+
+    /** 访问控制符 */
     private String accessSym;
-    // 静态修饰符
+
+    /** 静态修饰符 */
     private boolean staticSym;
-    // 常量修饰符
+
+    /** 常量修饰符 */
     private boolean finalSym;
-    // 抽象修饰符
+
+    /** 抽象修饰符 */
     private boolean abstractSym;
 
     /**
@@ -41,6 +45,7 @@ public class Modifier extends Node{
      * 设置变量类型
      * @param clazz 类对象
      */
+    @SuppressWarnings("unchecked")
     public void setType(Class<?> clazz) {
         importClass(clazz);
         this.type = clazz.getSimpleName();

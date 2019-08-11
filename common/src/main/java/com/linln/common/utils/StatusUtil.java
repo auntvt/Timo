@@ -12,11 +12,11 @@ import com.linln.common.exception.ResultException;
  */
 public class StatusUtil {
 
-    // 逻辑删除语句
-    public static final String sliceDelete = " set status=" + StatusConst.DELETE + " WHERE id=?";
+    /** 逻辑删除语句 */
+    public static final String SLICE_DELETE = " set status=" + StatusConst.DELETE + " WHERE id=?";
 
-    // 不等于逻辑删除条件语句
-    public static final String notDelete = "status != " + StatusConst.DELETE;
+    /** 不等于逻辑删除条件语句 */
+    public static final String NOT_DELETE = "status != " + StatusConst.DELETE;
 
     /**
      * 获取状态StatusEnum对象

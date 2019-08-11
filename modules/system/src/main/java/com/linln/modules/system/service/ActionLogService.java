@@ -7,6 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author 小懒虫
+ * @date 2018/10/19
+ */
 public interface ActionLogService {
 
     /**
@@ -19,6 +23,7 @@ public interface ActionLogService {
     /**
      * 根据日志ID查询日志数据
      * @param id 日志ID
+     * @return 日志数据
      */
     ActionLog getById(Long id);
 
@@ -26,19 +31,21 @@ public interface ActionLogService {
      * 获取数据的日志列表
      * @param model 模型（表名）
      * @param recordId 数据ID
+     * @return 日志列表
      */
     List<ActionLog> getDataLogList(String model, Long recordId);
 
     /**
      * 保存日志
      * @param actionLog 日志实体类
+     * @return 日志信息
      */
     ActionLog save(ActionLog actionLog);
 
     /**
      * 删除指指定ID日志
+     * @param id 日志ID
      */
-    @Transactional
     void deleteId(Long id);
 
     /**

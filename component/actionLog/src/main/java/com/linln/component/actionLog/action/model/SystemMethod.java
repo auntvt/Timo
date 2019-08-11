@@ -9,7 +9,8 @@ import lombok.Getter;
  */
 @Getter
 public class SystemMethod extends BusinessMethod{
-    // 日志类型
+
+    /** 日志类型 */
     protected Byte type = ActionLogEnum.SYSTEM.getCode();
 
     public SystemMethod(String method) {

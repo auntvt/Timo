@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class MethodNode extends Modifier{
 
-    // 方法参数列表
+    /** 方法参数列表 */
     private List<Format> params = new ArrayList<>();
 
     public MethodNode(){
@@ -32,6 +32,7 @@ public class MethodNode extends Modifier{
      * @param name 节点名称
      * @param classType 方法类型
      */
+    @SuppressWarnings("unchecked")
     public MethodNode(String name, Class<?> classType){
         this.name = name;
         this.type = classType.getSimpleName();
@@ -41,6 +42,7 @@ public class MethodNode extends Modifier{
     /**
      * 获取方法参数
      */
+    @SuppressWarnings("unchecked")
     public String getParamAll(){
         StringBuilder builder = new StringBuilder("(");
         if(params.size() > 0){

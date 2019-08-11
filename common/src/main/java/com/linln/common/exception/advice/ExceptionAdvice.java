@@ -6,5 +6,10 @@ package com.linln.common.exception.advice;
  * @date 2019/4/5
  */
 public interface ExceptionAdvice {
-    public void run(RuntimeException e);
+
+    /**
+     * 运行
+     * @param e 异常对象
+     */
+    void run(RuntimeException e);
 }

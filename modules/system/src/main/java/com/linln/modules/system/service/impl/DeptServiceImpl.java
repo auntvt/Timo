@@ -114,8 +114,8 @@ public class DeptServiceImpl implements DeptService {
 
         treeDepts.forEach(dept -> {
             if(statusEnum == StatusEnum.DELETE){
-                List<User> Depts = userRepository.findByDept(dept);
-                if(Depts.size() > 0){
+                List<User> users = userRepository.findByDept(dept);
+                if(users.size() > 0){
                     throw new ResultException(ResultEnum.DEPT_EXIST_USER);
                 }
             }

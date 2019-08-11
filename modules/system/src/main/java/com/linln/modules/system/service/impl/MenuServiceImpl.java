@@ -130,9 +130,6 @@ public class MenuServiceImpl implements MenuService {
         treeMenus.forEach(menu -> {
             // 删除菜单状态时，同时更新角色的权限
             if(statusEnum == StatusEnum.DELETE){
-                /*menu.getRoles().forEach(role -> {
-                    role.getMenus().remove(menu);
-                });*/
                 // 非规范的Jpa操作，直接采用SQL语句
                 menuRepository.cancelRoleJoin(menu.getId());
             }

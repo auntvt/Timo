@@ -21,31 +21,44 @@ import java.util.*;
  * @date 2018/12/7
  */
 public class QuerySpec {
-    // 查询规则
-    public static final Long EQUAL = 0L;              //精确查询(=)
-    public static final Long LIKE = 1L;               //模糊查询(*XX*)
-    public static final Long LEFT_LIKE = 2L;          //左模糊查询(*XX)
-    public static final Long RIGHT_LIKE = 3L;         //右模糊查询(XX*)
-    public static final Long NOT_EQUAL = 4L;          //不等于(!=)
-    public static final Long GT = 5L;                 //大于(>)
-    public static final Long GE = 6L;                 //大于等于(>=)
-    public static final Long LT = 7L;                 //小于(<)
-    public static final Long LE = 8L;                 //小于等于(<=)
-    public static final Long IN = 9L;                 //多值(in)
-    public static final Long BETWEEN = 10L;           //区间查询(between)
+    /* 查询规则 */
+    /** 精确查询(=) */
+    public static final Long EQUAL = 0L;
+    /** 模糊查询(*XX*) */
+    public static final Long LIKE = 1L;
+    /** 左模糊查询(*XX) */
+    public static final Long LEFT_LIKE = 2L;
+    /** 右模糊查询(XX*) */
+    public static final Long RIGHT_LIKE = 3L;
+    /** 不等于(!=) */
+    public static final Long NOT_EQUAL = 4L;
+    /** 大于(>) */
+    public static final Long GT = 5L;
+    /** 大于等于(>=) */
+    public static final Long GE = 6L;
+    /** 小于(<) */
+    public static final Long LT = 7L;
+    /** 小于等于(<=) */
+    public static final Long LE = 8L;
+    /** 多值(in) */
+    public static final Long IN = 9L;
+    /** 区间查询(between) */
+    public static final Long BETWEEN = 10L;
 
-    // 字段规则列表
+    /** 字段规则列表 */
     private Map<String, Long> fieldRules;
-    // 忽视字段
+    /** 忽视字段 */
     private String[] ignoredPaths;
-    // 多值in查询方式值列表
+    /** 多值in查询方式值列表 */
     private Map<String, List<Object>> inValues;
-    // 区间between查询方式值列表
+    /** 区间between查询方式值列表 */
     private Map<String, Long[]> betweenValues;
-    // 状态字段名称
+    /** 状态字段名称 */
     private String status = "status";
 
-    // 无参构造方法，初始化数据
+    /**
+     * 无参构造方法，初始化数据
+     */
     private QuerySpec(){
         fieldRules = new HashMap<>();
         inValues = new HashMap<>();

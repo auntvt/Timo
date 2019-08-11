@@ -31,7 +31,7 @@ public class ValidatorTemplate {
      * 验证规则列表
      */
     private static Map<FieldVerify, Format> verifyRule(){
-        Map<FieldVerify, Format> verify = new HashMap<>();
+        Map<FieldVerify, Format> verify = new HashMap<>(16);
 
         // 验证规则(字符串出现$时需要转义)
         verify.put(FieldVerify.NotNull, Format.of("$T(message = $S)", NotNull.class, "#T不能为空"));

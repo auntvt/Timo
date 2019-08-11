@@ -18,23 +18,32 @@ import java.util.stream.Collectors;
  * @date 2019/3/28
  */
 public class Node<T> {
-    // 节点名称
+
+    /** 节点名称 */
     protected String name;
-    // 节点注解
+
+    /** 节点注解 */
     protected List<String> annotation = new ArrayList<>();
-    // 节点注释
+
+    /** 节点注释 */
     protected String comments;
-    // 节点级别
+
+    /** 节点级别 */
     protected int level = 0;
-    // 父节点
+
+    /** 父节点 */
     protected Node parent;
-    // 子节点列表
+
+    /** 子节点列表 */
     protected Nodes children = new Nodes();
-    // 代码容器对象
+
+    /** 代码容器对象 */
     protected JAngelContainer container;
-    // 节点内容本体
+
+    /** 节点内容本体 */
     protected String body;
-    // 导入的包列表
+
+    /** 导入的包列表 */
     protected Set<String> imports = new TreeSet<>();
 
     public Node() {
@@ -193,6 +202,7 @@ public class Node<T> {
      * 添加子节点到首位
      * @param node 节点对象
      */
+    @SuppressWarnings("unchecked")
     public void insert(Node node) {
         children.add(0, node);
         node.setContainer(container);
@@ -207,6 +217,7 @@ public class Node<T> {
      * @param index 位置
      * @param node 节点对象
      */
+    @SuppressWarnings("unchecked")
     public void insert(int index, Node node) {
         children.add(index, node);
         node.setContainer(container);
@@ -220,6 +231,7 @@ public class Node<T> {
      * 从尾部添加子节点
      * @param node 节点对象
      */
+    @SuppressWarnings("unchecked")
     public void append(Node node) {
         children.add(node);
         node.setContainer(container);

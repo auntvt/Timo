@@ -21,12 +21,12 @@ public class ShiroUtil {
     /**
      * 加密算法
      */
-    public final static String hashAlgorithmName = EncryptUtil.hashAlgorithmName;
+    public final static String HASH_ALGORITHM_NAME = EncryptUtil.HASH_ALGORITHM_NAME;
 
     /**
      * 循环次数
      */
-    public final static int hashIterations = EncryptUtil.hashIterations;
+    public final static int HASH_ITERATIONS = EncryptUtil.HASH_ITERATIONS;
 
     /**
      * 加密处理
@@ -36,7 +36,7 @@ public class ShiroUtil {
      * @param salt 密码盐
      */
     public static String encrypt(String password, String salt) {
-        return EncryptUtil.encrypt(password, salt, hashAlgorithmName, hashIterations);
+        return EncryptUtil.encrypt(password, salt, HASH_ALGORITHM_NAME, HASH_ITERATIONS);
     }
 
     /**

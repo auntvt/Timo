@@ -34,7 +34,7 @@ public class ShiroConfig {
         /**
          * 添加自定义拦截器，重写user认证方式，处理session超时问题
          */
-        HashMap<String, Filter> myFilters = new HashMap<>();
+        HashMap<String, Filter> myFilters = new HashMap<>(16);
         myFilters.put("userAuth", new UserAuthFilter());
         shiroFilterFactoryBean.setFilters(myFilters);
 

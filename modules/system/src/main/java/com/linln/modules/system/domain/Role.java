@@ -3,8 +3,7 @@ package com.linln.modules.system.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linln.common.enums.StatusEnum;
 import com.linln.common.utils.StatusUtil;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,13 +24,14 @@ import java.util.Set;
  * @author 小懒虫
  * @date 2018/8/14
  */
+@Data
 @Entity
 @Table(name = "sys_role")
-@Getter
-@Setter
+@ToString(exclude = {"users", "menus", "createBy", "updateBy"})
+@EqualsAndHashCode(exclude = {"users", "menus", "createBy", "updateBy"})
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "update sys_role" + StatusUtil.sliceDelete)
-@Where(clause = StatusUtil.notDelete)
+@SQLDelete(sql = "update sys_role" + StatusUtil.SLICE_DELETE)
+@Where(clause = StatusUtil.NOT_DELETE)
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

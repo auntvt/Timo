@@ -24,7 +24,9 @@ import java.io.IOException;
 @Order(-1)
 public class AuthorizationExceptionHandler {
 
-    // 拦截访问权限异常
+    /**
+     * 拦截访问权限异常
+     */
     @ExceptionHandler(AuthorizationException.class)
     @ResponseBody
     public ResultVo authorizationException(AuthorizationException e, HttpServletRequest request,

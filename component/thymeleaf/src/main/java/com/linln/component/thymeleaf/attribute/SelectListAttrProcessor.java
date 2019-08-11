@@ -1,5 +1,6 @@
 package com.linln.component.thymeleaf.attribute;
 
+import lombok.EqualsAndHashCode;
 import org.thymeleaf.IEngineConfiguration;
 import org.thymeleaf.context.ITemplateContext;
 import org.thymeleaf.engine.AttributeName;
@@ -28,6 +29,7 @@ public class SelectListAttrProcessor extends SelectDictAttrProcessor {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void doProcess(
             final ITemplateContext context,
             final IProcessableElementTag tag,
@@ -37,7 +39,9 @@ public class SelectListAttrProcessor extends SelectDictAttrProcessor {
 
         // 如果属性值为空或者标签不为select。则不处理
         String elementName = tag.getElementCompleteName();
-        if (attributeValue.isEmpty() || !elementName.equals("select")) return;
+        if (attributeValue.isEmpty() || !"select".equals(elementName)) {
+            return;
+        }
 
         // 获取列表对象
         final IEngineConfiguration configuration = context.getConfiguration();
@@ -84,4 +88,13 @@ public class SelectListAttrProcessor extends SelectDictAttrProcessor {
         };
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

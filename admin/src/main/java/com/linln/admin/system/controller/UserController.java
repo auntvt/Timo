@@ -260,7 +260,6 @@ public class UserController {
             UploadProjectProperties properties = SpringContextUtil.getBean(UploadProjectProperties.class);
             String fuPath = properties.getFilePath();
             String spPath = properties.getStaticPath().replace("*", "");
-            String s = fuPath + p.replace(spPath, "");
             File file = new File(fuPath + p.replace(spPath, ""));
             if (file.exists()) {
                 FileCopyUtils.copy(new FileInputStream(file), response.getOutputStream());
@@ -305,6 +304,5 @@ public class UserController {
             return ResultVoUtil.error(statusEnum.getMessage() + "失败，请重新操作");
         }
     }
-
 
 }

@@ -46,7 +46,7 @@ public class AddHtmlTemplate {
                 temp = temp.replace("#{field.name}", field.getName());
                 fieldBuilder.append(HtmlParseUtil.tabBreak(fieldNode)).append(temp);
             }
-            if(field.getName().equals("remark")){
+            if("remark".equals(field.getName())){
                 fieldRemark = true;
             }
         }

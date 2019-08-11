@@ -1,4 +1,4 @@
-# Timo v2.0.1
+# Timo v2.0.2
 
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![加入QQ群](https://img.shields.io/badge/QQ%E7%BE%A4-941209502-brightgreen.svg)](https://jq.qq.com/?_wv=1027&k=5RCnDCO)
@@ -56,10 +56,12 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 #### 使用说明
 
 1. 使用文档：sdoc/使用文档.docx
-2. 开发手册：[TIMO开发文档.看云](https://www.kancloud.cn/timo/timo-doc)
+2. 开发手册：[TIMO开发文档.在线](http://www.linln.cn/docs)
 3. SQL文件：sdoc/timo.sql（经常忘记同步！）
 
 #### 更新记录
+- 2019-08-11更新 根据【阿里巴巴Java开发手册】对代码进行优化处理
+- 2019-06-14更新 修复接口无法继承多个父接口的问题
 - 2019-04-28更新 加入JWT TOKEN鉴权机制，实现多端的权限验证！
 - 2019-04-07更新 发布v2.0版本，带来全新的项目结构！
 - 2019-02-11更新 修复字典值过长格式显示问题，加入离线技术文档1.0
@@ -74,7 +76,7 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 - 2018-12-01更新 发布v1.0版本！
 
 #### 演示地址
-演示地址： [http://www.linln.top](http://www.linln.top)
+演示地址： [http://www.linln.cn](http://www.linln.cn)
 
 #### 预览图
 

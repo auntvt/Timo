@@ -7,8 +7,16 @@ package com.linln.common.exception.interfaces;
  */
 public interface ResultInterface {
 
-    public Integer getCode();
+    /**
+     * 获取状态编码
+     * @return 编码
+     */
+    Integer getCode();
 
-    public String getMessage();
+    /**
+     * 获取提示信息
+     * @return 提示信息
+     */
+    String getMessage();
 
 }

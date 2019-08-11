@@ -1,6 +1,6 @@
 package com.linln.component.actionLog.annotation;
 
-import com.linln.component.actionLog.action.base.ActionMap;
+import com.linln.component.actionLog.action.base.BaseActionMap;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,5 +22,5 @@ public @interface ActionLog {
     // 行为key
     String key() default "";
     // 行为类
-    Class<? extends ActionMap> action() default ActionMap.class;
+    Class<? extends BaseActionMap> action() default BaseActionMap.class;
 }

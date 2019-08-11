@@ -13,13 +13,15 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "project")
 public class ProjectProperties {
-    // 是否开启验证码
+
+    /** 是否开启验证码 */
     private boolean captchaOpen = false;
-    // xss防护设置
+
+    /** xss防护设置 */
     private ProjectProperties.Xxs xxs = new ProjectProperties.Xxs();
 
     /**
-     *  xss防护设置
+     * xss防护设置
      */
     @Data
     public static class Xxs {

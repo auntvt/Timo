@@ -9,11 +9,14 @@ import lombok.Getter;
  */
 @Getter
 public class BusinessType extends ActionModel{
-    // 日志名称
+
+    /** 日志名称 */
     protected String name;
-    // 日志消息
+
+    /** 日志消息 */
     protected String message;
-    // 日志类型
+
+    /** 日志类型 */
     protected Byte type = ActionLogEnum.BUSINESS.getCode();
 
     /**

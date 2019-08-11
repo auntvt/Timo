@@ -3,8 +3,7 @@ package com.linln.modules.system.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linln.common.enums.StatusEnum;
 import com.linln.common.utils.StatusUtil;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
@@ -22,12 +21,13 @@ import java.util.*;
  * @author 小懒虫
  * @date 2018/8/14
  */
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "sys_menu")
+@ToString(exclude = {"roles", "createBy", "updateBy"})
+@EqualsAndHashCode(exclude = {"roles", "createBy", "updateBy"})
 @EntityListeners(AuditingEntityListener.class)
-@Where(clause = StatusUtil.notDelete)
+@Where(clause = StatusUtil.NOT_DELETE)
 public class Menu implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,7 +67,8 @@ public class Menu implements Serializable {
     @JsonIgnore
     private Map<Long, Menu> children = new HashMap<>();
 
-    public Menu() {
+    public Menu(){
+
     }
 
     public Menu(Long id, String title, String pids) {

@@ -14,11 +14,14 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "project.upload")
 public class UploadProjectProperties {
-    // 上传文件路径
+
+    /** 上传文件路径 */
     private String filePath;
-    // 上传文件静态访问路径
+
+    /** 上传文件静态访问路径 */
     private String staticPath = "/upload/**";
 
+    /** 获取文件路径 */
     public String getFilePath() {
         if(filePath == null){
             return ToolUtil.getProjectPath() + "/upload/";

@@ -26,32 +26,40 @@ import java.util.regex.Pattern;
 @Data
 public class ResetLog {
 
-    /** 封装操作对象 */
-    // 注解日志的方法返回值
+    /* 封装操作对象 */
+    /** 注解日志的方法返回值 */
     private Object retValue;
-    // 获取日志实体对象
+    /** 获取日志实体对象 */
     private ActionLog actionLog;
-    // Aop连接点信息对象
+    /** Aop连接点信息对象 */
     private JoinPoint joinPoint;
-    // 是否记录日志（默认记录）
+    /** 是否记录日志（默认记录） */
     private Boolean record = true;
 
-    /** 辅助方法 */
-    // 判断返回值是否为ResultVo对象
+    /* 辅助方法 */
+    /**
+     * 判断返回值是否为ResultVo对象
+     */
     public boolean isResultVo(){
         return retValue instanceof ResultVo;
     }
-    // 判断ResultVo状态码是否为成功
+    /**
+     * 判断ResultVo状态码是否为成功
+     */
     public boolean isSuccess(){
         return retValue instanceof ResultVo &&
                 ((ResultVo) retValue).getCode().equals(ResultEnum.SUCCESS.getCode());
     }
-    // 判断ResultVo状态码是否为成功，且设置是否记录日志
+    /**
+     * 判断ResultVo状态码是否为成功，且设置是否记录日志
+     */
     public boolean isSuccessRecord(){
         return record = retValue instanceof ResultVo &&
                 ((ResultVo) retValue).getCode().equals(ResultEnum.SUCCESS.getCode());
     }
-    // 获取切入点方法指定名称的参数值
+    /**
+     * 获取切入点方法指定名称的参数值
+     */
     public Object getParam(String name){
         Object[] args = joinPoint.getArgs();
         if(args.length > 0){
@@ -65,7 +73,9 @@ public class ResetLog {
         }
         return null;
     }
-    // 获取切入点参数注解@EntityParam的对象
+    /**
+     * 获取切入点参数注解@EntityParam的对象
+     */
     public Object getEntityParam(){
         Object[] args = joinPoint.getArgs();
         if(args.length > 0){
@@ -82,10 +92,12 @@ public class ResetLog {
         }
         return null;
     }
-    // 内容填充规则
+    private static final Pattern FILL_PATTERN = Pattern.compile("\\$\\{[a-zA-Z0-9]+\\}");
+    /**
+     * 内容填充规则
+     */
     public String fillRule(Object beanObject, String content){
-        Pattern pattern = Pattern.compile("\\$\\{[a-zA-Z0-9]+\\}");
-        Matcher matcher = pattern.matcher(content);
+        Matcher matcher = FILL_PATTERN.matcher(content);
         while(matcher.find()){
             String matchWord = matcher.group(0);
             String property = matchWord.substring(2, matchWord.length()-1);
@@ -100,21 +112,29 @@ public class ResetLog {
         return content;
     }
 
-    /** 快捷数据 */
-    // 获取用户名
+    /* 快捷数据 */
+    /**
+     * 获取用户名
+     */
     public String getUsername(){
         return ShiroUtil.getSubject().getUsername();
     }
-    // 获取用户昵称
+    /**
+     * 获取用户昵称
+     */
     public String getNickname(){
         return ShiroUtil.getSubject().getNickname();
     }
-    // 获取当前时间
+    /**
+     * 获取当前时间
+     */
     public String getDatetime(){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return df.format(new Date());
     }
-    // 获取当前时间（自定义时间格式）
+    /**
+     * 获取当前时间（自定义时间格式）
+     */
     public String getDatetime(String pattern){
         SimpleDateFormat df = new SimpleDateFormat(pattern);
         return df.format(new Date());

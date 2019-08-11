@@ -75,7 +75,7 @@ public class UploadController {
         }
 
         // 判断图片是否存在
-        Upload uploadSha1 = uploadService.getBySha1(FileUpload.getFileSHA1(multipartFile));
+        Upload uploadSha1 = uploadService.getBySha1(FileUpload.getFileSha1(multipartFile));
         if (uploadSha1 != null) {
             return ResultVoUtil.success(uploadSha1);
         }

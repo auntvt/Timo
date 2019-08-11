@@ -4,7 +4,7 @@
 </head>
 <body>
 <div class="layui-form timo-compile">
-    <form th:action="@{#{baseUrl}/add}">
+    <form th:action="@{#{baseUrl}/save}">
         <input type="hidden" name="id" th:if="${#{var}}" th:value="${#{var}.id}"/>
         <div jsoup="field" class="layui-form-item">
             <label class="layui-form-label">#{field.title}</label>

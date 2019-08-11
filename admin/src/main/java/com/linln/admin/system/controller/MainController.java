@@ -55,7 +55,7 @@ public class MainController{
         User user = ShiroUtil.getSubject();
 
         // 菜单键值对(ID->菜单)
-        Map<Long, Menu> keyMenu = new HashMap<>();
+        Map<Long, Menu> keyMenu = new HashMap<>(16);
 
         // 管理员实时更新菜单
         if(user.getId().equals(AdminConst.ADMIN_ID)){
@@ -73,7 +73,7 @@ public class MainController{
         }
 
         // 封装菜单树形数据
-        Map<Long, Menu> treeMenu = new HashMap<>();
+        Map<Long, Menu> treeMenu = new HashMap<>(16);
         keyMenu.forEach((id, menu) -> {
             if(!menu.getType().equals(MenuTypeEnum.NOT_MENU.getCode())){
                 if(keyMenu.get(menu.getPid()) != null){

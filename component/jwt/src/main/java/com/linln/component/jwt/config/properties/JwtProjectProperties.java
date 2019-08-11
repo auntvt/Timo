@@ -13,12 +13,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "project.jwt")
 public class JwtProjectProperties {
-    // jwt秘钥
+
+    /** jwt秘钥 */
     private String secret = "mySecret";
-    // 过期时间(天)，默认3天
+
+    /** 过期时间(天)，默认3天  */
     private Integer expired = 3;
-    // 权限模式-路径拦截
+
+    /** 权限模式-路径拦截 */
     private boolean patternPath = false;
-    // 权限模式-注解拦截
+
+    /** 权限模式-注解拦截 */
     private boolean patternAnno = true;
 }

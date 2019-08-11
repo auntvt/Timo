@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class EntityBeanUtil {
 
-    // 复制实体对象保留的默认字段
+    /** 复制实体对象保留的默认字段 */
     private static String[] defaultFields = new String[]{
             "createDate",
             "updateDate",

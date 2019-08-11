@@ -19,11 +19,13 @@ import java.net.URLDecoder;
 public class JAngel {
 
     /* 默认值区域 */
-    // 字符编码
-    public static final String encode = "UTF-8";
-    // 系统默认的换行符
+    /** 字符编码 */
+    public static final String ENCODE = "UTF-8";
+
+    /** 系统默认的换行符 */
     public static String lineBreak = System.getProperty("line.separator");
-    // 制表符(缩进距离)
+
+    /** 制表符(缩进距离) */
     public static String tabBreak = StringUtil.blank(4);
 
     /**
@@ -60,8 +62,8 @@ public class JAngel {
         InputStreamReader isr = null;
         BufferedReader br = null;
         try {
-            fis = new FileInputStream(URLDecoder.decode(path, encode));
-            isr = new InputStreamReader(fis, encode);
+            fis = new FileInputStream(URLDecoder.decode(path, ENCODE));
+            isr = new InputStreamReader(fis, ENCODE);
             br = new BufferedReader(isr);
             String line = "";
             Parser parser = new Parser();
@@ -74,9 +76,15 @@ public class JAngel {
             return parser.getDocument();
         } catch (IOException e) {
             try {
-                if(fis != null) fis.close();
-                if(isr != null) isr.close();
-                if(br != null) br.close();
+                if(fis != null) {
+                    fis.close();
+                }
+                if(isr != null) {
+                    isr.close();
+                }
+                if(br != null) {
+                    br.close();
+                }
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

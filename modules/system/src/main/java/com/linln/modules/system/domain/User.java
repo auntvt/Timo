@@ -5,8 +5,7 @@ import com.linln.common.enums.StatusEnum;
 import com.linln.common.utils.StatusUtil;
 import com.linln.component.excel.annotation.Excel;
 import com.linln.component.excel.enums.ExcelType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,13 +22,14 @@ import java.util.Set;
  * @author 小懒虫
  * @date 2018/8/14
  */
+@Data
 @Entity
 @Table(name="sys_user")
-@Getter
-@Setter
+@ToString(exclude = {"dept", "roles"})
+@EqualsAndHashCode(exclude = {"dept", "roles"})
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "update sys_user" + StatusUtil.sliceDelete)
-@Where(clause = StatusUtil.notDelete)
+@SQLDelete(sql = "update sys_user" + StatusUtil.SLICE_DELETE)
+@Where(clause = StatusUtil.NOT_DELETE)
 @Excel("用户数据")
 public class User implements Serializable {
     @Id

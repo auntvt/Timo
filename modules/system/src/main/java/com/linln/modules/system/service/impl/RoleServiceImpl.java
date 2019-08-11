@@ -105,12 +105,6 @@ public class RoleServiceImpl implements RoleService {
     public Boolean updateStatus(StatusEnum statusEnum, List<Long> ids){
         // 删除角色时取消与角色和菜单的关联
         if(statusEnum == StatusEnum.DELETE){
-            /*List<Role> roles = roleRepository.findByIdIn(ids);
-            roles.forEach(role -> {
-                role.setMenus(null);
-                role.getUsers().forEach(user -> user.getRoles().remove(role));
-            });*/
-
             // 非规范的Jpa操作，直接采用SQL语句
             roleRepository.cancelUserJoin(ids);
             roleRepository.cancelMenuJoin(ids);

@@ -24,18 +24,18 @@ import java.util.List;
  */
 public class XmlParseUtil {
 
-    // 字符编码
-    private static final String encode = CodeUtil.encode;
-    // 业务模块名称
-    private static final String moduleName = "modules";
-    // 缩进字符单位
-    private static final int indentAmount = 4;
-    // 换行字符跟随系统
-    private static final String lineBreak = CodeUtil.lineBreak;
-    // 文档类型
-    private static String docType = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + lineBreak;
-    // modules模块pom文件路径
-    private static final String pomPath = String.format("%s/%s/pom.xml", ToolUtil.getProjectPath(), moduleName);
+    /** 字符编码 */
+    private static final String ENCODE = CodeUtil.ENCODE;
+    /** 业务模块名称 */
+    private static final String MODULE_NAME = "modules";
+    /** 缩进字符单位 */
+    private static final int INDENT_AMOUNT = 4;
+    /** 换行字符跟随系统 */
+    private static final String LINE_BREAK = CodeUtil.lineBreak;
+    /** 文档类型 */
+    private static String docType = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_BREAK;
+    /** modules模块pom文件路径 */
+    private static final String POM_PATH = String.format("%s/%s/pom.xml", ToolUtil.getProjectPath(), MODULE_NAME);
 
     /**
      * 获取Jsoup文档对象
@@ -43,7 +43,7 @@ public class XmlParseUtil {
      */
     public static Document document(String path) throws IOException {
         InputStream inputStream = new FileInputStream(path);
-        Document document = Jsoup.parse(inputStream, CodeUtil.encode, "", Parser.xmlParser());
+        Document document = Jsoup.parse(inputStream, CodeUtil.ENCODE, "", Parser.xmlParser());
         Document.OutputSettings outputSettings = document.outputSettings();
         outputSettings.prettyPrint(false);
         return document;
@@ -61,7 +61,7 @@ public class XmlParseUtil {
             if(i == 0){
                 html.append(" ");
             }else{
-                html.append(lineBreak).append(CodeUtil.blank(9));
+                html.append(LINE_BREAK).append(CodeUtil.blank(9));
             }
             html.append(pAttrs.get(i).getKey()).append("=\"").append(pAttrs.get(i).getValue()).append("\"");
         }
@@ -74,7 +74,7 @@ public class XmlParseUtil {
      */
     private static Element getPomModules(){
         try {
-            return document(pomPath).getElementsByTag("modules").get(0);
+            return document(POM_PATH).getElementsByTag("modules").get(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,11 +89,11 @@ public class XmlParseUtil {
         assert modules != null;
         Document document = modules.ownerDocument();
         StringBuilder indenx = new StringBuilder();
-        for (int i = 0; i < indentAmount; i++) {
+        for (int i = 0; i < INDENT_AMOUNT; i++) {
             indenx.append(" ");
         }
-        modules.append(indenx + "<module>"+moduleName+"</module>" + lineBreak + indenx);
-        FileUtil.saveWriter(new File(pomPath), html(document));
+        modules.append(indenx + "<module>"+moduleName+"</module>" + LINE_BREAK + indenx);
+        FileUtil.saveWriter(new File(POM_PATH), html(document));
     }
 
     /**
@@ -113,10 +113,10 @@ public class XmlParseUtil {
      */
     public static String getDependency(String moduleName){
         StringBuilder dependency = new StringBuilder();
-        dependency.append(CodeUtil.blank(4)).append("<dependency>").append(lineBreak);
-        dependency.append(CodeUtil.blank(12)).append("<groupId>com.linln.modules</groupId>").append(lineBreak);
-        dependency.append(CodeUtil.blank(12)).append("<artifactId>").append(moduleName).append("</artifactId>").append(lineBreak);
-        dependency.append(CodeUtil.blank(12)).append("<version>${project.version}</version>").append(lineBreak);
+        dependency.append(CodeUtil.blank(4)).append("<dependency>").append(LINE_BREAK);
+        dependency.append(CodeUtil.blank(12)).append("<groupId>com.linln.modules</groupId>").append(LINE_BREAK);
+        dependency.append(CodeUtil.blank(12)).append("<artifactId>").append(moduleName).append("</artifactId>").append(LINE_BREAK);
+        dependency.append(CodeUtil.blank(12)).append("<version>${project.version}</version>").append(LINE_BREAK);
         dependency.append(CodeUtil.blank(8)).append("</dependency>");
         return dependency.toString();
     }

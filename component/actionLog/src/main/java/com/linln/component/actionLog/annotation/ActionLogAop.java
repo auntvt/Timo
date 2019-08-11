@@ -1,7 +1,7 @@
 package com.linln.component.actionLog.annotation;
 
 import com.linln.common.utils.SpringContextUtil;
-import com.linln.component.actionLog.action.base.ActionMap;
+import com.linln.component.actionLog.action.base.BaseActionMap;
 import com.linln.component.actionLog.action.base.ResetLog;
 import com.linln.component.actionLog.action.model.ActionModel;
 import com.linln.component.actionLog.action.model.BusinessMethod;
@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
 @Component
 @Slf4j
 public class ActionLogAop {
-    private final static String defaultActionName = "default";
+    private final static String DEFAULT_ACTION_NAME = "default";
 
     @Pointcut("@annotation(com.linln.component.actionLog.annotation.ActionLog)")
     public void actionLog() {};
@@ -51,9 +51,9 @@ public class ActionLogAop {
         // 获取key值
         String key = anno.key();
         // 获取行为模型
-        Class<? extends ActionMap> action = anno.action();
-        ActionMap instance = action.newInstance();
-        Object actionModel = instance.get(!key.isEmpty() ? key : defaultActionName);
+        Class<? extends BaseActionMap> action = anno.action();
+        BaseActionMap instance = action.newInstance();
+        Object actionModel = instance.get(!key.isEmpty() ? key : DEFAULT_ACTION_NAME);
         Assert.notNull(actionModel, "无法获取日志的行为方法，请检查："+point.getSignature());
 
 
@@ -82,7 +82,9 @@ public class ActionLogAop {
             try {
                 Method method = action.getDeclaredMethod(((BusinessMethod)actionModel).getMethod(), ResetLog.class);
                 method.invoke(instance, resetLog);
-                if(!resetLog.getRecord()) return proceed;
+                if(!resetLog.getRecord()) {
+                    return proceed;
+                }
             } catch (NoSuchMethodException e) {
                 log.error("获取行为对象方法错误！请检查方法名称是否正确！", e);
                 e.printStackTrace();

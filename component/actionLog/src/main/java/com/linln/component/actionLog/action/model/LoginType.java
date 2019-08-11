@@ -9,7 +9,8 @@ import lombok.Getter;
  */
 @Getter
 public class LoginType extends BusinessType{
-    // 日志类型
+
+    /** 日志类型 */
     protected Byte type = ActionLogEnum.LOGIN.getCode();
 
     public LoginType(String message) {

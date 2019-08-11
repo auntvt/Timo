@@ -2,7 +2,7 @@ package com.linln.component.actionLog.action;
 
 import com.linln.common.utils.EntityBeanUtil;
 import com.linln.common.utils.HttpServletUtil;
-import com.linln.component.actionLog.action.base.ActionMap;
+import com.linln.component.actionLog.action.base.BaseActionMap;
 import com.linln.component.actionLog.action.base.ResetLog;
 import com.linln.modules.system.domain.ActionLog;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * @date 2018/10/14
  */
 @Slf4j
-public class SaveAction extends ActionMap {
+public class SaveAction extends BaseActionMap {
 
     @Override
     public void init() {

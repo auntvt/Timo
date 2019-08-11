@@ -25,7 +25,7 @@ import java.util.Date;
 @Entity
 @Table(name="sys_dict")
 @EntityListeners(AuditingEntityListener.class)
-@Where(clause = StatusUtil.notDelete)
+@Where(clause = StatusUtil.NOT_DELETE)
 public class Dict implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

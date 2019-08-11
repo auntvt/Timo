@@ -44,7 +44,7 @@ public class DeptController {
      */
     @GetMapping("/index")
     @RequiresPermissions("system:dept:index")
-    public String index(Model model, Dept dept) {
+    public String index(Model model) {
         String search = HttpServletUtil.getRequest().getQueryString();
         model.addAttribute("search", search);
         return "/system/dept/index";
@@ -130,20 +130,20 @@ public class DeptController {
                 Integer sortMax = deptService.getSortMax(dept.getPid());
                 dept.setSort(sortMax !=null ? sortMax - 1 : 0);
             }
+        }
 
-            // 添加全部上级序号
-            if (dept.getPid() != 0) {
-                Dept pDept = deptService.getById(dept.getPid());
-                dept.setPids(pDept.getPids() + ",[" + dept.getPid() + "]");
-            } else {
-                dept.setPids("[0]");
-            }
+        // 添加/更新全部上级序号
+        if (dept.getPid() != 0) {
+            Dept pDept = deptService.getById(dept.getPid());
+            dept.setPids(pDept.getPids() + ",[" + dept.getPid() + "]");
+        } else {
+            dept.setPids("[0]");
         }
 
         // 将验证的数据复制给实体类
         if (dept.getId() != null) {
             Dept beDept = deptService.getById(dept.getId());
-            EntityBeanUtil.copyProperties(beDept, dept, "dept", "pids");
+            EntityBeanUtil.copyProperties(beDept, dept, "dept");
         }
 
         // 排序功能

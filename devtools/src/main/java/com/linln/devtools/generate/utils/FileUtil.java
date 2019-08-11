@@ -34,7 +34,7 @@ public class FileUtil {
                 file.createNewFile();
             }
             fos = new FileOutputStream(file);
-            osw = new OutputStreamWriter(fos, CodeUtil.encode);
+            osw = new OutputStreamWriter(fos, CodeUtil.ENCODE);
             osw.write(content);
             osw.flush();
         } catch (IOException e) {

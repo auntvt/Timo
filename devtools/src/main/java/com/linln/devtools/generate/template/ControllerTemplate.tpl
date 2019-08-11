@@ -66,8 +66,8 @@ public class #{entity}Controller {
      * 保存添加/修改的数据
      * @param valid 验证对象
      */
-    @PostMapping({"/add","/edit"})
-    @RequiresPermissions({"#{permissions}:add","#{permissions}:edit"})
+    @PostMapping("/save")
+    @RequiresPermissions({"#{permissions}:add", "#{permissions}:edit"})
     @ResponseBody
     public ResultVo save(@Validated #{entity}Valid valid, #{entity} #{name}){
         // 复制保留无需修改的数据

@@ -131,16 +131,16 @@ public class MenuController {
                 Integer sortMax = menuService.getSortMax(menu.getPid());
                 menu.setSort(sortMax !=null ? sortMax - 1 : 0);
             }
-
-            // 添加全部上级序号
-            Menu pMenu = menuService.getById(menu.getPid());
-            menu.setPids(pMenu.getPids() + ",[" + menu.getPid() + "]");
         }
+
+        // 添加/更新全部上级序号
+        Menu pMenu = menuService.getById(menu.getPid());
+        menu.setPids(pMenu.getPids() + ",[" + menu.getPid() + "]");
 
         // 复制保留无需修改的数据
         if (menu.getId() != null) {
             Menu beMenu = menuService.getById(menu.getId());
-            EntityBeanUtil.copyProperties(beMenu, menu, "pids");
+            EntityBeanUtil.copyProperties(beMenu, menu);
         }
 
         // 排序功能

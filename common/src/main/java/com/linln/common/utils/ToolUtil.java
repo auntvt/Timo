@@ -36,20 +36,22 @@ public class ToolUtil {
      * 首字母转小写
      */
     public static String lowerFirst(String word){
-        if(Character.isLowerCase(word.charAt(0)))
+        if(Character.isLowerCase(word.charAt(0))) {
             return word;
-        else
+        } else {
             return String.valueOf(Character.toLowerCase(word.charAt(0))) + word.substring(1);
+        }
     }
 
     /**
      * 首字母转大写
      */
     public static String upperFirst(String word){
-        if(Character.isUpperCase(word.charAt(0)))
+        if(Character.isUpperCase(word.charAt(0))) {
             return word;
-        else
+        } else {
             return String.valueOf(Character.toUpperCase(word.charAt(0))) + word.substring(1);
+        }
     }
 
     /**

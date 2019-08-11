@@ -1,6 +1,6 @@
 package com.linln.component.actionLog.action;
 
-import com.linln.component.actionLog.action.base.ActionMap;
+import com.linln.component.actionLog.action.base.BaseActionMap;
 import com.linln.component.actionLog.action.base.ResetLog;
 import com.linln.component.actionLog.action.model.SystemMethod;
 import com.linln.modules.system.domain.ActionLog;
@@ -9,7 +9,7 @@ import com.linln.modules.system.domain.ActionLog;
  * @author 小懒虫
  * @date 2018/10/19
  */
-public class SystemAction extends ActionMap {
+public class SystemAction extends BaseActionMap {
 
     public static final String RUNTIME_EXCEPTION = "runtime_exception";
 
@@ -19,7 +19,9 @@ public class SystemAction extends ActionMap {
         putMethod(RUNTIME_EXCEPTION, new SystemMethod("系统异常","runtimeException"));
     }
 
-    // 系统异常行为方法
+    /**
+     * 系统异常行为方法
+     */
     public void runtimeException(ResetLog resetLog){
         RuntimeException runtime = (RuntimeException) resetLog.getParam("e");
         StringBuilder message = new StringBuilder();

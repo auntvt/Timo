@@ -9,8 +9,10 @@ import com.linln.devtools.generate.utils.jAngel.JAngel;
  */
 public class Document extends Node{
 
-    // 包路径（包名）
+    /** 包路径（包名） */
     private String packageName;
+
+    /** 类节点 */
     private ClassNode clazz;
 
     public Document() {
@@ -48,6 +50,7 @@ public class Document extends Node{
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public String content() {
         container.importClass(imports);
         StringBuilder packageBuilder = new StringBuilder("package ");
