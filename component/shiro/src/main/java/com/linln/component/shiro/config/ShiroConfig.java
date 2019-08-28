@@ -14,6 +14,7 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ import java.util.LinkedHashMap;
 public class ShiroConfig {
 
     @Bean
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, ShiroProjectProperties properties) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
@@ -56,6 +57,14 @@ public class ShiroConfig {
         filterMap.put("/images/**", "anon");
         filterMap.put("/lib/**", "anon");
         filterMap.put("/favicon.ico", "anon");
+        // 通过yml配置文件方式配置的[anon]忽略规则
+        String[] excludes = properties.getExcludes().split(",");
+        for (String exclude : excludes) {
+            if (!StringUtils.isEmpty(exclude.trim())) {
+                filterMap.put(exclude, "anon");
+            }
+        }
+        // 拦截根目录下所有路径，需要放行的路径必须在之前添加
         filterMap.put("/**", "userAuth");
 
         // 设置过滤规则
