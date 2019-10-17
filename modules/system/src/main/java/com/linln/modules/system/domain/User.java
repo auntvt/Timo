@@ -44,7 +44,7 @@ public class User implements Serializable {
     private String nickname;
     private String picture;
     @Excel(value = "性别", dict = "USER_SEX")
-    private String sex;
+    private Byte sex;
     @Excel("手机号码")
     private String phone;
     @Excel("电子邮箱")

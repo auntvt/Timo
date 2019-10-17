@@ -90,7 +90,7 @@ public class DictController {
         // 清除字典值两边空格
         dict.setValue(dict.getValue().trim());
 
-        // 判断角色标识是否重复
+        // 判断字典标识是否重复
         if (dictService.repeatByName(dict)) {
             throw new ResultException(ResultEnum.DICT_EXIST);
         }

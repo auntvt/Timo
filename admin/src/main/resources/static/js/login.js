@@ -11,10 +11,11 @@ layui.use(['element'], function () {
         var url = form.attr("action");
         var serializeArray = form.serializeArray();
         $.post(url, serializeArray, function (result) {
-            if(result.code != 200){
+            if(result.code !== 200){
                 $('.captcha-img').click();
             }
             $.fn.Messager(result);
         });
-    })
+    });
+    $('.layui-layer-loading').hide();
 });

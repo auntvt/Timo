@@ -41,7 +41,7 @@ public class ResultVoUtil {
      */
     public static ResultVo success(Object object){
         String message = ResultEnum.SUCCESS.getMessage();
-        return success(message,object);
+        return success(message, object);
     }
 
     /**
@@ -49,7 +49,7 @@ public class ResultVoUtil {
      */
     public static ResultVo success(String msg){
         Object object = null;
-        return success(msg,object);
+        return success(msg, object);
     }
 
     /**
@@ -77,7 +77,14 @@ public class ResultVoUtil {
      */
     public static ResultVo error(String msg){
         Integer code = ResultEnum.ERROR.getCode();
-        return error(code,msg);
+        return error(code, msg);
+    }
+
+    /**
+     * 操作有误，只返回默认错误状态码
+     */
+    public static ResultVo error(){
+        return error(null);
     }
 
 }

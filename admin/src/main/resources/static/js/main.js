@@ -1,7 +1,6 @@
-layui.use(['element', 'form', 'layer', 'upload'], function () {
+layui.use(['element', 'layer', 'upload'], function () {
     var $ = layui.jquery;
     var element = layui.element; //加载element模块
-    var form = layui.form; //加载form模块
     var layer = layui.layer; //加载layer模块
     var upload = layui.upload;  //加载upload模块
 
@@ -94,12 +93,16 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
 
     /* AJAX请求默认选项，处理连接超时问题 */
     $.ajaxSetup({
-        complete: function (xhr, status) {
-            if (xhr.status == 401) {
+        beforeSend: function () {
+            layer.load(0);
+        },
+        complete: function (xhr) {
+            layer.closeAll('loading');
+            if (xhr.status === 401) {
                 layer.confirm('session连接超时，是否重新登录？', {
                     btn: ['是', '否']
                 }, function () {
-                    if (window.parent.window != window) {
+                    if (window.parent.window !== window) {
                         window.top.location = window.location.pathname + '/login';
                     }
                 });
