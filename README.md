@@ -16,7 +16,7 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 
 #### 全新的项目结构
 
-![项目结构图](sdoc/images/TIMO结构图.png)
+![项目结构图](https://oscimg.oschina.net/oscnet/4e8e47b3801ba98767dc25a1a6efbb522fe.jpg)
 
 #### 功能列表
 
@@ -80,16 +80,16 @@ TIMO后台管理系统，基于SpringBoot2.0 + Spring Data Jpa + Thymeleaf + Shi
 
 #### 预览图
 
-![项目结构图](sdoc/images/项目结构图.jpg)
+![项目结构图](https://oscimg.oschina.net/oscnet/584b70844227ad813eb8f10bd452fad015c.jpg)
 
-![登录页面](sdoc/images/登录页面.jpg)
+![登录页面](https://oscimg.oschina.net/oscnet/55b1a88090da20735b67ec91a9bcbafc48a.jpg)
 
-![用户管理](sdoc/images/用户管理.jpg)
+![用户管理](https://oscimg.oschina.net/oscnet/91d2f63ac18b34773ddb7f20b25d0c9c539.jpg)
 
-![菜单管理](sdoc/images/菜单管理.jpg)
+![菜单管理](https://oscimg.oschina.net/oscnet/ac6c1a0521acb2c22c76130057bd97dfd3f.jpg)
 
-![字典管理](sdoc/images/字典管理.jpg)
+![字典管理](https://oscimg.oschina.net/oscnet/ce428dc1a62c6d591ac6bb5ed10e32caf39.jpg)
 
-![行为日志](sdoc/images/行为日志.jpg)
+![行为日志](https://oscimg.oschina.net/oscnet/8b41f93fad654f81349d9572c1630f6fe1f.jpg)
 
-![代码生成](sdoc/images/代码生成.jpg)
+![代码生成](https://oscimg.oschina.net/oscnet/f355fa74868080440299fa4453e9b7ea399.jpg)

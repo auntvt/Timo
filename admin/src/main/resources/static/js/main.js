@@ -202,23 +202,24 @@ layui.use(['element', 'layer', 'upload'], function () {
             param = param.substr(0, param.length - 1);
             url += "?" + param;
         }
-        var size = $(this).attr("data-size");
-        if (size === undefined || size === "auto") {
-            size = ['50%', '80%'];
-        }else if (size === "max") {
-            size = ['100%', '100%'];
+        var size = $(this).attr("data-size"), layerArea;
+        if (size === undefined || size === "auto" || size === "max") {
+            layerArea = ['50%', '80%'];
         }else if (size.indexOf(',') !== -1) {
             var split = size.split(",");
-            size = [split[0] + 'px', split[1] + 'px'];
+            layerArea = [split[0] + 'px', split[1] + 'px'];
         }
         window.layerIndex = layer.open({
             type: 2,
             title: title,
             shadeClose: true,
             maxmin: true,
-            area: size,
+            area: layerArea,
             content: [url, 'on']
         });
+        if (size === "max") {
+            layer.full(layerIndex);
+        }
     });
 
     /* 关闭弹出层 */
