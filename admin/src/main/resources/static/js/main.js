@@ -1,4 +1,4 @@
-layui.use(['element', 'layer', 'upload'], function () {
+layui.use(['element', 'form', 'layer', 'upload'], function () {
     var $ = layui.jquery;
     var element = layui.element; //加载element模块
     var layer = layui.layer; //加载layer模块
