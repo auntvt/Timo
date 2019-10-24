@@ -2,11 +2,9 @@ package com.linln.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linln.common.utils.HttpServletUtil;
-import com.linln.common.utils.StatusUtil;
 import lombok.Data;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

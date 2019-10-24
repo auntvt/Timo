@@ -5,7 +5,9 @@ import com.linln.common.enums.StatusEnum;
 import com.linln.common.utils.StatusUtil;
 import com.linln.component.excel.annotation.Excel;
 import com.linln.component.excel.enums.ExcelType;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,7 +26,7 @@ import java.util.Set;
  */
 @Data
 @Entity
-@Table(name="sys_user")
+@Table(name = "sys_user")
 @ToString(exclude = {"dept", "roles"})
 @EqualsAndHashCode(exclude = {"dept", "roles"})
 @EntityListeners(AuditingEntityListener.class)
@@ -33,12 +35,14 @@ import java.util.Set;
 @Excel("用户数据")
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Excel(value = "用户ID", type = ExcelType.EXPORT)
     private Long id;
     @Excel("用户名")
     private String username;
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     private String salt;
     @Excel("昵称")
     private String nickname;
@@ -60,14 +64,14 @@ public class User implements Serializable {
     @Excel(value = "状态", dict = "DATA_STATUS")
     private Byte status = StatusEnum.OK.getCode();
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="dept_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dept_id")
     @JsonIgnore
     private Dept dept;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "sys_user_role",
-            joinColumns = @JoinColumn(name="user_id"),
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @JsonIgnore
     private Set<Role> roles = new HashSet<>(0);

@@ -87,7 +87,7 @@
 .layui-layout-login .layui-form-item .forget-password{
     color: #009688;
 }
-.layui-layout-login .layui-layer-loading {
+.layui-layout-login .login-page-loading {
     position: absolute;
     top: 0;
     left: 0;
