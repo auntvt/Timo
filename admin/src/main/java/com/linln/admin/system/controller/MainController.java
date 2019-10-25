@@ -125,7 +125,6 @@ public class MainController{
             User subject = ShiroUtil.getSubject();
             subject.setPicture(((Upload) imageResult.getData()).getPath());
             userService.save(subject);
-            ShiroUtil.resetCookieRememberMe();
             return ResultVoUtil.SAVE_SUCCESS;
         }else {
             return imageResult;
@@ -142,13 +141,11 @@ public class MainController{
 
         // 复制保留无需修改的数据
         User subUser = ShiroUtil.getSubject();
-        String[] fields = {"id", "username", "password", "salt", "picture", "dept", "roles"};
-        EntityBeanUtil.copyProperties(subUser, user, fields);
+        String[] ignores = {"id", "username", "password", "salt", "picture", "dept", "roles"};
+        EntityBeanUtil.copyPropertiesIgnores(user, subUser, ignores);
 
         // 保存数据
-        userService.save(user);
-        BeanUtils.copyProperties(user, subUser);
-        ShiroUtil.resetCookieRememberMe();
+        userService.save(subUser);
         return ResultVoUtil.success("保存成功", new URL("/userInfo"));
     }
 
@@ -193,7 +190,6 @@ public class MainController{
 
         // 保存数据
         userService.save(subUser);
-        ShiroUtil.resetCookieRememberMe();
         return ResultVoUtil.success("修改成功");
     }
 }

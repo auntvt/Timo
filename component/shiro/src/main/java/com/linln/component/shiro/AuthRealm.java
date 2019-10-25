@@ -2,8 +2,9 @@ package com.linln.component.shiro;
 
 import com.linln.common.constant.AdminConst;
 import com.linln.common.enums.StatusEnum;
+import com.linln.common.utils.EntityBeanUtil;
+import com.linln.modules.system.domain.Role;
 import com.linln.modules.system.domain.User;
-import com.linln.modules.system.service.RoleService;
 import com.linln.modules.system.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
@@ -17,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
-
+import java.util.Set;
 
 /**
  * @author 小懒虫
@@ -27,9 +28,6 @@ public class AuthRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
 
     /**
      * 授权逻辑
@@ -41,25 +39,25 @@ public class AuthRealm extends AuthorizingRealm {
         User user = (User) principal.getPrimaryPrincipal();
 
         // 管理员拥有所有权限
-        if(user.getId().equals(AdminConst.ADMIN_ID)){
+        if (user.getId().equals(AdminConst.ADMIN_ID)) {
             info.addRole(AdminConst.ADMIN_ROLE_NAME);
             info.addStringPermission("*:*:*");
             return info;
         }
 
-        // 获取角色和资源（JPA延迟加载超时，通过用户ID获取角色列表）
-        user.setRoles(roleService.getUserOkRoleList(user.getId()));
         // 赋予角色和资源授权
-        user.getRoles().forEach(role -> {
+        Set<Role> roles = ShiroUtil.getSubjectRoles();
+        roles.forEach(role -> {
             info.addRole(role.getName());
             role.getMenus().forEach(menu -> {
                 String perms = menu.getPerms();
-                if(menu.getStatus().equals(StatusEnum.OK.getCode())
-                        && !StringUtils.isEmpty(perms) && !perms.contains("*")){
+                if (menu.getStatus().equals(StatusEnum.OK.getCode())
+                        && !StringUtils.isEmpty(perms) && !perms.contains("*")) {
                     info.addStringPermission(perms);
                 }
             });
         });
+
         return info;
     }
 
@@ -71,14 +69,20 @@ public class AuthRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 获取数据库中的用户名密码
         User user = userService.getByName(token.getUsername());
+
         // 判断用户名是否存在
-        if(user == null){
+        if (user == null) {
             throw new UnknownAccountException();
-        }else if(user.getStatus().equals(StatusEnum.FREEZED.getCode())){
+        } else if (user.getStatus().equals(StatusEnum.FREEZED.getCode())) {
             throw new LockedAccountException();
         }
+
         // 对盐进行加密处理
         ByteSource salt = ByteSource.Util.bytes(user.getSalt());
+
+        // 克隆一个用户对象，隐藏用户密码及密码盐（目的不让密码在“记住我”状态下实例化到浏览器cookie中）
+        String[] ignores = {"password", "salt"};
+        Object principal = EntityBeanUtil.cloneBean(user, ignores);
 
         /* 传入密码自动判断是否正确
          * 参数1：传入对象给Principal
@@ -86,7 +90,7 @@ public class AuthRealm extends AuthorizingRealm {
          * 参数3：加盐处理
          * 参数4：固定写法
          */
-        return new SimpleAuthenticationInfo(user, user.getPassword(), salt, getName());
+        return new SimpleAuthenticationInfo(principal, user.getPassword(), salt, getName());
     }
 
     /**
