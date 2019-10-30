@@ -32,7 +32,7 @@ public class ShiroUtil {
     public final static int HASH_ITERATIONS = EncryptUtil.HASH_ITERATIONS;
 
     /**
-     * 加密处理
+     * 加密处理（64位字符）
      * 备注：采用自定义的密码加密方式，其原理与SimpleHash一致，
      * 为的是在多个模块间可以使用同一套加密方式，方便共用系统用户。
      *

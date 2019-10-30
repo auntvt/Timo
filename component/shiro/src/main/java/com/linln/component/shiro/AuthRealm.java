@@ -2,7 +2,6 @@ package com.linln.component.shiro;
 
 import com.linln.common.constant.AdminConst;
 import com.linln.common.enums.StatusEnum;
-import com.linln.common.utils.EntityBeanUtil;
 import com.linln.modules.system.domain.Role;
 import com.linln.modules.system.domain.User;
 import com.linln.modules.system.service.UserService;
@@ -80,17 +79,13 @@ public class AuthRealm extends AuthorizingRealm {
         // 对盐进行加密处理
         ByteSource salt = ByteSource.Util.bytes(user.getSalt());
 
-        // 克隆一个用户对象，隐藏用户密码及密码盐（目的不让密码在“记住我”状态下实例化到浏览器cookie中）
-        String[] ignores = {"password", "salt"};
-        Object principal = EntityBeanUtil.cloneBean(user, ignores);
-
         /* 传入密码自动判断是否正确
          * 参数1：传入对象给Principal
          * 参数2：正确的用户密码
          * 参数3：加盐处理
          * 参数4：固定写法
          */
-        return new SimpleAuthenticationInfo(principal, user.getPassword(), salt, getName());
+        return new SimpleAuthenticationInfo(user, user.getPassword(), salt, getName());
     }
 
     /**
