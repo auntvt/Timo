@@ -65,8 +65,8 @@ public class ShiroUtil {
                 UserService userService = SpringContextUtil.getBean(UserService.class);
                 User reload = userService.getById(user.getId());
                 Hibernate.initialize(reload.getDept());
-                // 将重载用户数据拷贝到登录用户中，忽略掉密码和密码盐
-                BeanUtils.copyProperties(reload, user, "password", "salt", "roles");
+                // 将重载用户数据拷贝到登录用户中
+                BeanUtils.copyProperties(reload, user, "roles");
             }
         }
 
