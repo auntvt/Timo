@@ -12,6 +12,7 @@ import com.linln.common.utils.SpringContextUtil;
 import com.linln.common.vo.ResultVo;
 import com.linln.component.shiro.ShiroUtil;
 import com.linln.modules.system.domain.Menu;
+import com.linln.modules.system.domain.Role;
 import com.linln.modules.system.domain.Upload;
 import com.linln.modules.system.domain.User;
 import com.linln.modules.system.enums.MenuTypeEnum;
@@ -32,6 +33,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 /**
  * @author 小懒虫
  * @date 2018/8/14
@@ -63,7 +66,8 @@ public class MainController{
             menus.forEach(menu -> keyMenu.put(menu.getId(), menu));
         }else{
             // 其他用户需从相应的角色中获取菜单资源
-            user.getRoles().forEach(role -> {
+            Set<Role> roles = ShiroUtil.getSubjectRoles();
+            roles.forEach(role -> {
                 role.getMenus().forEach(menu -> {
                     if(menu.getStatus().equals(StatusEnum.OK.getCode())){
                         keyMenu.put(menu.getId(), menu);

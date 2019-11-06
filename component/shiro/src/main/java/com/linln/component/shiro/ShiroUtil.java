@@ -76,7 +76,7 @@ public class ShiroUtil {
     /**
      * 获取当前用户角色列表
      */
-    static Set<Role> getSubjectRoles() {
+    public static Set<Role> getSubjectRoles() {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
 
         // 如果用户为空，则返回空列表
