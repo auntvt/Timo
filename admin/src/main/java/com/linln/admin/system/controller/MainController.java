@@ -75,11 +75,11 @@ public class MainController{
         // 封装菜单树形数据
         Map<Long, Menu> treeMenu = new HashMap<>(16);
         keyMenu.forEach((id, menu) -> {
-            if(!menu.getType().equals(MenuTypeEnum.NOT_MENU.getCode())){
+            if(!menu.getType().equals(MenuTypeEnum.BUTTON.getCode())){
                 if(keyMenu.get(menu.getPid()) != null){
                     keyMenu.get(menu.getPid()).getChildren().put(Long.valueOf(menu.getSort()), menu);
                 }else{
-                    if(menu.getType().equals(MenuTypeEnum.TOP_LEVEL.getCode())){
+                    if(menu.getType().equals(MenuTypeEnum.DIRECTORY.getCode())){
                         treeMenu.put(Long.valueOf(menu.getSort()), menu);
                     }
                 }
