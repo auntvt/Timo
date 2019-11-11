@@ -1,6 +1,7 @@
 package com.linln.component.shiro;
 
 import com.linln.common.utils.EncryptUtil;
+import com.linln.common.utils.HttpServletUtil;
 import com.linln.common.utils.SpringContextUtil;
 import com.linln.modules.system.domain.Role;
 import com.linln.modules.system.domain.User;
@@ -11,6 +12,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.LazyInitializationException;
 import org.springframework.beans.BeanUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 /**
@@ -102,6 +104,24 @@ public class ShiroUtil {
      * 获取用户IP地址
      */
     public static String getIp() {
-        return SecurityUtils.getSubject().getSession().getHost();
+        HttpServletRequest request = HttpServletUtil.getRequest();
+        // 反向代理时获取真实ip
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Forwarded-For");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Real-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return ip;
     }
 }
