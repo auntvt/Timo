@@ -23,8 +23,11 @@ public class UploadProjectProperties {
 
     /** 获取文件路径 */
     public String getFilePath() {
-        if(filePath == null){
+        if (filePath == null) {
             return ToolUtil.getProjectPath() + "/upload/";
+        }
+        if (!filePath.endsWith("/")) {
+            return filePath + "/";
         }
         return filePath;
     }

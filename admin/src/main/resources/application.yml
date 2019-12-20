@@ -14,14 +14,14 @@ project:
 
 ### spring配置
 spring:
-## 数据库配置
+  ## 数据库配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/timo?useSSL=false&characterEncoding=utf-8
     username: root
     password: root
 
-## jpa配置
+  ## jpa配置
   jpa:
     show-sql: true
     hibernate:
@@ -40,8 +40,12 @@ spring:
     servlet.content-type: text/html
     cache: false
 
-## 文件上传配置
+  ## 文件上传配置
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+  ## json配置
+  jackson:
+    time-zone: Asia/Shanghai
