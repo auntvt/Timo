@@ -192,7 +192,7 @@ public class RoleController {
     @RequiresPermissions("system:role:detail")
     public String toUserList(@PathVariable("id") Role role, Model model){
         model.addAttribute("list", role.getUsers());
-        return "/system/role/user_list";
+        return "/system/role/userList";
     }
 
     /**

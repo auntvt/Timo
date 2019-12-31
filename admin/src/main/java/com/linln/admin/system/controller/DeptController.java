@@ -69,7 +69,7 @@ public class DeptController {
     }
 
     /**
-     * 获取排序菜单列表
+     * 获取排序部门列表
      */
     @GetMapping("/sortList/{pid}/{notId}")
     @RequiresPermissions({"system:dept:add", "system:dept:edit"})
@@ -77,7 +77,7 @@ public class DeptController {
     public Map<Integer, String> sortList(
             @PathVariable(value = "pid", required = false) Long pid,
             @PathVariable(value = "notId", required = false) Long notId){
-        // 本级排序菜单列表
+        // 本级排序部门列表
         notId = notId != null ? notId : (long) 0;
         List<Dept> levelDept = deptService.getListByPid(pid, notId);
         Map<Integer, String> sortMap = new TreeMap<>();

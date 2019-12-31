@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:mo="https://gitee.com/aun/Timo">
+      xmlns:mo="https://gitee.com/aun/Timo"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
     <style>
         .dict-value {
@@ -23,19 +24,22 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">状态</label>
                     <div class="layui-input-block timo-search-status">
-                        <select class="timo-search-select" name="status" mo:dict="SEARCH_STATUS" mo-selected="${param.status}"></select>
+                        <select class="timo-search-select" name="status" mo:dict="SEARCH_STATUS"
+                                mo-selected="${param.status}"></select>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">字典标识</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" th:value="${param.name}" placeholder="请输入字典标识" autocomplete="off" class="layui-input">
+                        <input type="text" name="name" th:value="${param.name}" placeholder="请输入字典标识" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">字典标题</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" th:value="${param.title}" placeholder="请输入字典标题" autocomplete="off" class="layui-input">
+                        <input type="text" name="title" th:value="${param.title}" placeholder="请输入字典标题"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -45,10 +49,11 @@
                 </div>
             </div>
             <div class="pull-right screen-btn-group">
-                <button class="layui-btn open-popup" data-title="添加字典" th:attr="data-url=@{/system/dict/add}" data-size="615,558">
+                <button class="layui-btn open-popup" data-title="添加字典" th:attr="data-url=@{/system/dict/add}"
+                        shiro:hasPermission="system:dict:add" data-size="615,558">
                     <i class="fa fa-plus"></i> 添加
                 </button>
-                <div class="btn-group">
+                <div class="btn-group" shiro:hasPermission="system:dict:status">
                     <button class="layui-btn">操作<span class="caret"></span></button>
                     <dl class="layui-nav-child layui-anim layui-anim-upbit">
                         <dd><a class="ajax-status" th:href="@{/system/dict/status/ok}">启用</a></dd>
@@ -86,9 +91,14 @@
                     <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
                     <td th:text="${#dates.format(item.updateDate, 'yyyy-MM-dd HH:mm:ss')}">更新时间</td>
                     <td>
-                        <a class="open-popup" data-title="编辑字典" th:attr="data-url=@{'/system/dict/edit/'+${item.id}}" data-size="615,558" href="#">编辑</a>
-                        <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/system/dict/detail/'+${item.id}}" data-size="800,600" href="#">详细</a>
-                        <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/system/dict/status/delete(ids=${item.id})}">删除</a>
+                        <a class="open-popup" data-title="编辑字典" th:attr="data-url=@{'/system/dict/edit/'+${item.id}}"
+                           shiro:hasPermission="system:dict:edit"
+                           data-size="615,558" href="#">编辑</a>
+                        <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/system/dict/detail/'+${item.id}}"
+                           shiro:hasPermission="system:dict:detail"
+                           data-size="800,600" href="#">详细</a>
+                        <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/system/dict/status/delete(ids=${item.id})}"
+                           shiro:hasPermission="system:dict:status">删除</a>
                     </td>
                 </tr>
                 </tbody>
@@ -104,10 +114,10 @@
         var dv = $(".dict-value");
         $(window).on("resize", function () {
             var width = $("body").width();
-            if(width > 1200){
-                dv.css("max-width",  width * 0.32);
-            }else{
-                dv.css("max-width",  width * 0.20);
+            if (width > 1200) {
+                dv.css("max-width", width * 0.32);
+            } else {
+                dv.css("max-width", width * 0.20);
             }
         }).resize();
     });

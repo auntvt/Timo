@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:mo="https://gitee.com/aun/Timo">
+      xmlns:mo="https://gitee.com/aun/Timo"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
     <link rel="stylesheet" th:href="@{/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
 </head>
@@ -25,13 +26,15 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">状态</label>
                         <div class="layui-input-block timo-search-status">
-                            <select class="timo-search-select" name="status" mo:dict="SEARCH_STATUS" mo-selected="${param.status}"></select>
+                            <select class="timo-search-select" name="status" mo:dict="SEARCH_STATUS"
+                                    mo-selected="${param.status}"></select>
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">名称</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" th:value="${param.title}" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
+                            <input type="text" name="title" th:value="${param.title}" placeholder="请输入部门名称"
+                                   autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -41,9 +44,12 @@
                     </div>
                 </div>
                 <div class="pull-right screen-btn-group">
-                    <button class="layui-btn open-popup popup-add" data-title="添加部门" th:attr="data-url=@{/system/dept/add}"  data-size="500,410">
-                        <i class="fa fa-plus"></i> 添加</button>
-                    <div class="btn-group">
+                    <button class="layui-btn open-popup popup-add" data-title="添加部门"
+                            th:attr="data-url=@{/system/dept/add}" shiro:hasPermission="system:dept:add"
+                            data-size="500,410">
+                        <i class="fa fa-plus"></i> 添加
+                    </button>
+                    <div class="btn-group" shiro:hasPermission="system:dept:status">
                         <button class="layui-btn">操作<span class="caret"></span></button>
                         <dl class="layui-nav-child layui-anim layui-anim-upbit">
                             <dd><a class="ajax-status" th:href="@{/system/dept/status/ok}">启用</a></dd>
@@ -62,7 +68,7 @@
                                 <i class="layui-icon layui-icon-ok"></i></label>
                         </th>
                         <th>名称</th>
-                        <th>序号	</th>
+                        <th>序号</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
@@ -75,9 +81,15 @@
                         <td>{{sort}}</td>
                         <td>正常</td>
                         <td>
-                            <a class="open-popup popup-edit" data-title="编辑部门" th:attr="data-url=@{'/system/dept/edit/{{id}}'}"  data-size="500,410" href="#">编辑</a>
-                            <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/system/dept/detail/{{id}}'}"  data-size="800,600" href="#">详细</a>
-                            <a class="ajax-get popup-delete" th:attr="data-msg='您是否确定删除'" th:href="@{'/system/dept/status/delete?ids={{id}}'}">删除</a>
+                            <a class="open-popup popup-edit" data-title="编辑部门"
+                               th:attr="data-url=@{'/system/dept/edit/{{id}}'}" shiro:hasPermission="system:dept:edit"
+                               data-size="500,410" href="#">编辑</a>
+                            <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/system/dept/detail/{{id}}'}"
+                               shiro:hasPermission="system:dept:detail"
+                               data-size="800,600" href="#">详细</a>
+                            <a class="ajax-get popup-delete" th:attr="data-msg='您是否确定删除'"
+                               th:href="@{'/system/dept/status/delete?ids={{id}}'}"
+                               shiro:hasPermission="system:dept:status">删除</a>
                         </td>
                     </tr>
                     </tbody>

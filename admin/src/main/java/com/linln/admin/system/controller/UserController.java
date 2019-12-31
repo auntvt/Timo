@@ -274,6 +274,7 @@ public class UserController {
      * 导出用户数据
      */
     @GetMapping("/export")
+    @RequiresPermissions("system:user:export")
     @ResponseBody
     public void exportExcel() {
         UserRepository userRepository = SpringContextUtil.getBean(UserRepository.class);
