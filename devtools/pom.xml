@@ -29,18 +29,6 @@
             <artifactId>shiro</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <!--swagger2接口文档-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
-        </dependency>
     </dependencies>
 
     <!-- 修复部分idea版本无法发布tpl文件到target目录下的问题 -->

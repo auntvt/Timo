@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2019/4/12
  */
 @Configuration
-@ConditionalOnProperty(name = "project.jwt.pattern-path", havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(name = "project.jwt.pattern-path", havingValue = "true")
 public class JwtInterceptorConfig implements WebMvcConfigurer {
 
     @Autowired

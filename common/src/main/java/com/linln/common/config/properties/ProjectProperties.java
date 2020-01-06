@@ -18,6 +18,9 @@ public class ProjectProperties {
     /** 是否开启验证码 */
     private boolean captchaOpen = false;
 
+    /** 是否开启Swagger数据接口文档 */
+    private boolean swaggerEnabled = true;
+
     /** xss防护设置 */
     private ProjectProperties.Xxs xxs = new ProjectProperties.Xxs();
 

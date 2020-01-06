@@ -9,7 +9,7 @@ project:
     remember-me-timeout: 7                    #cookie记住登录信息时间，默认7天（天）
     global-session-timeout: 1800              #Session会话超时时间，默认30分钟（秒）
   upload:
-    #file-path:                               #文件上传路径，默认在项目根目录upload下
+    #file-path: F:/upload/                    #文件上传路径，默认在项目根目录upload下
     static-path: /upload/**                   #上传文件静态访问路径
 
 ### spring配置
@@ -27,7 +27,7 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
-      hibernate.dialect: com.linln.common.mysql.MySQLDialectUTF8
+      hibernate.dialect: com.linln.common.dialect.MySQLDialectUTF8
       hibernate.format_sql: false
     open-in-view: true
 

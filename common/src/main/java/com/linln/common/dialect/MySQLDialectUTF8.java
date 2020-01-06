@@ -1,4 +1,4 @@
-package com.linln.common.mysql;
+package com.linln.common.dialect;
 
 import org.hibernate.dialect.MySQL5Dialect;
 

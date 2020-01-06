@@ -11,6 +11,9 @@ import com.linln.component.jwt.enums.JwtResultEnums;
 import com.linln.component.jwt.utlis.JwtUtil;
 import com.linln.modules.system.domain.User;
 import com.linln.modules.system.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 默认登录验证控制器
  * 说明：默认采用系统用户进行登录验证
+ *
  * @author 小懒虫
  * @date 2019/4/9
  */
 @RestController
+@Api(tags = "登录接口")
 public class AuthController {
 
     @Autowired
@@ -32,12 +37,15 @@ public class AuthController {
 
     @IgnorePermissions
     @PostMapping("/api/auth")
-    public ResultVo auth(String username, String password){
+    @ApiOperation(value = "jwt登录")
+    public ResultVo auth(
+            @ApiParam(value = "用户名", required = true) String username,
+            @ApiParam(value = "密码", required = true) String password) {
         // 根据用户名获取系统用户数据
         User user = userService.getByName(username);
         if (user == null) {
             throw new ResultException(JwtResultEnums.AUTH_REQUEST_ERROR);
-        } else if (user.getStatus().equals(StatusEnum.FREEZED.getCode())){
+        } else if (user.getStatus().equals(StatusEnum.FREEZED.getCode())) {
             throw new ResultException(JwtResultEnums.AUTH_REQUEST_LOCKED);
         } else {
             // 对明文密码加密处理

@@ -14,7 +14,7 @@ public enum StatusEnum {
     /**
      * 正常的数据
      */
-    OK(StatusConst.OK, "启用"),
+    OK(StatusConst.OK, "正常"),
     /**
      * 被冻结的数据，不可用
      */

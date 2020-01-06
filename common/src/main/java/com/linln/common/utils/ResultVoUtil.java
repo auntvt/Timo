@@ -2,10 +2,10 @@ package com.linln.common.utils;
 
 import com.linln.common.enums.ResultEnum;
 import com.linln.common.vo.ResultVo;
-import com.linln.common.data.URL;
 
 /**
  * 响应数据(结果)最外层对象工具
+ *
  * @author 小懒虫
  * @date 2018/10/15
  */
@@ -15,11 +15,12 @@ public class ResultVoUtil {
 
     /**
      * 操作成功
-     * @param msg 提示信息
+     *
+     * @param msg    提示信息
      * @param object 对象
      */
-    public static ResultVo success(String msg, Object object){
-        ResultVo<Object> resultVo = new ResultVo<>();
+    public static <T> ResultVo<T> success(String msg, T object) {
+        ResultVo<T> resultVo = new ResultVo<>();
         resultVo.setMsg(msg);
         resultVo.setCode(ResultEnum.SUCCESS.getCode());
         resultVo.setData(object);
@@ -27,19 +28,11 @@ public class ResultVoUtil {
     }
 
     /**
-     * 操作成功，返回url地址
-     * @param msg 提示信息
-     * @param url URL包装对象
-     */
-    public static ResultVo success(String msg, URL url){
-        return success(msg, url.getUrl());
-    }
-
-    /**
      * 操作成功，使用默认的提示信息
+     *
      * @param object 对象
      */
-    public static ResultVo success(Object object){
+    public static <T> ResultVo<T> success(T object) {
         String message = ResultEnum.SUCCESS.getMessage();
         return success(message, object);
     }
@@ -47,24 +40,24 @@ public class ResultVoUtil {
     /**
      * 操作成功，返回提示信息，不返回数据
      */
-    public static ResultVo success(String msg){
-        Object object = null;
-        return success(msg, object);
+    public static <T> ResultVo<T> success(String msg) {
+        return success(msg, null);
     }
 
     /**
      * 操作成功，不返回数据
      */
-    public static ResultVo success(){
+    public static ResultVo success() {
         return success(null);
     }
 
     /**
      * 操作有误
+     *
      * @param code 错误码
-     * @param msg 提示信息
+     * @param msg  提示信息
      */
-    public static ResultVo error(Integer code, String msg){
+    public static ResultVo error(Integer code, String msg) {
         ResultVo resultVo = new ResultVo();
         resultVo.setMsg(msg);
         resultVo.setCode(code);
@@ -73,9 +66,10 @@ public class ResultVoUtil {
 
     /**
      * 操作有误，使用默认400错误码
+     *
      * @param msg 提示信息
      */
-    public static ResultVo error(String msg){
+    public static ResultVo error(String msg) {
         Integer code = ResultEnum.ERROR.getCode();
         return error(code, msg);
     }
@@ -83,7 +77,7 @@ public class ResultVoUtil {
     /**
      * 操作有误，只返回默认错误状态码
      */
-    public static ResultVo error(){
+    public static ResultVo error() {
         return error(null);
     }
 

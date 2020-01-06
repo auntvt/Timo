@@ -42,6 +42,10 @@
         <poi.version>4.0.0</poi.version>
         <!--jwt处理框架版本：component.jwt-->
         <jwt.version>3.4.0</jwt.version>
+        <!--swagger2接口文档版本：component.jwt-->
+        <swagger.version>2.9.2</swagger.version>
+        <!--swagger-knife4j接口文档页面：component.jwt-->
+        <swagger.knife4j.version>2.0.1</swagger.knife4j.version>
         <google.findbugs.version>3.0.1</google.findbugs.version>
         <skipTests>true</skipTests>
     </properties>
@@ -100,11 +104,29 @@
             <version>${ehcache.version}</version>
         </dependency>
 
-        <!--html解析工具，处理xss工具-->
+        <!--html解析工具，处理xss攻击-->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
+        </dependency>
+
+        <!--swagger2接口文档-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <!--knife4j（swagger-bootstrap-ui）接口文档页面-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-ui</artifactId>
+            <version>${swagger.knife4j.version}</version>
         </dependency>
 
         <!--解决编译时javax.annotation.meta.When不存在问题-->

@@ -80,10 +80,12 @@ public class ShiroConfig {
 
     @Bean
     public DefaultWebSecurityManager getDefaultWebSecurityManager(AuthRealm authRealm,
+                                                                  EhCacheManager cacheManager,
                                                                   DefaultWebSessionManager sessionManager,
                                                                   CookieRememberMeManager rememberMeManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(authRealm);
+        securityManager.setCacheManager(cacheManager);
         securityManager.setSessionManager(sessionManager);
         securityManager.setRememberMeManager(rememberMeManager);
         return securityManager;

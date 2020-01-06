@@ -119,10 +119,10 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
                     parent.location.reload();
                     return;
                 }
-                if (result.data == null) {
-                    window.location.reload();
+                if (result.data != null && result.data.url != null) {
+                    window.location.href = result.data.url;
                 } else {
-                    window.location.href = result.data
+                    window.location.reload();
                 }
             }, 2000);
         } else {

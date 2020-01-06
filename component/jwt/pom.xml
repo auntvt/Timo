@@ -26,6 +26,7 @@
             <artifactId>system</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <!-- jwt处理框架-->
         <dependency>
             <groupId>com.auth0</groupId>

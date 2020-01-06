@@ -85,7 +85,10 @@ public class GenerateController {
             GenerateUtil.genMavenModule(generate);
         }
         // 自动生成菜单和角色权限
-        genMenuRule(generate);
+        if(generate.getTemplate().isController()){
+            genMenuRule(generate);
+        }
+
         return ResultVoUtil.success(fieldMap);
     }
 
