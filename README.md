@@ -1,9 +1,6 @@
 # Timo v2.0.3
 
-[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
-[![加入QQ群](https://img.shields.io/badge/QQ%E7%BE%A4-941209502-brightgreen.svg)](https://jq.qq.com/?_wv=1027&k=5RCnDCO)
-[![star](https://gitee.com/aun/Timo/badge/star.svg?theme=dark)](https://gitee.com/aun/Timo/stargazers)
-[![fork](https://gitee.com/aun/Timo/badge/fork.svg?theme=dark)](https://gitee.com/aun/Timo/members)
+[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE) [![加入QQ群①](https://img.shields.io/badge/QQ%E7%BE%A4%E2%91%A0-941209502(%E5%B7%B2%E6%BB%A1)-red)](https://jq.qq.com/?_wv=1027&k=5RCnDCO) [![加入QQ群②](https://img.shields.io/badge/QQ%E7%BE%A4②-545633945-brightgreen.svg)](https://jq.qq.com/?_wv=1027&k=5AIEf1E) [![star](https://gitee.com/aun/Timo/badge/star.svg?theme=dark)](https://gitee.com/aun/Timo/stargazers) [![fork](https://gitee.com/aun/Timo/badge/fork.svg?theme=dark)](https://gitee.com/aun/Timo/members)
 
 #### 项目介绍
 
