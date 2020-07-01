@@ -34,7 +34,7 @@
         <shiro.version>1.4.0</shiro.version>
         <lombok.version>1.18.2</lombok.version>
         <ehcache.version>2.10.5</ehcache.version>
-        <mysql.connector.version>5.1.46</mysql.connector.version>
+        <mysql.connector.version>8.0.16</mysql.connector.version>
         <jsoup.version>1.11.3</jsoup.version>
         <!--shiro模板视图权限标签扩展：component.thymeleaf-->
         <thymeleaf-shiro.version>2.0.0</thymeleaf-shiro.version>
