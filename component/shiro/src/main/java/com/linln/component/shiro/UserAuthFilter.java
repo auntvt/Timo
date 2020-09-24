@@ -23,7 +23,7 @@ public class UserAuthFilter extends AccessControlFilter {
             return true;
         } else {
             Subject subject = getSubject(request, response);
-            return subject.getPrincipal() != null;
+            return subject.getPrincipal() != null && (subject.isRemembered() || subject.isAuthenticated());
         }
     }
 
