@@ -43,7 +43,7 @@
         <!--jwt处理框架版本：component.jwt-->
         <jwt.version>3.4.0</jwt.version>
         <!--swagger2接口文档版本：component.jwt-->
-        <swagger.version>2.9.2</swagger.version>
+        <swagger.version>2.10.0</swagger.version>
         <!--swagger-knife4j接口文档页面：component.jwt-->
         <swagger.knife4j.version>2.0.1</swagger.knife4j.version>
         <google.findbugs.version>3.0.1</google.findbugs.version>
