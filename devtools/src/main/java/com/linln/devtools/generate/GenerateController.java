@@ -55,31 +55,26 @@ public class GenerateController {
     @ResponseBody
     public ResultVo save(@RequestBody Generate generate){
         Map<String, String> fieldMap = new LinkedHashMap<>();
-        if(generate.getTemplate().isEntity()){
+        
+        if (generate.getTemplate().isEntity()) {
             fieldMap.put("实体类", EntityTemplate.generate(generate));
-        }
-        if(generate.getTemplate().isValidator()){
+        } else if (generate.getTemplate().isValidator()) {
             fieldMap.put("验证类", ValidatorTemplate.generate(generate));
-        }
-        if(generate.getTemplate().isRepository()){
+        } else if (generate.getTemplate().isRepository()) {
             fieldMap.put("数据访问层", RepositoryTemplate.generate(generate));
-        }
-        if(generate.getTemplate().isService()){
+        } else if (generate.getTemplate().isService()) {
             fieldMap.put("服务层", ServiceTemplate.generate(generate));
             fieldMap.put("服务实现层", ServiceImplTemplate.generate(generate));
-        }
-        if(generate.getTemplate().isController()){
+        } else if (generate.getTemplate().isController()) {
             fieldMap.put("控制器", ControllerTemplate.generate(generate));
-        }
-        if(generate.getTemplate().isIndex()){
+        } else if (generate.getTemplate().isIndex()) {
             fieldMap.put("列表页面", IndexHtmlTemplate.generate(generate));
-        }
-        if(generate.getTemplate().isAdd()){
+        } else if (generate.getTemplate().isAdd()) {
             fieldMap.put("添加页面", AddHtmlTemplate.generate(generate));
-        }
-        if(generate.getTemplate().isDetail()){
+        } else if (generate.getTemplate().isDetail()) {
             fieldMap.put("详细页面", DetailHtmlTemplate.generate(generate));
         }
+        
         // 当模块结构为独立模块时生成业务模块
         if(generate.getBasic().getModuleType().equals(ModuleType.ALONE.getCode())){
             GenerateUtil.genMavenModule(generate);
